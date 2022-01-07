@@ -11,7 +11,7 @@ func main(){
 	// test2()() this can also be directly used instead of above two statements
 
 
-	// fmt.Println(test1) returns address of test1 -example 0xe8c660
+	// fmt.Println(test1) prints address of test1 -example 0xe8c660
 	// fmt.Println(reflect.TypeOf(test1)) returns func() 
 	
 }
