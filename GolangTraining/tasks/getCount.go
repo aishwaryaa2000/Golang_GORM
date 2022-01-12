@@ -25,14 +25,24 @@ func main() {
 }
 
 func getCount(number []int) {
-	var myMap = make(map[int]int)
-	for _, value := range number {
-		myMap[value]++
-	}
+	// var myMap = make(map[int]int)
+	// for _, value := range number {
+	// 	myMap[value]++
+	// }
 
-	for i := 1; i < 100; i++ {
-		if myMap[i] != 0 {
-			fmt.Println("The number ",i," has occured ",myMap[i],"times")
+	// for i := 1; i < 100; i++ {
+	// 	if myMap[i] != 0 {
+	// 		fmt.Println("The number ",i," has occured ",myMap[i],"times")
+	// 	}
+	// }
+
+	var countArray [100]int
+    for _,value :=range number{
+		countArray[value-1]++
+	}
+	for i:=0;i<100;i++{
+		if countArray[i]!=0{
+			fmt.Println("The number ",i+1,"has occured ",countArray[i]," times")
 		}
 	}
 }
