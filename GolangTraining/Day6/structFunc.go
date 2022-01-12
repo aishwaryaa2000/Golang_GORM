@@ -41,7 +41,11 @@ func main() {
 		fmt.Println("\nFirst Name is : ",singlePerson.firstName)
 		fmt.Println("Last Name is : ",singlePerson.lastName)
 		fmt.Println("Age is : ",singlePerson.age)
-		fmt.Println("Address is : ",singlePerson.address)
+		
+		for index,add := range singlePerson.address{
+			fmt.Println("Address ",index+1,"is : ",add)
+
+		}
 	}
 
 }
