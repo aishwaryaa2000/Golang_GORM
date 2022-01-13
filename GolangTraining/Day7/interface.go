@@ -41,11 +41,11 @@ func(c circle)perimeter() float64{
 }
 
 //struct rectangle implements shape interface bcoz rectangle implements these two methods
-func(r *rectangle)area() float64{ //notice r*rectangle
+func(r *rectangle)area() float64{ //notice r*rectangle  - pointer receiver can only accept &rectangle
 	return r.length*r.breadth
 }
 
-func(r rectangle)perimeter() float64{ //notice no r*rectangle
+func(r rectangle)perimeter() float64{ //notice no r*rectangle- value receiver can accept both
 	return 2*(r.breadth+r.length)
 }
 
@@ -86,6 +86,19 @@ and in the parameter we have pointer receiver
 func(c circle)area() float64{
 	return 22/7*(c.radius*c.radius)
 }
-NO ERROR
+NO ERROR	
  But value receiver work on both pointer as well as value
+*/
+
+
+/* one function but can take multiple structures as arguments is polymorphism
+    passInterface(circle{ 
+		radius: 10.,
+	}) 
+
+	passInterface(&rectangle{ 
+		length: 10,
+		breadth: 20,
+	})
+	
 */
