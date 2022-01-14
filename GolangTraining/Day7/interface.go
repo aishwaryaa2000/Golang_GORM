@@ -1,14 +1,16 @@
 package main
-import "fmt"
+
+import (
+	"fmt"
+)
 
 func main(){
 
-	fmt.Println("FOR CIRCLE")
+	
 	passInterface(circle{ //Notice no &circle
 		radius: 10.,
 	})
 
-	fmt.Println("\nFOR RECTANGLE")
 
 	passInterface(&rectangle{ //Notice &rectangle
 		length: 10,
@@ -52,9 +54,29 @@ func(r rectangle)perimeter() float64{ //notice no r*rectangle- value receiver ca
 
 func passInterface(sh shape){ 
 	//a func that needs shape interface accepts circle or rectangle as argument bcoz circle&rectangle implements shape
+	checkType(sh)
 	fmt.Println("Area is: ",sh.area())
 	fmt.Println("Perimeter is : ",sh.perimeter())
 }
+
+
+
+func checkType(anyType interface{}) {
+	switch anyType.(type) {
+    case *rectangle:
+        fmt.Println("\nYou have passed a rectangle")
+    case circle:
+        fmt.Println("\nYou have passed a Circle")
+	}
+}
+
+
+
+
+
+
+
+
 
 //every method of interface shape MUST BE IMPLEMENTED by the circle or rectangle structure ELSE ERROR
 
