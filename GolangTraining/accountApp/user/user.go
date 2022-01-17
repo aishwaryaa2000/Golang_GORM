@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-var allUserSclice []User
+var allUserSlice []*User
 
 type User struct {
 	Id          int
@@ -18,13 +18,13 @@ type User struct {
 }
 
 func New(name, password string) *User {
-	var userNew = &User{
+	var userNew = User{
 		name:     name, //fieldName : VariableName
 		password: password,
 		Id:       getNewId(),
 	}
-	allUserSclice = append(allUserSclice, *userNew)
-	return userNew //this is a pointer
+	allUserSlice = append(allUserSlice, &userNew)
+	return &userNew //this is a pointer
 }
 
 func getNewId() int {
@@ -44,14 +44,14 @@ begin:
 
 }
 
-func GetAllUsers() []User {
+func GetAllUsers() []*User {
 
-	return allUserSclice
+	return allUserSlice
 
 }
 
 func DisplayAllUser() {
-	for _, iuser := range allUserSclice {
+	for _, iuser := range allUserSlice {
 		fmt.Println("\nUser ID is : ", iuser.Id)
 		fmt.Println("User name is : ", iuser.name)
 		if iuser.AllAccounts != nil {
@@ -66,9 +66,9 @@ func DisplayAllUser() {
 }
 
 func Login(id int, pass string) (*User, error) {
-	for _, iuser := range allUserSclice {
+	for _, iuser := range allUserSlice {
 		if iuser.Id == id && iuser.password == pass {
-			return &iuser, nil
+			return iuser, nil
 		}
 	}
 	return nil, errors.New("Login failed.User ID with given password not found")

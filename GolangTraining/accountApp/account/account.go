@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var allAccountSlice []Account
+var allAccountSlice []*Account
 
 type Account struct {
 	AccNo   int
@@ -18,8 +18,8 @@ func New() *Account {
 		AccNo:   getNewId(),
 		Balance: 0,
 	}
-	allAccountSlice = append(allAccountSlice, *AccountNew)
-	
+	allAccountSlice = append(allAccountSlice, AccountNew)
+
 	return AccountNew //this is a pointer
 }
 
