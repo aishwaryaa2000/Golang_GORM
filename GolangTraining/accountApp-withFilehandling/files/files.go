@@ -47,8 +47,5 @@ func ReadFromFile() {
 			i+=2
 		}
 
-		for i:=0;i<len(eachWord);i++{
-
-		}
 	}
 }
