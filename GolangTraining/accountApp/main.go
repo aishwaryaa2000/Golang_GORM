@@ -75,7 +75,8 @@ LoginDashboard:
 				fmt.Scanln(&amt)
 				str, err := iaccount.Transfer(toAccNo, amt)
 				if err != nil {
-					log.Fatal(err)
+					fmt.Println("Error occurred : ",err)
+					goto LoginDashboard				
 				}
 				fmt.Println(str)
 				break
@@ -106,7 +107,8 @@ LoginDashboard:
 				fmt.Scanln(&amt)
 				str, err := iaccount.Deposit(amt)
 				if err != nil {
-					log.Fatal(err)
+					fmt.Println("Error occurred : ",err)
+					goto LoginDashboard				
 				}
 				fmt.Println(str)
 				break
@@ -133,7 +135,8 @@ LoginDashboard:
 				fmt.Scanln(&amt)
 				str, err := iaccount.Withdraw(amt)
 				if err != nil {
-					log.Fatal(err)
+					fmt.Println("Error occurred : ",err)
+					goto LoginDashboard
 				}
 				fmt.Println(str)
 				break
