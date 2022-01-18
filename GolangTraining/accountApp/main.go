@@ -4,7 +4,6 @@ import (
 	"accountApp/account"
 	"accountApp/user"
 	"fmt"
-	"log"
 )
 
 func main() {
@@ -14,27 +13,31 @@ begin:
 	fmt.Scanln(&userChoice)
 	switch userChoice {
 	case 1:
-		user.DisplayAllUser()
-		goto begin
+		err:= user.DisplayAllUser()
+		if err!=nil{
+			fmt.Println(err)
+		}
+		goto begin //if I don't write goto then main() will exit
 	case 2:
 		var loginId int
 		var pass string
-		fmt.Print("Enter login ID : ")
+		fmt.Print("\nEnter login ID : ")
 		fmt.Scanln(&loginId)
-		fmt.Print("\nEnter password : ")
+		fmt.Print("Enter password : ")
 		fmt.Scanln(&pass)
 		currUser, err := user.Login(loginId, pass)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println("Error occurred : ",err)
+			goto begin
 		}
 		fmt.Println("Login successfull")
 		afterLoginMenu(currUser)
-		goto begin
+		goto begin //if I don't write goto then after LOGOUT program will exit
 	case 3:
 		var name, pass string
 		fmt.Print("\nEnter your name : ")
 		fmt.Scanln(&name)
-		fmt.Print("\nEnter your password : ")
+		fmt.Print("Enter your password : ")
 		fmt.Scanln(&pass)
 		var newUser = user.New(name, pass)
 		fmt.Println("Succesfully added")
@@ -57,12 +60,15 @@ LoginDashboard:
 	case 1:
 		var newAcc = account.New() //retuurns pointer
 		userLogin.AddAccount(newAcc)
-		goto LoginDashboard
+		goto LoginDashboard //if I don't write goto then execution will go to the func main()
 	case 2:
 		//choose from which account do u wish to transfer
 		var accNumber int
-	insidecase2:
 		found := false
+		if userLogin.AllAccounts==nil{
+			fmt.Println("You do not have any accounts to make a transfer")
+			goto LoginDashboard
+		}
 		fmt.Print("Enter your account number : ")
 		fmt.Scanln(&accNumber)
 		for _, iaccount := range userLogin.AllAccounts {
@@ -84,21 +90,21 @@ LoginDashboard:
 		}
 		if found == false {
 			fmt.Println("Account number is incorrect")
-			goto insidecase2
+
 		}
+		goto LoginDashboard				
+
 
 	case 3:
 		//choose to which account u wish to deposit bcoz a user has multiple accounts
 		var accNumber int
-	insidecase3:
+		if userLogin.AllAccounts == nil {
+			fmt.Println("You don't have an account.Create one")
+			goto LoginDashboard
+		}
 		found := false
 		fmt.Print("Enter your account number : ")
 		fmt.Scanln(&accNumber)
-
-		if userLogin.AllAccounts == nil {
-			fmt.Println("This user doesn't have an account.Create one")
-			goto LoginDashboard
-		}
 		for _, iaccount := range userLogin.AllAccounts {
 			if iaccount.AccNo == accNumber {
 				found = true
@@ -115,15 +121,18 @@ LoginDashboard:
 			}
 		}
 		if found == false {
-			fmt.Println("Account number is incorrect")
-			goto insidecase3
+			fmt.Println("Your account number is incorrect")
+
 		}
 		goto LoginDashboard
 
 	case 4:
 		//choose from which account you wish to withdraw
 		var accNumber int
-	insidecase4:
+		if userLogin.AllAccounts==nil{
+			fmt.Println("You do not have any accounts to make a transfer")
+			goto LoginDashboard
+		}
 		found := false
 		fmt.Print("Enter your account number : ")
 		fmt.Scanln(&accNumber)
@@ -143,8 +152,7 @@ LoginDashboard:
 			}
 		}
 		if found == false {
-			fmt.Println("Account number is incorrect")
-			goto insidecase4
+			fmt.Println("Your account number is incorrect")
 		}
 		goto LoginDashboard
 

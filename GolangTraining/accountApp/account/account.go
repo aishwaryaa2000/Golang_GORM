@@ -25,10 +25,16 @@ func New() *Account {
 
 func getNewId() int {
 
+	begin:
 	seconds := time.Now().Unix()
 	rand.Seed(seconds)
-	newId := rand.Intn(100) + 1
-	return newId
+	NewAccNo := rand.Intn(100) + 1
+	for _, value := range allAccountSlice {
+		if value.AccNo == NewAccNo {
+			goto begin
+		}
+	}
+	return NewAccNo
 
 }
 

@@ -50,19 +50,21 @@ func GetAllUsers() []*User {
 
 }
 
-func DisplayAllUser() {
+func DisplayAllUser() error{
+	if allUserSlice==nil{
+		return errors.New("No users to display")
+	}
 	for _, iuser := range allUserSlice {
 		fmt.Println("\nUser ID is : ", iuser.Id)
 		fmt.Println("User name is : ", iuser.name)
-		if iuser.AllAccounts != nil {
-			fmt.Println("Accounts are there")
-		}
+	
 		for _, iaccount := range iuser.AllAccounts {
 			fmt.Println("Account ID is : ", iaccount.AccNo)
 			fmt.Println("Account Balance is : ", iaccount.Balance)
 
 		}
 	}
+	return nil
 }
 
 func Login(id int, pass string) (*User, error) {
