@@ -28,5 +28,5 @@ func sum(str string,num...int) int{
 	return total
 }
 
-// variable number of arguments
+// variable number of arguments 
 // first we need to type the compulsory parameters and then the variadic variables with ...

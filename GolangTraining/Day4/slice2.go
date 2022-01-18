@@ -60,6 +60,10 @@ func main() {
    fmt.Println("Address of first elemet of copyMySlice : ",&copyMySlice[0])
    fmt.Println("Address of first elemet of MySlice : ",&mySlice[0])
 
+   //will print same address
+   mySlice = copyMySlice
+   fmt.Println("\nAddress of first elemet of copyMySlice : ",&copyMySlice[0])
+   fmt.Println("Address of first elemet of MySlice : ",&mySlice[0])
 
 
 
