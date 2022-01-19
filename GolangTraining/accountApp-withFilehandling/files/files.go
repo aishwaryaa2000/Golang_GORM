@@ -49,3 +49,16 @@ func ReadFromFile() {
 
 	}
 }
+
+func WriteNewUser(id int,name,pass string){
+	f, err := os.OpenFile("accountApp.txt",os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println(err)
+	}
+	defer f.Close()
+	str  := "\n"+strconv.Itoa(id)+","+name+","+pass
+	_, errr := f.WriteString(str)
+	if errr != nil {
+		log.Println(errr)
+	}
+}

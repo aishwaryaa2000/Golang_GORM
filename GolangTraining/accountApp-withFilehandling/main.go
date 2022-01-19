@@ -44,6 +44,7 @@ begin:
 		var newUser = user.New(name, pass,0)
 		fmt.Println("Succesfully added")
 		fmt.Println("Your user ID is : ", newUser.Id)
+		files.WriteNewUser(newUser.Id,name,pass)
 		goto begin
 	case 4:
 		return
