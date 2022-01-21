@@ -16,9 +16,11 @@ func NewBoard(size int) []*cell.Cell{
 }
 
 func Display(board []*cell.Cell,size int){
+	index:=0
 	for i:=0;i<size;i++{
 		for j:=0;j<size;j++{
-			fmt.Print("|",*board[i])
+			fmt.Print("|",*board[index])
+			index++
 		}
 		fmt.Printf("|\n")
 	}
