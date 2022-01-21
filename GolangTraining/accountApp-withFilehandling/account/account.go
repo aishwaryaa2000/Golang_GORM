@@ -49,6 +49,10 @@ func (a *Account) Transfer(toAccNo, amt int) (string, error) {
 		err := errors.New("Money cannot be transferred since your account balance will become less than 1000")
 		return "", err
 	}
+	if amt<0{
+		err := errors.New("Amount cannot be negative")
+		return "", err
+	}
 	success := false
 	for _, accNoValue := range allAccountSlice {
 		if accNoValue.AccNo == toAccNo {
@@ -81,6 +85,10 @@ func (a *Account) Deposit(amt int) (string, error) {
 
 func (a *Account) Withdraw(amt int) (string, error) {
 
+	if amt<0{
+		err := errors.New("Amount cannot be negative")
+		return "", err
+	}
 	if a.Balance-amt < 1000 {
 		err := errors.New("Amount cannot be withdraw as your account balance will become less than 1000 after withdrawal")
 		return "", err

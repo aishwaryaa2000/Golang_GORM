@@ -17,6 +17,10 @@ type User struct {
 	AllAccounts []*account.Account
 }
 
+func(currUser *User) ReturnNameAndPass() (string,string){
+	return currUser.name, currUser.password
+}
+
 func New(name, password string,id int) *User {
 	var userNew = User{
 		name:     name, //fieldName : VariableName

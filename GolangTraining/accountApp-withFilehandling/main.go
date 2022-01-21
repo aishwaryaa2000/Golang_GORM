@@ -10,7 +10,7 @@ import (
 func main() {
 	files.ReadFromFile()
 begin:
-	fmt.Printf("1-List all users\n2-Login\n3-Register a new user\n4-Exit\nEnter your choice : ")
+	fmt.Printf("1-List all users\n2-Login\n3-Register a new user\n4-Save and Exit\nEnter your choice : ")
 	var userChoice int
 	fmt.Scanln(&userChoice)
 	switch userChoice {
@@ -44,9 +44,11 @@ begin:
 		var newUser = user.New(name, pass,0)
 		fmt.Println("Succesfully added")
 		fmt.Println("Your user ID is : ", newUser.Id)
-		files.WriteNewUser(newUser.Id,name,pass)
+		// files.WriteNewUser(newUser.Id,name,pass)
 		goto begin
 	case 4:
+		files.WriteIntoFile()
+		fmt.Println("Exiting..")
 		return
 
 	}

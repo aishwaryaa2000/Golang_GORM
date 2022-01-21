@@ -50,15 +50,26 @@ func ReadFromFile() {
 	}
 }
 
-func WriteNewUser(id int,name,pass string){
-	f, err := os.OpenFile("accountApp.txt",os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+func WriteIntoFile(){
+	f, err := os.OpenFile("accountApp.txt",os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
 	}
 	defer f.Close()
-	str  := "\n"+strconv.Itoa(id)+","+name+","+pass
-	_, errr := f.WriteString(str)
-	if errr != nil {
-		log.Println(errr)
+
+	allUserSlice := user.GetAllUsers()
+
+	for _, iuser := range allUserSlice {	
+		name,pass:= iuser.ReturnNameAndPass()
+		str := strconv.Itoa(iuser.Id)+","+name+","+pass
+		for _, iaccount := range iuser.AllAccounts {
+			str = str +","+strconv.Itoa(iaccount.AccNo)+","+strconv.Itoa(iaccount.Balance)
+		}
+        str = str + "\n"
+		_, errr := f.WriteString(str)
+		if errr != nil {
+			log.Println(errr)
+		}
 	}
+	
 }
