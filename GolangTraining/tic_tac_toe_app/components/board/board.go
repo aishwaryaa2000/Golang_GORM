@@ -5,25 +5,25 @@ import(
 	"fmt"
 )
 
-var board = [10]*cell.Cell{} //an array of 9 structure pointers
+var board = []*cell.Cell{}  //slice of cell structure pointer
 
-
-func NewBoard() [10]*cell.Cell{
-	for i:=0;i<10;i++{
-		board[i]= cell.NewCell()
-		}
+func NewBoard(size int) []*cell.Cell{
+	for i:=0;i<size*size;i++{
+		icell := cell.NewCell()
+		board=append(board,icell)
+	}
 	return board
 }
 
-func Display(board [10]*cell.Cell){
-	fmt.Println(*board[7]," | ",*board[8]," | ",*board[9])
-    fmt.Println("-----|-------|-----")
-    fmt.Println(*board[4]," | ",*board[5]," | ",*board[6])
-    fmt.Println("-----|-------|-----")
-    fmt.Println(*board[1]," | ",*board[2]," | ",*board[3])
-
+func Display(board []*cell.Cell,size int){
+	for i:=0;i<size;i++{
+		for j:=0;j<size;j++{
+			fmt.Print("|",*board[i])
+		}
+		fmt.Printf("|\n")
+	}
 }
 
-func GetCellStatus(board [10]*cell.Cell,i int) *cell.Cell{
+func GetCellStatus(board []*cell.Cell,i int) *cell.Cell{
 	return board[i]
 }

@@ -1,10 +1,31 @@
 package main
-import(
+
+import (
+	// "fmt"
+	"fmt"
+	// "reflect"
 	"tic_tac_toe_app/components/board"
 )
 
 func main(){
-	boardn:=board.NewBoard()
-	board.Display(boardn)
+
+	begin:
+	fmt.Print("Enter size of board : ")
+	var size int
+	_,err := fmt.Scan(&size)
+	if err!=nil{
+		fmt.Println("Please enter an integer for board")
+		goto begin
+	}
+	if size<3{
+		fmt.Println("Please enter size greater than 2")
+		goto begin
+	}
+	boardn:=board.NewBoard(size)
+	board.Display(boardn,size)
+	var player1Name, _ string
+	fmt.Print("Enter your name : ")
+	fmt.Scan(&player1Name)
+
 
 }

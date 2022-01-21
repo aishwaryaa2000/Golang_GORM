@@ -10,7 +10,7 @@ func NewCell() *Cell {
 	var cellTest = &Cell{
 		mark: "-",
 	}
-	return cellTest
+	return cellTest //pointer to cell
 
 }
 
