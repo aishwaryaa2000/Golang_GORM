@@ -2,7 +2,6 @@ package cell
 
 import (
 	"testing"
-	"errors"
 )
 
 
@@ -34,9 +33,8 @@ func TestSetMark(t *testing.T){
 	newCell := New()	
 	c,_ :=newCell.setMark(XMark)
 	_,actual:=c.setMark(OMark) //Error should come as this cell is already marked
-	expected  := errors.New("This cell is already marked")
-	if actual!=expected{
-		t.Error("Actual is ",actual,"but expected is ",expected)
+	if actual==nil{
+		t.Error("Error is expected as the cell is already marked")
 	}
 
 }
