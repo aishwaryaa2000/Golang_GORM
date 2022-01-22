@@ -18,22 +18,21 @@ func TestNew(t *testing.T){  //Test___()
 
 func TestGetMark(t *testing.T){
 	newCell := New()	
-	cell,_ :=newCell.setMark(XMark)
-	var actual Mark = cell.getMark()
+	err := newCell.setMark(XMark)
+	var actual Mark = newCell.getMark()
 	var expected Mark=XMark
 
 	if actual!=expected{
-		t.Error("Actual is ",actual,"but expected is ",expected)
+		t.Error("Actual is ",actual,"but expected is ",expected,"\nError while setting mark is :",err)
 	}
-
 
 }
 
 func TestSetMark(t *testing.T){
 	newCell := New()	
-	c,_ :=newCell.setMark(XMark)
-	_,actual:=c.setMark(OMark) //Error should come as this cell is already marked
-	if actual==nil{
+	newCell.setMark(XMark)
+	actualError:=newCell.setMark(OMark) //Error should come as this cell is already marked
+	if actualError==nil{
 		t.Error("Error is expected as the cell is already marked")
 	}
 
