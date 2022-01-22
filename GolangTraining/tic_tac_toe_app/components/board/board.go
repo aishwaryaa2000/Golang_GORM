@@ -13,7 +13,7 @@ type board struct{
 
 func New(sizeByUser int) *board {
 
-	var testCells = []*cell.Cell{} 
+	var testCells = []*cell.Cell{} //a slice of cell structure pointers
 
 	for i:=0;i<sizeByUser*sizeByUser;i++{
 		newCell := cell.New() //new cell is created with noMark
@@ -24,7 +24,7 @@ func New(sizeByUser int) *board {
 		nCells: testCells, 
 		size: sizeByUser,
 	}
-	return boardTest //pointer to player
+	return boardTest //pointer to board
 }
 
 
@@ -32,8 +32,8 @@ func (b*board) Display(){
 	index:=0
 	for i:=0;i<b.size;i++{
 		for j:=0;j<b.size;j++{
-			icell := b.nCells[index]
-			fmt.Print(" | ",icell.GetMark())
+			icell := b.nCells[index]	//get a structure pointer of the cell at a particular index
+			fmt.Print(" | ",icell.GetMark())	//get the mark of the cell at that index
 			index++
 		}
 		fmt.Printf(" |\n")
