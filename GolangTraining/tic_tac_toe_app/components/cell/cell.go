@@ -22,10 +22,10 @@ func (c*Cell) getMark() (Mark){
 	return c.cellMark
 }
 
-func (c *Cell) setMark(markByUser Mark) (*Cell, error) {
+func (c *Cell) setMark(markByUser Mark) (error) {
 	if c.cellMark == NoMark {
 		c.cellMark = markByUser
-		return c, nil
+		return  nil
 	}
-	return c, errors.New("This cell is already marked")
+	return errors.New("This cell is already marked")
 }
