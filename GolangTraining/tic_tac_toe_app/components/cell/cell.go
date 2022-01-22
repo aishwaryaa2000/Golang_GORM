@@ -1,22 +1,30 @@
 package cell
-
 import "errors"
+type Mark string
+const (
+	NoMark Mark  = "-"
+	XMark Mark   = "X"
+	OMark Mark   = "O"
+  )
 
 type Cell struct {
-	mark string
+	cellMark Mark
 }
 
-func NewCell() *Cell {
+func New() *Cell {
 	var cellTest = &Cell{
-		mark: "-",
+		cellMark: NoMark,
 	}
 	return cellTest //pointer to cell
-
 }
 
-func (c *Cell) markCell(mark string) (*Cell, error) {
-	if c.mark == "-" {
-		c.mark = mark
+func (c*Cell) getMark() (Mark){
+	return c.cellMark
+}
+
+func (c *Cell) setMark(markByUser Mark) (*Cell, error) {
+	if c.cellMark == NoMark {
+		c.cellMark = markByUser
 		return c, nil
 	}
 	return c, errors.New("This cell is already marked")
