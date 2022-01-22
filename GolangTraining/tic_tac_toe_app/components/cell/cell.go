@@ -18,7 +18,7 @@ func New() *Cell {
 	return cellTest //pointer to cell
 }
 
-func (c*Cell) getMark() (Mark){
+func (c*Cell) GetMark() (Mark){
 	return c.cellMark
 }
 

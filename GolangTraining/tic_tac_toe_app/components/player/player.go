@@ -1,9 +1,16 @@
 package player
+import(
+	"tic_tac_toe_app/components/cell"
+)
+type player struct {
+	mark cell.Mark //player's mark
+	name string
+}
 
-player1 :=''
-player2 :=''
-
-func PlayerInput(){
-	fmt.Print("Hey Player1,choose X or O ")
-	fmt.Scanln(&player1)
+func New(playerMark cell.Mark) *player {
+	var playerTest = &player{
+		mark: playerMark,
+		// name: "", means name is empty string
+	}
+	return playerTest //pointer to player
 }

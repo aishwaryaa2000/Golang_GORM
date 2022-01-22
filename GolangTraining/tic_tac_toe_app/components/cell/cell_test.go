@@ -19,7 +19,7 @@ func TestNew(t *testing.T){  //Test___()
 func TestGetMark(t *testing.T){
 	newCell := New()	
 	err := newCell.setMark(XMark)
-	var actual Mark = newCell.getMark()
+	var actual Mark = newCell.GetMark()
 	var expected Mark=XMark
 
 	if actual!=expected{

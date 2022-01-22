@@ -5,27 +5,37 @@ import(
 	"fmt"
 )
 
-var board = []*cell.Cell{}  //slice of cell structure pointer
-
-func NewBoard(size int) []*cell.Cell{
-	for i:=0;i<size*size;i++{
-		icell := cell.NewCell()
-		board=append(board,icell)
-	}
-	return board
+type board struct{
+	nCells []*cell.Cell //a slice of cell structure pointers
+	size int
 }
 
-func Display(board []*cell.Cell,size int){
+
+func New(sizeByUser int) *board {
+
+	var testCells = []*cell.Cell{} 
+
+	for i:=0;i<sizeByUser*sizeByUser;i++{
+		newCell := cell.New() //new cell is created with noMark
+		testCells = append(testCells,newCell)
+	}
+
+	var boardTest = &board{
+		nCells: testCells, 
+		size: sizeByUser,
+	}
+	return boardTest //pointer to player
+}
+
+
+func (b*board) Display(){
 	index:=0
-	for i:=0;i<size;i++{
-		for j:=0;j<size;j++{
-			fmt.Print("|",*board[index])
+	for i:=0;i<b.size;i++{
+		for j:=0;j<b.size;j++{
+			icell := b.nCells[index]
+			fmt.Print(" | ",icell.GetMark())
 			index++
 		}
-		fmt.Printf("|\n")
+		fmt.Printf(" |\n")
 	}
-}
-
-func GetCellStatus(board []*cell.Cell,i int) *cell.Cell{
-	return board[i]
 }
