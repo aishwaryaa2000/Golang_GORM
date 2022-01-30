@@ -7,10 +7,10 @@ type player struct {
 	name string
 }
 
-func New(playerMark cell.Mark) *player {
+func New(playerMark cell.Mark,name string) *player {
 	var playerTest = &player{
 		mark: playerMark,
-		// name: "", means name is empty string
+		name: name,
 	}
 	return playerTest //pointer to player
 }

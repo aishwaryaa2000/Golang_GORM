@@ -39,3 +39,23 @@ func (b*board) Display(){
 		fmt.Printf(" |\n")
 	}
 }
+
+func (b*board) GetBoard() string{
+	strBoard := ""
+	for i:=0;i<b.size*b.size;i++{
+		icell := b.nCells[i]
+		strBoard = strBoard + string(icell.GetMark())
+	}
+	return strBoard
+}
+
+func (b*board) IsFull() bool{
+	for i:=0;i<b.size*b.size;i++{
+		icell := b.nCells[i]
+	    if icell.GetMark()==cell.NoMark{
+			return false
+		}
+	}
+
+	return true
+}
