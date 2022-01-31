@@ -2,6 +2,7 @@ package result
 
 import(
 	// "tic_tac_toe_app/components/board"
+	"strings"
 	"math"
 
 )
@@ -26,7 +27,7 @@ func checkRowWin(board string) bool{
 	boardSize := int(math.Sqrt(float64(strLen)))
 	for i:=0;i<strLen;i+=boardSize{
 		ok := checkIfSame(board[i:i+boardSize])
-		if ok==true{
+		if ok==true{ 
 			return ok
 		}
 	}
@@ -73,7 +74,10 @@ func checkSecDiaWin(board string)bool{
 }
 
 func checkIfSame(strMark string) bool{
-	if strMark=="XXX" || strMark=="OOO"{
+	xStr := strings.Repeat("X", len(strMark))
+	oStr := strings.Repeat("O", len(strMark))
+
+	if strMark==xStr || strMark==oStr{
 		return true
 	}
 	return false

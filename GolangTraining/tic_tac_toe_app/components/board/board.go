@@ -7,15 +7,15 @@ import(
 
 type Board struct{
 	NCells []*cell.Cell //a slice of cell structure pointers
-	Size int
+	Size uint8
 }
 
 
-func New(sizeByUser int) *Board {
+func New(sizeByUser uint8) *Board {
 
 	var testCells = []*cell.Cell{} //a slice of cell structure pointers
-
-	for i:=0;i<sizeByUser*sizeByUser;i++{
+	var i uint8
+	for i=0;i<(sizeByUser*sizeByUser);i++{
 		newCell := cell.New() //new cell is created with noMark
 		testCells = append(testCells,newCell)
 	}
@@ -30,8 +30,9 @@ func New(sizeByUser int) *Board {
 
 func (b*Board) Display(){
 	index:=0
-	for i:=0;i<b.Size;i++{
-		for j:=0;j<b.Size;j++{
+	var i,j uint8
+	for i=0;i<b.Size;i++{
+		for j=0;j<b.Size;j++{
 			icell := b.NCells[index]	//get a structure pointer of the cell at a particular index
 			fmt.Print(" | ",icell.GetMark())	//get the mark of the cell at that index
 			index++
@@ -42,7 +43,8 @@ func (b*Board) Display(){
 
 func (b*Board) GetBoard() string{
 	strBoard := ""
-	for i:=0;i<b.Size*b.Size;i++{
+	var i uint8
+	for i=0;i<b.Size*b.Size;i++{
 		icell := b.NCells[i]
 		strBoard = strBoard + string(icell.GetMark())
 	}
