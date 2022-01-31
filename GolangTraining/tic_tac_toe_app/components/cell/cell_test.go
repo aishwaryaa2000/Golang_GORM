@@ -18,7 +18,7 @@ func TestNew(t *testing.T){  //Test___()
 
 func TestGetMark(t *testing.T){
 	newCell := New()	
-	err := newCell.setMark(XMark)
+	err := newCell.SetMark(XMark)
 	var actual Mark = newCell.GetMark()
 	var expected Mark=XMark
 
@@ -30,8 +30,8 @@ func TestGetMark(t *testing.T){
 
 func TestSetMark(t *testing.T){
 	newCell := New()	
-	newCell.setMark(XMark)
-	actualError:=newCell.setMark(OMark) //Error should come as this cell is already marked
+	newCell.SetMark(XMark)
+	actualError:=newCell.SetMark(OMark) //Error should come as this cell is already marked
 	if actualError==nil{
 		t.Error("Error is expected as the cell is already marked")
 	}

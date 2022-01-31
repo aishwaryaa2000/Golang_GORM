@@ -1,7 +1,7 @@
 package result
 
 import(
-	"tic_tac_toe_app/components/board"
+	// "tic_tac_toe_app/components/board"
 	"math"
 
 )

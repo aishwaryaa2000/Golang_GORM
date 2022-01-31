@@ -2,15 +2,15 @@ package player
 import(
 	"tic_tac_toe_app/components/cell"
 )
-type player struct {
-	mark cell.Mark //player's mark
-	name string
+type Player struct {
+	Mark cell.Mark //player's mark
+	Name string
 }
 
-func New(playerMark cell.Mark,name string) *player {
-	var playerTest = &player{
-		mark: playerMark,
-		name: name,
+func New(playerMark cell.Mark,name string) *Player {
+	var playerTest = &Player{
+		Mark: playerMark,
+		Name: name,
 	}
 	return playerTest //pointer to player
 }

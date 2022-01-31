@@ -22,7 +22,7 @@ func (c*Cell) GetMark() (Mark){
 	return c.cellMark
 }
 
-func (c *Cell) setMark(markByUser Mark) (error) {
+func (c *Cell) SetMark(markByUser Mark) (error) {
 	if c.cellMark == NoMark {
 		c.cellMark = markByUser
 		return  nil
