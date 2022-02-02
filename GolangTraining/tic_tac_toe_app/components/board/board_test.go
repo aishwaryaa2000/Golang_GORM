@@ -33,16 +33,20 @@ func TestNew(t *testing.T){  //Test___()
 	}
 }
 
-func TestGetBoard(t *testing.T){
-	newBoard := New(4)
 
-	for index:=0;index<=14;index=index+2{
-	icell := newBoard.NCells[index]
-	icell.SetMark(cell.XMark)
-	}
-	strBoardActual := newBoard.GetBoard()
-	strBoardExpected := "X-X-X-X-X-X-X-X-"
-	if strBoardActual != strBoardExpected{
-		t.Error("Actual is ",strBoardActual,"but expected is ",strBoardExpected)
-	}
-}
+
+
+
+// func TestGetBoard(t *testing.T){
+// 	newBoard := New(4)
+
+// 	for index:=0;index<=14;index=index+2{
+// 	icell := newBoard.NCells[index]
+// 	icell.SetMark(cell.XMark)
+// 	}
+// 	strBoardActual := newBoard.GetBoard()
+// 	strBoardExpected := "X-X-X-X-X-X-X-X-"
+// 	if strBoardActual != strBoardExpected{
+// 		t.Error("Actual is ",strBoardActual,"but expected is ",strBoardExpected)
+// 	}
+// }

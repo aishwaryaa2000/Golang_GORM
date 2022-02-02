@@ -19,13 +19,16 @@ func Player(name1,name2 string) (*player.Player,*player.Player){
 func Board(size uint8) *board.Board{
 	board := board.New(size)
 	board.Display()
+	result.MakeWinArray(int(size))
 	return board
 }
 
 func GameStart(b *board.Board,player1,player2 *player.Player){
 	var index int
+	noOfTurns := 0
 	currentPlayer := player1
-	for;;{
+	for{
+		noOfTurns++
 		errorOccured:
 		fmt.Print(currentPlayer.Name," enter cell number where you wish to mark : ")
 		fmt.Scan(&index)
@@ -40,12 +43,13 @@ func GameStart(b *board.Board,player1,player2 *player.Player){
 			goto errorOccured
 		}
 		b.Display()
-		checkForStatus(b,currentPlayer)
+		checkForStatus(b.Size,currentPlayer,index,noOfTurns)
 		currentPlayer = playerSwitch(currentPlayer,player1,player2)
-
 	}
 
 }
+
+
 
 func playerSwitch(currentPlayer,player1,player2 *player.Player) *player.Player{
 	if(currentPlayer==player1){
@@ -56,9 +60,8 @@ func playerSwitch(currentPlayer,player1,player2 *player.Player) *player.Player{
 	return currentPlayer
 }
 
-func checkForStatus(b *board.Board,currentPlayer *player.Player){
-	boardString := b.GetBoard()
-		gameStatus := result.GetStatus(boardString)
+func checkForStatus(boardSize uint8,currentPlayer *player.Player,index ,noOfTurns int){
+		gameStatus := result.GetStatus(int(boardSize),currentPlayer.Mark,index,noOfTurns)
 		if(gameStatus==result.Win){
 			fmt.Println("Yaay!",currentPlayer.Name," won")
 			os.Exit(0)

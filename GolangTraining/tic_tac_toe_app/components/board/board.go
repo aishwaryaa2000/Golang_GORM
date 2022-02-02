@@ -41,15 +41,32 @@ func (b*Board) Display(){
 	}
 }
 
-func (b*Board) GetBoard() string{
-	strBoard := ""
-	var i uint8
-	for i=0;i<b.Size*b.Size;i++{
-		icell := b.NCells[i]
-		strBoard = strBoard + string(icell.GetMark())
-	}
-	return strBoard
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// func (b*Board) GetBoard() string{
+// 	strBoard := ""
+// 	var i uint8
+// 	for i=0;i<b.Size*b.Size;i++{
+// 		icell := b.NCells[i]
+// 		strBoard = strBoard + string(icell.GetMark())
+// 	}
+// 	return strBoard
+// }
 
 // func (b*Board) IsFull() bool{
 // 	for i:=0;i<b.Size*b.Size;i++{

@@ -1,93 +1,91 @@
 package result
 
-import(
-	// "tic_tac_toe_app/components/board"
-	"strings"
+import (
 	"math"
+	"tic_tac_toe_app/components/cell"
+
 
 )
 type Status uint8
+
+var colWin[] int
+var rowWin[] int
+var priDiaWin int
+var secDiaWin int
+
+
+func MakeWinArray(boardsize int){
+	colWin = make([]int, boardsize)
+	rowWin = make([]int, boardsize)
+
+}
+
 const (
 	Win Status  = 0
 	Tie Status   = 2
 	Running Status  = 1
 )
 
-func GetStatus(board string) Status{
-	if checkColWin(board) || checkRowWin(board) || checkPriDiaWin(board) || checkSecDiaWin(board) {
+func GetStatus(boardSize int ,mark cell.Mark,index,noOfTurns int) Status{
+
+	changeWinArray(index,boardSize,mark)
+
+	if checkColRowWin(boardSize,index) || checkPriSecDiaWin(boardSize,index){
 		return Win
-	}else if checkTie(board){
+	}else if noOfTurns==boardSize*boardSize{
 		return Tie
 	}
 	return Running
 }
 
-func checkRowWin(board string) bool{
-	strLen := len(board)
-	boardSize := int(math.Sqrt(float64(strLen)))
-	for i:=0;i<strLen;i+=boardSize{
-		ok := checkIfSame(board[i:i+boardSize])
-		if ok==true{ 
-			return ok
+
+func changeWinArray(index int,boardsize int,mark cell.Mark){
+	virtualColumn := index%boardsize
+	virtualRow := index/boardsize
+	
+	if mark == cell.XMark{ 
+		rowWin[virtualRow]++
+		colWin[virtualColumn]++
+	}else{
+		rowWin[virtualRow]--
+		colWin[virtualColumn]--
+	}
+
+	if virtualColumn+virtualRow==boardsize-1{	
+			if mark == cell.XMark{ 
+				secDiaWin++
+			}else{
+				secDiaWin--
+			}
+	}
+
+	if virtualColumn==virtualRow{	
+		if mark == cell.XMark{ 
+			priDiaWin++
+		}else{
+			priDiaWin--
 		}
 	}
+}
+
+func checkColRowWin(boardSize ,index int) bool{
+	
+	virtualColumn := index%boardSize
+	virtualRow := index/boardSize
+
+	if boardSize==int(math.Abs(float64(rowWin[virtualRow]))) ||boardSize==int(math.Abs(float64(colWin[virtualColumn]))){
+		return true
+	}
+
 	return false
-
 }
 
-func checkColWin(board string)bool{
-	strLen := len(board)
-	boardSize := int(math.Sqrt(float64(strLen)))
-	for i:=0;i<boardSize;i++{
-		colValue:=""
-		for k:=0;k<boardSize;k++{
-			colValue += string(board[i+k*boardSize])
-		}
-		ok := checkIfSame(colValue)
-		if ok==true{
-			return ok
-		}
-	}
-	return false
-}
-
-func checkPriDiaWin(board string)bool{
-	strLen := len(board)
-	boardSize := int(math.Sqrt(float64(strLen)))
-	diagonalValue := ""
-	for i:=0;i<boardSize*boardSize;i+=boardSize+1{
-		diagonalValue+= string(board[i])
-	}
-
-	return checkIfSame(diagonalValue)
-}
-
-func checkSecDiaWin(board string)bool{
-	strLen := len(board)
-	boardSize := int(math.Sqrt(float64(strLen)))
-	diagonalValue := ""
-	for i:=boardSize-1;i<boardSize*boardSize;i+=boardSize-1{
-		diagonalValue+= string(board[i])
-	}
-
-	return checkIfSame(diagonalValue)
-}
-
-func checkIfSame(strMark string) bool{
-	xStr := strings.Repeat("X", len(strMark))
-	oStr := strings.Repeat("O", len(strMark))
-
-	if strMark==xStr || strMark==oStr{
+func checkPriSecDiaWin(boardSize ,index int)bool{
+	
+	if int(math.Abs(float64(priDiaWin)))==boardSize || int(math.Abs(float64(secDiaWin)))==boardSize{
 		return true
 	}
 	return false
+
 }
 
-func checkTie(board string) bool{
-	for i:=0;i<len(board);i++{
-		if(board[i]=='-'){
-			return false
-		}
-	}
-	return true
-}
