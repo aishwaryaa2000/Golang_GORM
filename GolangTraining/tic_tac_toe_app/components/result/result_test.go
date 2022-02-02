@@ -3,15 +3,6 @@ import(
 	"testing"
 )
 
-// func TestGetStatus(t *testing.T){  //Test___()
-// 	actualStatus := GetStatus("XXXOXOOXO")
-// 	expectedStatus := Win
-
-// 	if actualStatus != expectedStatus{
-// 		t.Error("Actual is ",actualStatus,"but expected is ",expectedStatus)
-// 	}
-// }
-
 func TestGetStatusBulk(t *testing.T){
 	var listTest = []struct{ //slice of struct
 		strBoard string
