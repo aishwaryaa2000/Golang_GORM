@@ -1,0 +1,26 @@
+{
+    "Users" : [
+                {
+                    "Name" : "Rohit",
+                    "phoneNumbers" : {
+                        "home" : "1234578",
+                        "office" : "1212312"
+                    },
+                    "Age" : 23,
+                    "Pets" : [
+                                {
+                                    "Type":"Dog",
+                                    "Name":"Tommy"
+                                },
+                                {
+                                    "Type":"Cat",
+                                    "Name":"Borris"
+                                }    
+                             ],
+                    "Address":{
+                                "Permanent address" : "USA",
+                                "current Address" : "AU"
+                              }
+                }
+              ]
+}
