@@ -21,6 +21,28 @@
                                 "Permanent address" : "USA",
                                 "current Address" : "AU"
                               }
+                },
+                {
+                    "Name" : "Aishwarya",
+                    "phoneNumbers" : {
+                        "home" : "27715964",
+                        "office" : "8291404495"
+                    },
+                    "Age" : 22,
+                    "Pets" : [
+                                {
+                                    "Type":"Dog",
+                                    "Name":"Rocky"
+                                },
+                                {
+                                    "Type":"Cat",
+                                    "Name":"Kitty"
+                                }    
+                             ],
+                    "Address":{
+                                "Permanent address" : "India",
+                                "current Address" : "India"
+                              }
                 }
               ]
 }

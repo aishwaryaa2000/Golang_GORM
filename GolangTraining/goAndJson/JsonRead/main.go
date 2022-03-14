@@ -47,7 +47,7 @@ func main(){
 	json.Unmarshal(jsonByteData,&mappedData)
 
 	for _,iUser := range mappedData.U{
-		fmt.Println("Name : ",iUser.UserName)
+		fmt.Println("\nName : ",iUser.UserName)
 		fmt.Println("Phone numbers \n    Home number",iUser.UserPhNumber.HomeNo,"\n    Office number : ",iUser.UserPhNumber.OfficeNo)
 		fmt.Println("Age : ",iUser.UserAge)
 		fmt.Println("Pets")
