@@ -1,0 +1,7 @@
+package main
+
+type {{ .StructName }} struct{
+{{ range .StructProperty }}
+        {{ .Name }} {{ .Dtype }} `json:"{{ .Name }}"`
+{{end}}
+}
