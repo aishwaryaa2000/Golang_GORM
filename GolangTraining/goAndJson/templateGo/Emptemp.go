@@ -30,7 +30,7 @@ func createMicroservice(w http.ResponseWriter,r *http.Request){
 						StructProperty: props,
 					}
 	
-	templatePath := "C:\\xampp\\htdocs\\Swabhav_Techlabs\\GolangTraining\\goAndJson\\templateGo\\structTemplate.txt"
+	templatePath := "C:\\Users\\aishwarya.anand\\OneDrive - Forcepoint\\Desktop\\Swabhav_Techlabs\\GolangTraining\\goAndJson\\templateGo\\structTemplate.txt"
 
 	tmpl,err:= template.New("structTemplate.txt").ParseFiles(templatePath)
 	if err!=nil{

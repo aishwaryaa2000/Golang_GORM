@@ -1,0 +1,38 @@
+package Database
+
+import (
+	"database/sql"
+	"fmt"
+	"log"
+
+	_ "github.com/lib/pq"
+)
+
+func SetupDB(user,dbName,password,host,sslmode string) *sql.DB {
+	connectDB := "user=" +user+ " dbname=" +dbName+ " password=" +password+ " host=" +host+ " sslmode=" +sslmode+ ""
+	db, err := sql.Open("postgres", connectDB) //This postgres is the driver
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("DB connected")
+
+	createDB(dbName,db)
+	createTB(db)
+	return db
+}
+
+func createDB(dbName string,db *sql.DB){
+    _, err := db.Exec("create database " + dbName+"DB")
+    if err != nil {
+		//handle the error
+		log.Fatal(err)
+	}
+}
+
+func createTB(db *sql.DB){
+	_, err := db.Exec("CREATE TABLE example ( id integer, username varchar(255) )")
+		if err != nil {
+			log.Fatal(err)
+		}
+	 
+}
