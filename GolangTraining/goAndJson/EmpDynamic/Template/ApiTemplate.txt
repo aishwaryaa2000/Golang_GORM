@@ -1,0 +1,99 @@
+package {{.Info.Title}}files
+
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+{{$str:=.Info.Title}}
+{{$db:=.ConnectDB}}
+{{range .Funcs  }}
+    func {{.OpID}}(w http.ResponseWriter, r *http.Request){
+		{{if eq .OpID "GetEmployeeDetailsCorrespondingToEmployeeId"}}
+			jsonByte, err := ioutil.ReadAll(r.Body)
+			if err != nil {
+				fmt.Println("Error:", err)
+			}
+
+			var mappedData {{$str}}
+			json.Unmarshal(jsonByte, &mappedData)
+
+			query := `select * from {{$db.TableName}} where empid='` + mappedData.{{ range $db.TBproperties.Col }} {{if eq .Cname "Empid" }} {{.Cname}} {{end}} {{end}} + `';`
+			fmt.Println(query)
+			db := ConnectDB()
+			row, err := db.Query(query)
+			if err != nil {
+				fmt.Println("Error:", err)
+			}
+			if row.Next() {
+				var id, fname, lname, email, pass string
+				row.Scan(&fname, &lname, &id, &email, &pass)
+				fmt.Println("FirstName:", fname)
+				fmt.Println("LastName:", lname)
+				fmt.Println("EmpID:", id)
+				fmt.Println("Email:", email)
+				fmt.Println("Password:", pass)
+			}
+		{{end}}
+		{{if eq .OpID "DeleteEmployeeDetailsCorrespondingToEmployeeId"}}
+				var mappedData {{$str}}
+				jsonByteData,err2 := ioutil.ReadAll(r.Body) 
+				//r.Body is the request body given from client to server
+				if err2!=nil{
+					fmt.Println(err2)
+				}
+				json.Unmarshal(jsonByteData,&mappedData)
+				db := ConnectDB()
+				
+				sqlStatement := `DELETE FROM {{$db.TableName}} WHERE empid ='` + mappedData.{{range $db.TBproperties.Col}}{{if eq .Cname "Empid"}} {{.Cname}} {{end}} {{end}} + `';`
+				_, errDel := db.Exec(sqlStatement)
+				if errDel != nil {
+				fmt.Println(errDel)
+				}else{
+					fmt.Println("Deleted successfully")
+				}
+		{{end}}
+		{{if eq .OpID "CreateEmployeeDetails"}}
+				var mappedData {{$str}}
+				jsonByteData,err2 := ioutil.ReadAll(r.Body) 
+				//r.Body is the request body given from client to server
+				if err2!=nil{
+					fmt.Println(err2)
+				}
+				json.Unmarshal(jsonByteData,&mappedData)
+				db := ConnectDB()
+
+				{{$len:=len $db.TBproperties.Col}}
+				{{$temp:=dec $len}}
+				sqlStatement := `INSERT INTO {{$db.TableName}}({{range $index,$val := $db.TBproperties.Col}}{{if eq $index $temp}} {{$val.Cname}} {{else}} {{$val.Cname}}, {{end}}{{end}}) VALUES ('` +{{range $index,$val:=$db.TBproperties.Col}}mappedData.{{.Cname}}{{if eq $index $temp}} + `');` {{else}}+ `','` +  {{end}}{{end}} 
+				_, errInsert := db.Exec(sqlStatement)
+				if errInsert != nil {
+				fmt.Println(errInsert)
+				}else{
+					fmt.Println("Inserted successfully")
+				}
+		{{end}}
+		{{if eq .OpID "UpdateEmployeeDetailsCorrespondingToEmployeeId"}}
+				var mappedData {{$str}}
+				jsonByteData,err2 := ioutil.ReadAll(r.Body) 
+				//r.Body is the request body given from client to server
+				if err2!=nil{
+					fmt.Println(err2)
+				}
+				json.Unmarshal(jsonByteData,&mappedData)
+				db := ConnectDB()
+
+				sqlStatement := `UPDATE {{$db.TableName}} SET email='`+mappedData.{{range $db.TBproperties.Col}}{{if eq .Cname "Email"}}{{.Cname}}{{end}}{{end}}+ `' WHERE empid ='` + mappedData.{{range $db.TBproperties.Col}}{{if eq .Cname "Empid"}} {{.Cname}} {{end}} {{end}} + `';`
+				_, errUpdate := db.Exec(sqlStatement)
+				if errUpdate != nil {
+				fmt.Println(errUpdate)
+				}else{
+					fmt.Println("Updated successfully")
+				}
+		{{end}}
+    }
+
+	
+{{end}}
