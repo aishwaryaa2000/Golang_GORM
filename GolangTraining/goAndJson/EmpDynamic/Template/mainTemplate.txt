@@ -1,9 +1,0 @@
-package main
-
-import "{{.Info.Title}}/{{.Info.Title}}files"
-
-func main(){
-    {{.Info.Title}}files.CreateDB()
-    {{.Info.Title}}files.CreateTB()
-    {{.Info.Title}}files.MuxRoutes()
-}

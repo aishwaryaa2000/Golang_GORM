@@ -1,7 +1,0 @@
-package  {{.Info.Title}}files
-
-type {{ .Info.Title }} struct{
-{{ range .ConnectDB.TBproperties.Col }}
-        {{ .Cname }} {{ .Type }} `json:"{{ .Cname }}"`
-{{end}}
-}
