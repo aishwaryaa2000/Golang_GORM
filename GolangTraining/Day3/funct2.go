@@ -4,6 +4,7 @@ import "fmt"
 // import "reflect"
 
 func main(){
+	fmt.Println(test2())
 	fnreturned:= test2()
 	fnreturned() 
     //this function is getting invoked
@@ -22,5 +23,5 @@ func test1(){
 
 func test2() func(){
 	fmt.Println("Inside test2")
-	return test1
+	return test1 //this is the address of test1
 }
