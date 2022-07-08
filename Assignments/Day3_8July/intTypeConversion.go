@@ -8,7 +8,7 @@ func main() {
 	var no int16 = 10
 	var nooo int
 	nooo = int(no)
-	fmt.Println(no, nooo)
+	fmt.Println(no, nooo)//10 10
 
 	var no2 int16 = 10000
 	//binary equivalent is 1 0 0 1 1 1 0 0 0 1 0 0 0 0
