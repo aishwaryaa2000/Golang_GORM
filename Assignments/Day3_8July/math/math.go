@@ -13,6 +13,7 @@ func Mul(no1,no2 float32) float64{
 }
 
 func Div(no1,no2 float32) float64{
+	//Here we can raise an error if no2==0 i.e cannot divide by zero
 	return float64(no1 / no2)
 }
 
