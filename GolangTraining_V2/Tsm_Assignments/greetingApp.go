@@ -33,10 +33,10 @@ func greeting() string{
 
 func main(){
 
-  fmt.Println("Current time is : ",	time.Now().Format(time.Kitchen))
+  fmt.Println("Current time is : ",time.Now().Format(time.Kitchen))
   //kitchen is built-in time layout defined in the time package 
   //example of kitchen format is 3:04PM
-  
+
   msg := greeting()
   fmt.Println(msg)
 
