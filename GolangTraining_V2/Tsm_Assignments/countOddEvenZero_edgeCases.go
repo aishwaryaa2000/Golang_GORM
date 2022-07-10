@@ -1,3 +1,28 @@
+/* 
+If user enters 0001 and input is taken as int then the program considers input as 1 
+so count of odd=1 and count of zero=0
+Here the starting zeros 000 are neglected.
+
+This case can be handled by considering the input as a string input i.e "0001"
+
+Hence if input is 0001
+OUTPUT
+Count of odd : 1
+Count of zero : 3
+Count of even : 0
+
+Here,if user enters a negative number then that case is handled by the CONTINUE statement i.e by 
+neglecting the - sign
+Hence if input is -000234
+OUTPUT
+Count of odd :  1
+Count of even :  2
+Count of zero :  3
+
+If user enters any character then error is raised and program exits
+
+*/
+
 package main
 import(
 	"fmt"
@@ -43,27 +68,3 @@ func main(){
 	fmt.Println("Count of odd : ",odd,"\nCount of even : ",even,"\nCount of zero : ",zero)
 }
 
-/* 
-If user enters 0001 and input is taken as int then the program considers input as 1 
-so count of odd=1 and count of zero=0
-Here the starting zeros 000 are neglected.
-
-This case can be handled by considering the input as a string input i.e "0001"
-
-Hence if input is 0001
-OUTPUT
-Count of odd : 1
-Count of zero : 3
-Count of even : 0
-
-Here,if user enters a negative number then that case is handled by the CONTINUE statement i.e by 
-neglecting the - sign
-Hence if input is -000234
-OUTPUT
-Count of odd :  1
-Count of even :  2
-Count of zero :  3
-
-If user enters any character then error is raised and program exits
-
-*/

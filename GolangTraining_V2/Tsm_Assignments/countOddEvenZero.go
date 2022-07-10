@@ -1,3 +1,16 @@
+/*
+If user enters 100 then count of odd=1 and count of zero=2
+
+If user enters 0001 then the program considers input as 1 
+so count of odd=1 and count of zero=0
+Here the starting zeros 000 are neglected.
+This case can be handled by considering the input as a string input i.e "0001"
+Refer countOddEvenZero_edgeCases.go program 
+
+If user enters a negative number then that case is handled by making it positive
+
+*/
+
 package main
 import(
 	"fmt"
@@ -45,15 +58,3 @@ func main(){
 	fmt.Println("Count of odd : ",odd,"\nCount of even : ",even,"\nCount of zero : ",zero)
 }
 
-/*
-If user enters 100 then count of odd=1 and count of zero=2
-
-If user enters 0001 then the program considers input as 1 
-so count of odd=1 and count of zero=0
-Here the starting zeros 000 are neglected.
-This case can be handled by considering the input as a string input i.e "0001"
-Refer countOddEvenZero_edgeCases.go program 
-
-If user enters a negative number then that case is handled by making it positive
-
-*/
