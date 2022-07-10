@@ -41,3 +41,7 @@ func main(){
   fmt.Println(msg)
 
 }
+
+
+
+//Date and time formats : https://gosamples.dev/date-time-format-cheatsheet/
