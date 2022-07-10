@@ -14,6 +14,7 @@ func fiboNthTerm(noOfTerms int) (uint64,error) {
 		err := errors.New("Number of terms cannot be less than zero")
 		return 0,err
 	}else{
+		//Formula for Nth term of fibonacci series : https://r-knott.surrey.ac.uk/Fibonacci/fibFormula.html
 		phi  := (1 + math.Sqrt(5)) / 2
 		return uint64(math.Round(math.Pow(phi, float64(noOfTerms)) / math.Sqrt(5))),nil
 	}
@@ -33,7 +34,7 @@ func main (){
 	sum,err := fiboNthTerm(no+1)
 	//S(n) = F(n+1) – 1 
 	//when we consider fibonacci series as 0 1 1 3 4 where 0 is the 1st term, 1 is the 2nd term and so on...
-	
+
 	if err!=nil{
 		fmt.Println("Error occured : ",err)
 	}else{
