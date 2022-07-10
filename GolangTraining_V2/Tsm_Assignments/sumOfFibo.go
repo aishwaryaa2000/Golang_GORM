@@ -8,6 +8,10 @@ import (
 
 func sumOfFibonaci(noOfTerms int) (uint64,error) {
 	//Fibonacci series : 0 1 1 2 3 8...
+	//where 0 is the 1st term, 1 is the 2nd term and so on...
+	//Taking uint64 as return type because we know that the sum will always be positive thereby increasing the range
+
+
 	if noOfTerms<0{
 		err := errors.New("Number of terms cannot be less than zero")
 		return 0,err
@@ -37,7 +41,7 @@ func sumOfFibonaci(noOfTerms int) (uint64,error) {
 func main(){
 	var no int 
    
-    fmt.Print("Enter an integer : ")
+    fmt.Print("Enter number of terms : ")
 	_, err := fmt.Scanf("%d", &no)
 	if err!=nil{
 		//If user doesn't enter a number then simply raise an error and exit
