@@ -17,7 +17,7 @@ func turnScore(iTurn uint64,totalScore *uint64) (bool) {
 		fmt.Scan(&rollOrHold)
 		if(rollOrHold=="h"){
 			*totalScore=*totalScore+currentTurnScore
-			fmt.Println("You have holded.Your turn score is ",currentTurnScore," and your total score is", *totalScore)
+			fmt.Println("You have holded.Your turn score is ",currentTurnScore," and your new total score is", *totalScore)
 			return false
 
 		}
