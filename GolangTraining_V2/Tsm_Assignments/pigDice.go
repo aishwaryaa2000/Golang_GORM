@@ -23,6 +23,8 @@ func turnScore(iTurn uint64,totalScore *uint64) (bool) {
 		}
 
 		if(rollOrHold!="r"){
+			//When user has entered h then the above if will be executed
+			//If user has entered something which is not r then he has entered an invalid input
 			fmt.Println("You have entered incorrect character.")
 			continue
 		}
