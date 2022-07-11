@@ -40,7 +40,7 @@ func turnScore(iTurn uint64,totalScore *uint64) (uint64,*uint64,bool) {
 		fmt.Println("Your turn score is ",currentTurnScore," and your total score is", *totalScore)
 
 		if *totalScore+currentTurnScore>uint64(20){
-			fmt.Println("\nYou Win,you finished in ",iTurn,"turns!\nNew total score considering the current total score and turn score : ",*totalScore+currentTurnScore)
+			fmt.Println("\nYou Win,you finished in ",iTurn,"turns!\nNew total score considering the current total score and turn score is : ",*totalScore+currentTurnScore)
 			return 0,totalScore,true
 		}
 
