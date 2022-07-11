@@ -9,16 +9,17 @@ func greeting() string{
 
 	currentHour:= time.Now().Hour()
   	currentSecond := time.Now().Second()
+	currentMinute := time.Now().Minute()
 
 	var greetingMsg string
 
-	if (currentHour==6 && currentSecond!=0)||(currentHour==11 && currentSecond==0)||(currentHour > 6 && currentHour<11){
+	if (currentHour==6 && currentSecond!=0)||(currentHour==11 && currentSecond==0 && currentMinute==0)||(currentHour > 6 && currentHour<11){
 		// 6:00:01 am to 11:00:00 am 
 		greetingMsg = "Good morning"
-	} else if (currentHour >=11 && currentHour<16) || (currentHour==16 && currentSecond==0){
+	} else if (currentHour >=11 && currentHour<16) || (currentHour==16 && currentSecond==0 && currentMinute==0){
 		//11:00:01 am to 4:00:00 pm 
 		greetingMsg =  "Good Afternoon"
-	} else if (currentHour >= 16 && currentHour<21) || (currentHour==21 && currentSecond==0){
+	} else if (currentHour >= 16 && currentHour<21) || (currentHour==21 && currentSecond==0 && currentMinute==0){
 		//4:00:01 pm to 9:00:00 pm
 		greetingMsg = "Good Evening"
 	} else {
