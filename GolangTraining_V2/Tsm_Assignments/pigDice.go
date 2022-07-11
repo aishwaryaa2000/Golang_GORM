@@ -6,7 +6,7 @@ import (
  	"math/big"
 )
 
-func turnScore(iTurn uint64,totalScore *uint64) (uint64,*uint64,bool) {
+func turnScore(iTurn uint64,totalScore *uint64) (bool) {
 
 	fmt.Println("\nThis is your turn ",iTurn)
 	rollOrHold := "r"
@@ -17,8 +17,8 @@ func turnScore(iTurn uint64,totalScore *uint64) (uint64,*uint64,bool) {
 		fmt.Scan(&rollOrHold)
 		if(rollOrHold=="h"){
 			*totalScore=*totalScore+currentTurnScore
-			fmt.Println("You have .Your turn score is ",currentTurnScore," and your total score is", *totalScore)
-			return uint64(currentTurnScore),totalScore,false
+			fmt.Println("You have holded.Your turn score is ",currentTurnScore," and your total score is", *totalScore)
+			return false
 
 		}
 
@@ -41,13 +41,13 @@ func turnScore(iTurn uint64,totalScore *uint64) (uint64,*uint64,bool) {
 
 		if *totalScore+currentTurnScore>uint64(20){
 			fmt.Println("\nYou Win,you finished in ",iTurn,"turns!\nNew total score considering the current total score and turn score is : ",*totalScore+currentTurnScore)
-			return 0,totalScore,true
+			return true
 		}
 
 
 	}
 
-	return uint64(currentTurnScore),totalScore,false
+	return false
 }
 
 func main() {
@@ -57,7 +57,7 @@ func main() {
 	fmt.Println("Let's play Pig Dice game")
 	for{
 		iTurn=iTurn+1
-		_,_,okGameFinish := turnScore(iTurn,&totalScore)
+		okGameFinish := turnScore(iTurn,&totalScore)
 		if okGameFinish{
 			return
 		}
