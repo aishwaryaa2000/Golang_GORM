@@ -25,7 +25,7 @@ func test1(myArray [3]int) {
 }
 
 func test2(myArray *[3]int){
-	myArray[1]=200
+	myArray[1]=200//no need to dereference it
 	fmt.Println("Address in test2 is : ",&myArray[0])
 	fmt.Println("Value is in test2 is : ",myArray)
 
