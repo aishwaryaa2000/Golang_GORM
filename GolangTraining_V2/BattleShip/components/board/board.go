@@ -18,13 +18,16 @@ type Board struct{
 func New(rowSizeByUser,colSizeByUser uint8) *Board {
 
 
-	var testCells [][]*cell.Cell //a slice of cell structure pointers
+	var testCells = [][]*cell.Cell{} //a slice of cell structure pointers
 	
 	for i:=0;i<int(rowSizeByUser);i++{
+		ithRow := []*cell.Cell{}
 		for j:=0;j<int(colSizeByUser);j++{
 		newCell := cell.New() //new cell is created with noMark
-		testCells[i][j] = newCell
+		ithRow = append(ithRow, newCell)
 		}
+		testCells = append(testCells, ithRow)
+
 	}
 
 	var boardTest = &Board{
@@ -167,7 +170,21 @@ func (b*Board) Display(){
 
 
 
+/* 
+var testCells [][]*string //a slice of cell structure pointers
+	fmt.Println(reflect.TypeOf(testCells))
+	str := "aishu"
+	p := &str
+	testCells[0][0] = p
 
+	var testCells []*string //a slice of cell structure pointers
+	fmt.Println(reflect.TypeOf(testCells))
+	str := "aishu"
+	p := &str
+	testCells[0] = p
+
+
+*/
 // func (b*Board) GetBoard() string{
 // 	strBoard := ""
 // 	var i uint8
