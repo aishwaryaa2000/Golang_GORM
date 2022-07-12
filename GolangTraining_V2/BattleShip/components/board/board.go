@@ -111,13 +111,8 @@ func placeShip(b [][]*cell.Cell,XcordinateRandom,YcordinateRandom int,direction 
 	var icell *cell.Cell
 	if(direction=="right" || direction=="left"){
 		for i:=0;i<5;i++{
-			if orientation==-1{
-			icell = b[XcordinateRandom][YcordinateRandom - i]
-			} else{
-				icell = b[XcordinateRandom][YcordinateRandom + i]
-			}
-			mark := icell.GetMark()
-			
+			icell = b[XcordinateRandom][YcordinateRandom + orientation*i]
+			mark := icell.GetMark()	
 			if(mark==cell.BattleShip){
 					//alreay marked so cannot place ship here
 					return false
@@ -125,25 +120,16 @@ func placeShip(b [][]*cell.Cell,XcordinateRandom,YcordinateRandom int,direction 
 		}
 
 		for i:=0;i<5;i++{
-			if orientation==-1{
-			icell = b[XcordinateRandom][YcordinateRandom - i]
-			} else{
-				icell = b[XcordinateRandom][YcordinateRandom + i]
-			}
+			icell = b[XcordinateRandom][YcordinateRandom + orientation*i]
 			 icell.SetMark(cell.BattleShip)
 			
 		}
-			return true
+		return true
 				
 	}else {
 		for i:=0;i<5;i++{
-			if orientation==-1{
-			icell = b[XcordinateRandom-i][YcordinateRandom]
-			} else{
-				icell = b[XcordinateRandom+i][YcordinateRandom]
-			}
-			mark := icell.GetMark()
-			
+			icell = b[XcordinateRandom+orientation*i][YcordinateRandom]		
+			mark := icell.GetMark()			
 			if(mark==cell.BattleShip){
 					//alreay marked so cannot place ship here
 					return false
@@ -151,11 +137,7 @@ func placeShip(b [][]*cell.Cell,XcordinateRandom,YcordinateRandom int,direction 
 			}
 
 			for i:=0;i<5;i++{
-				if orientation==-1{
-				icell = b[XcordinateRandom-i][YcordinateRandom]
-				} else{
-					icell = b[XcordinateRandom+i][YcordinateRandom]
-				}
+				icell = b[XcordinateRandom+orientation*i][YcordinateRandom]		
 				icell.SetMark(cell.BattleShip)				
 			}
 
