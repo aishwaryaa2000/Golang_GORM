@@ -23,8 +23,8 @@ func New(rowSizeByUser,colSizeByUser uint8) *Board {
 	for i:=0;i<int(rowSizeByUser);i++{
 		ithRow := []*cell.Cell{}
 		for j:=0;j<int(colSizeByUser);j++{
-		newCell := cell.New() //new cell is created with noMark
-		ithRow = append(ithRow, newCell)
+			newCell := cell.New() //new cell is created with noMark
+			ithRow = append(ithRow, newCell)
 		}
 		testCells = append(testCells, ithRow)
 
@@ -56,6 +56,7 @@ func (b*Board)BoardInit(){
 		fmt.Println("inside right")
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"right",1)
 		if okBool{
+			b.Display()
 			noOfShips--
 			goto newShipPlacement
 
@@ -67,6 +68,8 @@ func (b*Board)BoardInit(){
 
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"left",-1)
 		if okBool{
+			b.Display()
+
 			noOfShips--
 			goto newShipPlacement
 
@@ -78,6 +81,8 @@ func (b*Board)BoardInit(){
 
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"down",1)
 		if okBool{
+			b.Display()
+
 			noOfShips--
 			goto newShipPlacement
 
@@ -90,6 +95,8 @@ func (b*Board)BoardInit(){
 
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"up",-1)
 		if okBool{
+			b.Display()
+
 			noOfShips--
 			goto newShipPlacement
 
