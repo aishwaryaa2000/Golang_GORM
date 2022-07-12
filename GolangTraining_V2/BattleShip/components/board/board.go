@@ -53,10 +53,9 @@ func (b*Board)BoardInit(){
 	fmt.Println("X is : ",XcordinateRandom,"\nY is : ",YcordinateRandom)
 	if YcordinateRandom + 4 < int(b.colSize){
 		//Ship towards right
-		fmt.Println("inside right")
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"right",1)
 		if okBool{
-			b.Display()
+			//b.Display()
 			noOfShips--
 			goto newShipPlacement
 
@@ -64,11 +63,10 @@ func (b*Board)BoardInit(){
 	}
 	 if YcordinateRandom - 4 >= 0{
 		//Ship towards left
-		fmt.Println("inside left")
 
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"left",-1)
 		if okBool{
-			b.Display()
+			//b.Display()
 
 			noOfShips--
 			goto newShipPlacement
@@ -77,11 +75,10 @@ func (b*Board)BoardInit(){
 	}
 	 if XcordinateRandom + 4 < int(b.rowSize){
 		//Ship downwards
-		fmt.Println("inside downwards")
 
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"down",1)
 		if okBool{
-			b.Display()
+			// b.Display()
 
 			noOfShips--
 			goto newShipPlacement
@@ -91,11 +88,10 @@ func (b*Board)BoardInit(){
 	}
 	 if XcordinateRandom - 4 >=0{
 		//upwards
-		fmt.Println("inside upwards")
 
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"up",-1)
 		if okBool{
-			b.Display()
+			// b.Display()
 
 			noOfShips--
 			goto newShipPlacement
@@ -168,16 +164,6 @@ func placeShip(b [][]*cell.Cell,XcordinateRandom,YcordinateRandom int,direction 
 
 }
 
-func (b*Board) Display(){
-	var i,j uint8
-	for i=0;i<b.rowSize;i++{
-		for j=0;j<b.colSize;j++{
-			icell := b.NCells[i][j]	//get a structure pointer of the cell at a particular index
-			fmt.Print(" | ",icell.GetMark())	//get the mark of the cell at that index
-		}
-		fmt.Printf(" |\n")
-	}
-}
 
 func (b*Board) DisplayHitMiss(){
 	var i,j uint8
@@ -196,65 +182,15 @@ func (b*Board) DisplayHitMiss(){
 
 
 
+func (b*Board) Display(){
+	var i,j uint8
+	for i=0;i<b.rowSize;i++{
+		for j=0;j<b.colSize;j++{
+			icell := b.NCells[i][j]	//get a structure pointer of the cell at a particular index
+			fmt.Print(" | ",icell.GetMark())	//get the mark of the cell at that index
+		}
+		fmt.Printf(" |\n")
+	}
+}
 
 
-
-// import (
-// 	"crypto/rand"
-// 	"math/big"
-// )
-
-// func main() {
-// 	for i := 0; i < 4; i++ {
-		// n, _ := rand.Int(rand.Reader, big.NewInt(10))
-		// println(n.Int64())
-// 	}
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 
-var testCells [][]*string //a slice of cell structure pointers
-	fmt.Println(reflect.TypeOf(testCells))
-	str := "aishu"
-	p := &str
-	testCells[0][0] = p
-
-	var testCells []*string //a slice of cell structure pointers
-	fmt.Println(reflect.TypeOf(testCells))
-	str := "aishu"
-	p := &str
-	testCells[0] = p
-
-
-*/
-// func (b*Board) GetBoard() string{
-// 	strBoard := ""
-// 	var i uint8
-// 	for i=0;i<b.Size*b.Size;i++{
-// 		icell := b.NCells[i]
-// 		strBoard = strBoard + string(icell.GetMark())
-// 	}
-// 	return strBoard
-// }
-
-// func (b*Board) IsFull() bool{
-// 	for i:=0;i<b.Size*b.Size;i++{
-// 		icell := b.NCells[i]
-// 	    if icell.GetMark()==cell.NoMark{
-// 			return false
-// 		}
-// 	}
-
-// 	return true
-// }
