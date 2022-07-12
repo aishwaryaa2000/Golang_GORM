@@ -31,5 +31,5 @@ func (c *Cell) SetMark(markByUser Mark) (error) {
 		c.cellMark = markByUser
 		return  nil
 	}
-	return errors.New("This cell is already marked")
+	return errors.New("this cell is already marked")
 }
