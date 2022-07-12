@@ -1,7 +1,5 @@
 package cell
-import(
-	"errors"
-)
+
 type Mark string
 const (
 	NoMark Mark = "   "

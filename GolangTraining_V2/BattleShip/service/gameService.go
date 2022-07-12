@@ -36,6 +36,7 @@ func GameStart(b *board.Board,currentPlayer *player.Player){
 		icell := b.NCells[X][Y]
 		if icell.GetMark()==cell.BattleShip{
 			icell.SetMark(cell.Hit)
+			b.Display()
 			fmt.Println("Hurray! You hit the ship")
 			b.DisplayHitMiss()
 			shipCells--
