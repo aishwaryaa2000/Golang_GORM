@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math"
 )
 
 func main() {
@@ -36,10 +37,26 @@ func main() {
 	}
 }
 
-func secondMax(number []int) (int64,bool){
+func secondMax(number []int) (int,bool){
 
 	
 	if len(number)<=1{
 		return 0,false
 	}
+	okBool := false
+	secondLarge := math.MinInt64
+	largest := number[0]
+	for i:=1;i<len(number);i++{
+		if number[i]>largest{
+			largest=number[i]
+			secondLarge = largest
+			okBool = true
+
+		}else if number[i]<largest && number[i]>secondLarge{
+			secondLarge = number[i]
+			okBool = true
+
+		}
+	}
+	return secondLarge,okBool
 }
