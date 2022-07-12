@@ -1,15 +1,11 @@
 /* 
 Using maps
 
-<<<<<<< HEAD
 The number of loops can further be reduced 
 if we store the numbers given by the user directly into the map and update the frequencies simultaneously.
-Refer ocurr.go 
+Refer occurrence_lessTime.go 
 
 If user enters a negative size of character then error is raised and program exits
-=======
-If user enters a negative size or character then error is raised and program exits
->>>>>>> 2d96b5e7bb4670a969b286eb752c55e6b4a7f8cd
 If user enters a character instead of a number while entering elements into the slice then error is raised and program exits
 
 If you do not want program to exit whenever error is raised, then GOTO can be used so that the user can re-enter a valid number
