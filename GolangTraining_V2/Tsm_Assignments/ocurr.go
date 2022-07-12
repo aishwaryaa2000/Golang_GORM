@@ -1,9 +1,7 @@
 /* 
-Using maps
+if we store the numbers given by the user directly into the map and update the frequencies simultaneously 
+then number of loops required is lesser than occurrence.go
 
-The number of loops can further be reduced 
-if we store the numbers given by the user directly into the map and update the frequencies simultaneously.
-Refer ocurr.go 
 
 If user enters a negative size of character then error is raised and program exits
 If user enters a character instead of a number while entering elements into the slice then error is raised and program exits
@@ -20,7 +18,8 @@ import (
 )
 
 func main() {
-	numberSlice := make([]int,0,10)
+	var numberCountMap = make(map[int]int)
+    
     var len,i uint64
 	var userNumber int
 	fmt.Print("Enter the count of numbers you wish to enter : ")
@@ -34,33 +33,31 @@ func main() {
 
     for i=0;i<len;i++{
 		fmt.Print("Enter number",i+1,": ")
+
 		_,err2:=fmt.Scanln(&userNumber)
 		if err2!=nil{
 			//If user enters a character i.e not a number
 			log.Fatal(err2)
 		}
-		numberSlice = append(numberSlice,userNumber)
+
+		//Storing the numbers into the map and simultaneously storing the count of numbers
+		numberCountMap[userNumber]++
+		
 	}
 
-	getCount(numberSlice)
+	displayCount(numberCountMap)
+
 }
 
-func getCount(number []int) {
-
-	var numberCountMap = make(map[int]int)
-	for _, value := range number {
-		//Storing the numbers along with their frequencies into the map
-		numberCountMap[value]++
-	}
-
-	for num, count := range numberCountMap {
-		if count==1{
-        fmt.Println( num, " occured ",count," time")
+func displayCount(NumFreq map[int]int){
+	//Displaying the count and numbers stored in the map
+	for num, freq := range NumFreq {
+		if freq==1{
+        fmt.Println( num, " occured ",freq," time")
 		//1 time
 		}else{
-			fmt.Println( num, " occured ",count," times")
+			fmt.Println( num, " occured ",freq," times")
 		//times
 		}
     }
-	
 }
