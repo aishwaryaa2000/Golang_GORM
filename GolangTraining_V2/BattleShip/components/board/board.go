@@ -18,7 +18,7 @@ type Board struct{
 func New(rowSizeByUser,colSizeByUser uint8) *Board {
 
 
-	var testCells = [][]*cell.Cell{} //a slice of cell structure pointers
+	var testCells [][]*cell.Cell //a slice of cell structure pointers
 	
 	for i:=0;i<int(rowSizeByUser);i++{
 		for j:=0;j<int(colSizeByUser);j++{
