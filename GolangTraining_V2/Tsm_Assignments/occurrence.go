@@ -1,7 +1,7 @@
 /* 
 Using maps
 
-If user enters a negative size of character then error is raised and program exits
+If user enters a negative size or character then error is raised and program exits
 If user enters a character instead of a number while entering elements into the slice then error is raised and program exits
 
 If you do not want program to exit whenever error is raised, then GOTO can be used so that the user can re-enter a valid number
