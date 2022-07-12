@@ -25,7 +25,7 @@ func (c*Cell) GetMark() (Mark){
 }
 
 func (c *Cell) SetMark(markByUser Mark) {
-	if c.cellMark == NoMark {
+	
 		c.cellMark = markByUser
-	}
+	
 }
