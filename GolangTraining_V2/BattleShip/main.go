@@ -2,11 +2,22 @@ package main
 
 import(
 	"battleShip/service"
+	"fmt"
+	"in"
+	"strings"
 )
 
 func main(){
 
 	var r uint8=11
 	var c uint8 = 7
-	service.Board(r,c)
+	board := service.Board(r,c)
+	
+	fmt.Print("Hey player,enter your name : ")
+	name, _ := in.ReadString('\n')
+	name = strings.TrimRight(name, "\r\n")
+
+	player := service.Player(name)
+	service.GameStart(board,player)
+
 }

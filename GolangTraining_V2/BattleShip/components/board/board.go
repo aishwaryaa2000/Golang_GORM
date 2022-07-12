@@ -179,6 +179,22 @@ func (b*Board) Display(){
 	}
 }
 
+func (b*Board) DisplayHitMiss(){
+	var i,j uint8
+	for i=0;i<b.rowSize;i++{
+		for j=0;j<b.colSize;j++{
+			icell := b.NCells[i][j]	//get a structure pointer of the cell at a particular index
+			if icell.GetMark()==cell.BattleShip{ 
+				fmt.Print(" |    ")
+			}else{
+				fmt.Print(" | ",icell.GetMark())	//get the mark of the cell at that index
+			}
+		}
+		fmt.Printf(" |\n")
+	}
+}
+
+
 
 
 

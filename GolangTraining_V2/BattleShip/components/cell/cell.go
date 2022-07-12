@@ -5,8 +5,8 @@ import(
 type Mark string
 const (
 	NoMark Mark = "   "
-	Hit Mark  = "X"
-	Miss Mark   = "Miss"
+	Hit Mark  = " X "
+	Miss Mark   = " M "
 	BattleShip Mark   = " B "
 )
 
@@ -26,10 +26,8 @@ func (c*Cell) GetMark() (Mark){
 	return c.cellMark
 }
 
-func (c *Cell) SetMark(markByUser Mark) (error) {
+func (c *Cell) SetMark(markByUser Mark) {
 	if c.cellMark == NoMark {
 		c.cellMark = markByUser
-		return  nil
 	}
-	return errors.New("this cell is already marked")
 }
