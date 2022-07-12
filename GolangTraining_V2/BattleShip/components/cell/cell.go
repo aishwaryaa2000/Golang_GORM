@@ -4,7 +4,7 @@ import(
 )
 type Mark string
 const (
-	NoMark Mark = ""
+	NoMark Mark = "  "
 	Hit Mark  = "X"
 	Miss Mark   = "Miss"
 	BattleShip Mark   = "B"
