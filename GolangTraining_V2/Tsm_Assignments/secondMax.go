@@ -29,34 +29,36 @@ func main() {
 		numberSlice = append(numberSlice,userNumber)
 	}
 
-	SecondLarge,OkBool := secondMax(numberSlice)
-	if OkBool{
-	fmt.Println("Second largest number is : ",SecondLarge)
+	secondLarge := secondMax(numberSlice)
+	
+	if secondLarge!=math.MinInt64{
+	fmt.Println("Second largest number is : ",secondLarge)
 	}else{
 		fmt.Println("No second largest number")
 	}
 }
 
-func secondMax(number []int) (int,bool){
+func secondMax(number []int) (int){
 
-	
-	if len(number)<=1{
-		return 0,false
-	}
-	okBool := false
 	secondLarge := math.MinInt64
+	//Assign secondLarge as the most minimum value of int
+
+
+	if len(number)<=1{
+		return secondLarge
+	}
+
 	largest := number[0]
 	for i:=1;i<len(number);i++{
 		if number[i]>largest{
-			largest=number[i]
 			secondLarge = largest
-			okBool = true
+			largest=number[i]
 
 		}else if number[i]<largest && number[i]>secondLarge{
+			//Specify the else condition because in case of 3 3 3 there is no secondLarge element
 			secondLarge = number[i]
-			okBool = true
 
 		}
 	}
-	return secondLarge,okBool
+	return secondLarge
 }
