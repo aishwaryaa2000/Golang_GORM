@@ -5,7 +5,11 @@ import(
 )
 
 func main(){
-boardGame := board.New(4,6)
+boardGame := board.New(11,7)
 boardGame.Display()
+boardGame.BoardInit()
+boardGame.Display()
+
+
 
 }
