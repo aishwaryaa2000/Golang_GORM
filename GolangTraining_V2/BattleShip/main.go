@@ -1,14 +1,14 @@
 package main
 
 import(
-	"battleShip/components/board"
+	"battleShip/service"
 )
 
 func main(){
-boardGame := board.New(11,7)
-boardGame.Display()
-boardGame.BoardInit()
-boardGame.Display()
+
+	var r uint8=11
+	var c uint8 = 7
+	service.Board(r,c)
 
 
 
