@@ -50,8 +50,10 @@ func (b*Board)BoardInit(){
 
 	YcordinateRandom := uint8(random.Intn(int(b.colSize)))
 
+	fmt.Println("X is : ",XcordinateRandom,"\nY is : ",YcordinateRandom)
 	if YcordinateRandom + 4 < b.colSize{
 		//Ship towards right
+		fmt.Println("inside right")
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"right",1)
 		if okBool{
 			noOfShips--
@@ -61,6 +63,8 @@ func (b*Board)BoardInit(){
 	}
 	 if YcordinateRandom - 4 >= 0{
 		//Ship towards left
+		fmt.Println("inside left")
+
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"left",-1)
 		if okBool{
 			noOfShips--
@@ -70,6 +74,8 @@ func (b*Board)BoardInit(){
 	}
 	 if XcordinateRandom + 4 < b.rowSize{
 		//Ship downwards
+		fmt.Println("inside downwards")
+
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"down",1)
 		if okBool{
 			noOfShips--
@@ -79,6 +85,9 @@ func (b*Board)BoardInit(){
 
 	}
 	 if XcordinateRandom - 4 >=0{
+		//upwards
+		fmt.Println("inside upwards")
+
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"up",-1)
 		if okBool{
 			noOfShips--
