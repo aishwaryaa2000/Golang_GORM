@@ -46,12 +46,12 @@ func (b*Board)BoardInit(){
 	for ;noOfShips>0 ;{
 	seed := rand.NewSource(time.Now().UnixNano())
 	random := rand.New(seed)
-	XcordinateRandom := uint8(random.Intn(int(b.rowSize)))
+	XcordinateRandom := (random.Intn(int(b.rowSize)))
 
-	YcordinateRandom := uint8(random.Intn(int(b.colSize)))
+	YcordinateRandom := (random.Intn(int(b.colSize)))
 
 	fmt.Println("X is : ",XcordinateRandom,"\nY is : ",YcordinateRandom)
-	if YcordinateRandom + 4 < b.colSize{
+	if YcordinateRandom + 4 < int(b.colSize){
 		//Ship towards right
 		fmt.Println("inside right")
 		okBool = placeShip(b.NCells,XcordinateRandom,YcordinateRandom,"right",1)
@@ -75,7 +75,7 @@ func (b*Board)BoardInit(){
 
 		}
 	}
-	 if XcordinateRandom + 4 < b.rowSize{
+	 if XcordinateRandom + 4 < int(b.rowSize){
 		//Ship downwards
 		fmt.Println("inside downwards")
 
@@ -110,12 +110,11 @@ func (b*Board)BoardInit(){
 
 
 
-func placeShip(b [][]*cell.Cell,XcordinateRandom,YcordinateRandom uint8,direction string,orientation int) bool{
+func placeShip(b [][]*cell.Cell,XcordinateRandom,YcordinateRandom int,direction string,orientation int) bool{
 //here b me change hona chahiye
 	var icell *cell.Cell
-	var i uint8
 	if(direction=="right" || direction=="left"){
-		for i=0;i<5;i++{
+		for i:=0;i<5;i++{
 			if orientation==-1{
 			icell = b[XcordinateRandom][YcordinateRandom - i]
 			} else{
@@ -130,7 +129,7 @@ func placeShip(b [][]*cell.Cell,XcordinateRandom,YcordinateRandom uint8,directio
 			return true
 				
 	}else {
-		for i=0;i<5;i++{
+		for i:=0;i<5;i++{
 			if orientation==-1{
 			icell = b[XcordinateRandom-i][YcordinateRandom]
 			} else{
