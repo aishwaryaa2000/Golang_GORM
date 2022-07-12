@@ -43,7 +43,7 @@ func turnScore(iTurn uint64, totalScore *uint64) bool {
 		currentTurnScore = currentTurnScore + diceRoll
 		fmt.Println("Your turn score is ", currentTurnScore, " and your total score is", *totalScore)
 
-		if *totalScore+currentTurnScore > uint64(20) {
+		if *totalScore+currentTurnScore >= uint64(20) {
 			fmt.Println("\nYou Win,you finished in ", iTurn, "turns!\nNew total score considering the current total score and turn score is : ", *totalScore+currentTurnScore)
 			return true
 		}
