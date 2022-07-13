@@ -51,7 +51,6 @@ func sorting(number []int){
         for ; j >= 0 && number[j] > temp ;{
             number[j + 1] = number[j]
             j--
-			fmt.Println(j)
         }
         number[j + 1] = temp
 
