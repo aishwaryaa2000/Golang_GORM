@@ -1,15 +1,5 @@
 /* 
-Using maps
-
-The number of loops can further be reduced 
-if we store the numbers given by the user directly into the map and update the frequencies simultaneously.
-Refer occurrence_lessTime.go 
-
-If user enters a negative size of character then error is raised and program exits
-If user enters a character instead of a number while entering elements into the slice then error is raised and program exits
-
-If you do not want program to exit whenever error is raised, then GOTO can be used so that the user can re-enter a valid number
-
+Maps or countArray[100]
 */
 
 package main
@@ -20,47 +10,55 @@ import (
 )
 
 func main() {
-	numberSlice := make([]int,0,10)
+	mySlice := make([]int,0,10)
     var len,i uint64
-	var userNumber int
+	userNumber:=0
 	fmt.Print("Enter the count of numbers you wish to enter : ")
 	_,err := fmt.Scanln(&len)
 
-	if err!=nil{
+	if err!=nil || len==0{
 		//If user enters a character i.e not a number and when user enters a negative number as len is uint
-		fmt.Println("Either you entered a negative number or a character")
+		fmt.Println("Either you entered a negative number or a character or a zero")
 		log.Fatal(err)
 	}
 
+
+    fmt.Println("Please enter numbers greater than 0 and less than 100")
     for i=0;i<len;i++{
 		fmt.Print("Enter number",i+1,": ")
-		_,err2:=fmt.Scanln(&userNumber)
-		if err2!=nil{
-			//If user enters a character i.e not a number
-			log.Fatal(err2)
-		}
-		numberSlice = append(numberSlice,userNumber)
+		fmt.Scanln(&userNumber)
+		if userNumber<=0 || userNumber >100{
+			i--
+			fmt.Println("Oops!This is an invalid number.Please enter a valid number.")
+			continue
+		} 
+		mySlice = append(mySlice,userNumber)
 	}
 
-	getCount(numberSlice)
+	getCount(mySlice)
 }
 
 func getCount(number []int) {
 
-	var numberCountMap = make(map[int]int)
+	/* var myMap = make(map[int]int)
 	for _, value := range number {
-		//Storing the numbers along with their frequencies into the map
-		numberCountMap[value]++
+		myMap[value]++
 	}
 
-	for num, count := range numberCountMap {
-		if count==1{
-        fmt.Println( num, " occured ",count," time")
-		//1 time
-		}else{
-			fmt.Println( num, " occured ",count," times")
-		//times
+	for i := 1; i < 100; i++ {
+		if myMap[i] != 0 {
+			fmt.Println("The number ",i," has occured ",myMap[i],"times")
 		}
-    }
-	
+	}
+	*/
+
+	var countArray [100]int
+    for _,value :=range number{
+		countArray[value-1]++
+	}
+	for i:=0;i<100;i++{
+		if countArray[i]!=0{
+			fmt.Println("The number ",i+1,"has occured ",countArray[i]," times")
+		}
+	}
 }
