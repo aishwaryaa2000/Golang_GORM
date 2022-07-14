@@ -1,0 +1,75 @@
+
+func checkIfVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, rowSize, shipSize int) (int, int, bool) {
+
+	var icell *cell.Cell
+
+	icell = b[XcordinateRandom][YcordinateRandom]
+	if icell.GetMark()==cell.BattleShip{
+		return -1, -1, false
+	}
+
+	var (
+		upMin, downMax int = XcordinateRandom, XcordinateRandom
+	)
+
+	for upMin >= 0 {
+		icell = b[upMin][YcordinateRandom]
+		if icell.GetMark() == cell.BattleShip {
+			break
+		}
+		upMin--
+	}
+	upMin++
+
+	for downMax < rowSize {
+		icell = b[downMax][YcordinateRandom]
+		if icell.GetMark() == cell.BattleShip {
+			break
+		}
+		downMax++
+	}
+	downMax--
+
+	if downMax-upMin+1 >= shipSize {
+		return upMin, upMin + shipSize, true
+	}
+
+	return -1, -1, false
+}
+
+func checkIfHorizontal(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, colSize, shipSize int) (int, int, bool) {
+	
+	var icell *cell.Cell
+
+	icell = b[XcordinateRandom][YcordinateRandom]
+	if icell.GetMark()==cell.BattleShip{
+		return -1, -1, false
+	}
+
+	var (
+		leftMin, rightMax int = YcordinateRandom, YcordinateRandom
+	)
+	for leftMin >= 0 {
+		icell = b[XcordinateRandom][leftMin]
+		if icell.GetMark() == cell.BattleShip {
+			break
+		}
+		leftMin--
+	}
+	leftMin++
+
+	for rightMax < colSize {
+		icell = b[XcordinateRandom][rightMax]
+		if icell.GetMark() == cell.BattleShip {
+			break
+		}
+		rightMax++
+	}
+	rightMax--
+
+	if rightMax-leftMin+1 >= shipSize {
+		return leftMin, leftMin + shipSize, true
+	} 
+
+	return -1, -1, false	
+}

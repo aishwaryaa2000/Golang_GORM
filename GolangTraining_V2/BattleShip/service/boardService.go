@@ -3,161 +3,127 @@ package service
 import (
 	"battleShip/components/board"
 	"battleShip/components/cell"
-	"fmt"
 	"math/rand"
+	"fmt"
 	"time"
 )
 
+func MakeBoard() *board.Board{
+	var rowSize uint8
+	var colSize uint8
+	begin1 : 
+	fmt.Print("Enter number of rows of the board : ")
+	_,err1 := fmt.Scanln(&rowSize)
+	if err1!=nil || rowSize<5{
+		fmt.Println("Please enter an integer greater than 4 for board")
+		goto begin1
+	}
+	
+	begin2 : 
+	fmt.Print("Enter number of columns of the board : ")
+	_,err2 := fmt.Scanln(&colSize)
+	if err2!=nil || colSize<5{
+		fmt.Println("Please enter an integer greater than 4")
+		goto begin2
+	}
+	board := board.New(rowSize,colSize)
+	BoardInit(board) //Initializing board with 5 random ships of size 5 4 3 2 1
+	board.Display()
+	return board
+}
+
 func BoardInit(b *board.Board) {
-	//Initializing board with 5 random ships of size 5
+	//Initializing board with 5 random ships of size 5 4 3 2 1 horizontally or vertically
 	shipSize := 5
-	newShipPlacement:
+
 	for shipSize > 0 {
 		seed := rand.NewSource(time.Now().UnixNano())
 		random := rand.New(seed)
 		XcordinateRandom := (random.Intn(int(b.RowSize)))
 		YcordinateRandom := (random.Intn(int(b.ColSize)))
-
-		fmt.Println("X is : ", XcordinateRandom, "\nY is : ", YcordinateRandom)
 		orientation := random.Intn(2)
-if orientation==1{
-	fmt.Println("vertical phele")
+		//This is to check if vertical placement should be done first then horizontal or vice versa thereby increasing randomness
+		if orientation==1{
+				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.RowSize), shipSize,"vertical")
+				if okBool {
+					placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, "vertical")
+					shipSize--
+					continue
+				}
+				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.ColSize), shipSize,"horizontal")
+				if okBool {
+					placeShip(b.NCells, colStart, colEnd, XcordinateRandom, "horizontal")
+					shipSize--
+					continue
+				}
+		}else{
+				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.ColSize), shipSize,"horizontal")
+				if okBool {
+					placeShip(b.NCells, colStart, colEnd, XcordinateRandom, "horizontal")
+					shipSize--
+					continue	
+				}
+				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.RowSize), shipSize,"vertical")
+				if okBool {
+					placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, "vertical")
+					shipSize--
+					continue
+				}
 
-	rowMin, rowMax, okBool := checkIfVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.RowSize), shipSize)
-	if okBool {
-
-		placeShip(b.NCells, rowMin, rowMax, YcordinateRandom, "vertical")
-		fmt.Println("Ship size placed ", shipSize)
-		b.Display()
-		shipSize--
-		goto newShipPlacement
-	}
-
-	colMin, colMax, okBool := checkIfHorizontal(b.NCells, XcordinateRandom, YcordinateRandom, int(b.ColSize), shipSize)
-	if okBool {
-
-		placeShip(b.NCells, colMin, colMax, XcordinateRandom, "horizontal")
-		fmt.Println("Ship size placed ", shipSize)
-		b.Display()
-		shipSize--
-		goto newShipPlacement
-	}
-}else{
-	fmt.Println("horizontal phele")
-	colMin, colMax, okBool := checkIfHorizontal(b.NCells, XcordinateRandom, YcordinateRandom, int(b.ColSize), shipSize)
-	if okBool {
-
-		placeShip(b.NCells, colMin, colMax, XcordinateRandom, "horizontal")
-		fmt.Println("Ship size placed ", shipSize)
-		b.Display()
-		shipSize--
-		goto newShipPlacement	
-	}
-
-	rowMin, rowMax, okBool := checkIfVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.RowSize), shipSize)
-	if okBool {
-
-		placeShip(b.NCells, rowMin, rowMax, YcordinateRandom, "vertical")
-		fmt.Println("Ship size placed ", shipSize)
-		b.Display()
-		shipSize--
-		goto newShipPlacement
-	}
-
-  }
-
- }
+  			}
+    }
 
 }
 
-func checkIfVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, rowSize, shipSize int) (int, int, bool) {
-	//row index dhekna hoga
+func checkIfHorizontalOrVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, rowOrColSize, shipSize int,orientation string) (int, int, bool){
 	var icell *cell.Cell
-	var mark cell.Mark
-
 	icell = b[XcordinateRandom][YcordinateRandom]
 	if icell.GetMark()==cell.BattleShip{
 		return -1, -1, false
 	}
 
-	var (
-		upMin, downMax int = XcordinateRandom, XcordinateRandom
-	)
+	upOrLeftMin, downOrRightMax := YcordinateRandom, YcordinateRandom
 
-	for upMin >= 0 {
-		icell = b[upMin][YcordinateRandom]
-		mark = icell.GetMark()
-		if mark == cell.BattleShip {
+	if orientation=="vertical"{
+		upOrLeftMin, downOrRightMax  = XcordinateRandom, XcordinateRandom
+	}
+
+	for upOrLeftMin >= 0 {
+		if orientation=="vertical"{
+			icell = b[upOrLeftMin][YcordinateRandom]
+		}else{
+			icell = b[XcordinateRandom][upOrLeftMin]
+		}
+		if icell.GetMark() == cell.BattleShip {
 			break
 		}
-		upMin--
+		upOrLeftMin--
 	}
+	upOrLeftMin++
 
-	upMin++
-	for downMax < rowSize {
-		icell = b[downMax][YcordinateRandom]
-		mark = icell.GetMark()
-		if mark == cell.BattleShip {
+	for downOrRightMax < rowOrColSize {
+		if orientation=="vertical"{
+			icell = b[downOrRightMax][YcordinateRandom]
+		}else{
+			icell = b[XcordinateRandom][downOrRightMax]
+		}
+		if icell.GetMark() == cell.BattleShip {
 			break
 		}
-		downMax++
+		downOrRightMax++
+	}
+	downOrRightMax--
+
+	if downOrRightMax-upOrLeftMin+1 >= shipSize {
+		return upOrLeftMin, upOrLeftMin + shipSize, true
 	}
 
-	downMax--
-
-	if downMax-upMin+1 >= shipSize {
-		//rowMin rowMax bool
-		fmt.Println("Vertical:", upMin, downMax)
-		return upMin, upMin + shipSize, true
-	} else {
-		return -1, -1, false
-	}
-
-}
-
-func checkIfHorizontal(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, colSize, shipSize int) (int, int, bool) {
-	var icell *cell.Cell
-	var mark cell.Mark
-
-	icell = b[XcordinateRandom][YcordinateRandom]
-	if icell.GetMark()==cell.BattleShip{
-		return -1, -1, false
-	}
-
-	var (
-		leftMin, rightMax int = YcordinateRandom, YcordinateRandom
-	)
-	for leftMin >= 0 {
-		icell = b[XcordinateRandom][leftMin]
-		mark = icell.GetMark()
-		if mark == cell.BattleShip {
-			break
-		}
-		leftMin--
-	}
-
-	leftMin++
-	for rightMax < colSize {
-		icell = b[XcordinateRandom][rightMax]
-		mark = icell.GetMark()
-		if mark == cell.BattleShip {
-			break
-		}
-		rightMax++
-	}
-
-	rightMax--
-
-	if rightMax-leftMin+1 >= shipSize {
-		return leftMin, leftMin + shipSize, true
-	} 
-	
 	return -1, -1, false
 	
 }
 
 func placeShip(b [][]*cell.Cell, min, max, cordinate int, direction string) {
-	//here b me change hona chahiye
+
 	var icell *cell.Cell
 		for i := min; i < max; i++ {
 			if direction == "horizontal" {
