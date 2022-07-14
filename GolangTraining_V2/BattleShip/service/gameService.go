@@ -11,10 +11,9 @@ func GameStart(b *board.Board,currentPlayer *player.Player){
 	var X,Y uint8
 	var (shipCells ,noOfTries uint= 15,50)
 
-
 	fmt.Println("You only have ",noOfTries," to attack all the ships")
 	for ;shipCells>0 && noOfTries>0;{
-		X,Y = takeInputFromPlayer(currentPlayer.Name,b.RowSize,b.ColSize)
+		X,Y = inputFromPlayerToAttack(currentPlayer.Name,b.RowSize,b.ColSize)
 		icell := b.NCells[X][Y]
 		if icell.GetMark()==cell.BattleShip{
 			icell.SetMark(cell.Hit)

@@ -4,28 +4,12 @@ import (
 	"battleShip/components/board"
 	"battleShip/components/cell"
 	"math/rand"
-	"fmt"
 	"time"
 )
 
 func MakeBoard() *board.Board{
-	var rowSize uint8
-	var colSize uint8
-	begin1 : 
-	fmt.Print("Enter number of rows of the board : ")
-	_,err1 := fmt.Scanln(&rowSize)
-	if err1!=nil || rowSize<5{
-		fmt.Println("Please enter an integer greater than 4 for board")
-		goto begin1
-	}
-	
-	begin2 : 
-	fmt.Print("Enter number of columns of the board : ")
-	_,err2 := fmt.Scanln(&colSize)
-	if err2!=nil || colSize<5{
-		fmt.Println("Please enter an integer greater than 4")
-		goto begin2
-	}
+
+	rowSize,colSize := inputSizeFromPlayer()
 	board := board.New(rowSize,colSize)
 	BoardInit(board) //Initializing board with 5 random ships of size 5 4 3 2 1
 	board.Display()

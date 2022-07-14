@@ -33,8 +33,6 @@ func New(rowSizeByUser, colSizeByUser uint8) *Board {
 	return boardTest //pointer to board
 }
 
-
-
 func (b *Board) DisplayHitMiss() {
 	var i, j uint8
 	for i = 0; i < b.RowSize; i++ {
