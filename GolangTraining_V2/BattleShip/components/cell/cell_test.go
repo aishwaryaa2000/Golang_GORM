@@ -5,7 +5,6 @@ import (
 )
 
 
-
 func TestNew(t *testing.T){  //Test___()
 	newCell := New()
 	var actual Mark = newCell.cellMark
@@ -27,7 +26,6 @@ func TestGetMark(t *testing.T){
 	}
 
 }
-
 
 func TestGetSetMarkBulk(t *testing.T){
 
