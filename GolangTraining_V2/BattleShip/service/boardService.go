@@ -18,36 +18,37 @@ func MakeBoard() *board.Board{
 
 func BoardInit(b *board.Board) {
 	//Initializing board with 5 random ships of size 5 4 3 2 1 horizontally or vertically
-	shipSize := 5
+	shipSize := 5	
+	rowSize,colSize := b.GetRowColSize()
 
 	for shipSize > 0 {
 		seed := rand.NewSource(time.Now().UnixNano())
 		random := rand.New(seed)
-		XcordinateRandom := (random.Intn(int(b.RowSize)))
-		YcordinateRandom := (random.Intn(int(b.ColSize)))
+		XcordinateRandom := (random.Intn(int(rowSize)))
+		YcordinateRandom := (random.Intn(int(colSize)))
 		orientation := random.Intn(2)
 		//This is to check if vertical placement should be done first then horizontal or vice versa thereby increasing randomness
 		if orientation==1{
-				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.RowSize), shipSize,"vertical")
+				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), shipSize,"vertical")
 				if okBool {
 					placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, "vertical")
 					shipSize--
 					continue
 				}
-				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.ColSize), shipSize,"horizontal")
+				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(colSize), shipSize,"horizontal")
 				if okBool {
 					placeShip(b.NCells, colStart, colEnd, XcordinateRandom, "horizontal")
 					shipSize--
 					continue
 				}
 		}else{
-				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.ColSize), shipSize,"horizontal")
+				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(colSize), shipSize,"horizontal")
 				if okBool {
 					placeShip(b.NCells, colStart, colEnd, XcordinateRandom, "horizontal")
 					shipSize--
 					continue	
 				}
-				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(b.RowSize), shipSize,"vertical")
+				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), shipSize,"vertical")
 				if okBool {
 					placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, "vertical")
 					shipSize--

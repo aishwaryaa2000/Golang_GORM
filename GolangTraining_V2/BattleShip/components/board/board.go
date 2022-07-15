@@ -7,8 +7,8 @@ import (
 
 type Board struct {
 	NCells  [][]*cell.Cell //a slice of cell structure pointers
-	RowSize uint8
-	ColSize uint8
+	rowSize uint8
+	colSize uint8
 }
 
 func New(rowSizeByUser, colSizeByUser uint8) *Board {
@@ -27,16 +27,18 @@ func New(rowSizeByUser, colSizeByUser uint8) *Board {
 
 	var boardTest = &Board{
 		NCells:  testCells,
-		RowSize: rowSizeByUser,
-		ColSize: colSizeByUser,
+		rowSize: rowSizeByUser,
+		colSize: colSizeByUser,
 	}
 	return boardTest //pointer to board
 }
-
+func (b *Board) GetRowColSize()(uint8,uint8){
+	return b.rowSize,b.colSize
+}
 func (b *Board) DisplayHitMiss() {
 	var i, j uint8
-	for i = 0; i < b.RowSize; i++ {
-		for j = 0; j < b.ColSize; j++ {
+	for i = 0; i < b.rowSize; i++ {
+		for j = 0; j < b.colSize; j++ {
 			icell := b.NCells[i][j] //get a structure pointer of the cell at a particular index
 			if icell.GetMark() == cell.BattleShip {
 				fmt.Print(" |    ")
@@ -50,8 +52,8 @@ func (b *Board) DisplayHitMiss() {
 
 func (b *Board) Display() {
 	var i, j uint8
-	for i = 0; i < b.RowSize; i++ {
-		for j = 0; j < b.ColSize; j++ {
+	for i = 0; i < b.rowSize; i++ {
+		for j = 0; j < b.colSize; j++ {
 			icell := b.NCells[i][j]           //get a structure pointer of the cell at a particular index
 			fmt.Print(" | ", icell.GetMark()) //get the mark of the cell at that index
 		}
