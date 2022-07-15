@@ -6,13 +6,21 @@ import (
 	"fmt"
 	"bufio"
 	"strings"
+	"unicode"
 )
 
 func MakePlayer() (*player.Player){
 	in := bufio.NewReader(os.Stdin)
+	nameLabel :
 	fmt.Print("Hey player,enter your name : ")
 	name, _ := in.ReadString('\n')
 	name = strings.TrimRight(name, "\r\n")
+
+	if !IsLetter(name){
+		fmt.Println("INVALID INPUT.A-Z or a-z only")
+		goto nameLabel
+	}
+	
 	PlayerNow:= player.New(name)
 	return PlayerNow
 }
@@ -60,4 +68,14 @@ func inputSizeFromPlayer() (uint8,uint8){
 
 	return rowSize,colSize
 
+}
+
+
+func IsLetter(s string) bool {
+    for _, r := range s {
+        if !unicode.IsLetter(r) {
+            return false
+        }
+    }
+    return true
 }

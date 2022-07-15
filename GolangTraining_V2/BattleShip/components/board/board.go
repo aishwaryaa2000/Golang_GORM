@@ -48,18 +48,19 @@ func (b *Board) DisplayHitMiss() {
 				fmt.Print(" | ", icell.GetMark()) //get the mark of the cell at that index
 			}
 		}
-		fmt.Printf(" |\n")
+		fmt.Printf(" Row %d |\n",i )
 	}
 }
 
 func (b *Board) Display() {
 	var i, j uint8
+	fmt.Print(" ")
 	for i = 0; i < b.rowSize; i++ {
 		for j = 0; j < b.colSize; j++ {
 			icell := b.NCells[i][j]           //get a structure pointer of the cell at a particular index
 			fmt.Print(" | ", icell.GetMark()) //get the mark of the cell at that index
 		}
-		fmt.Printf(" |\n")
+		fmt.Printf("|  Row %d \n ",i )
 	}
 }
 
