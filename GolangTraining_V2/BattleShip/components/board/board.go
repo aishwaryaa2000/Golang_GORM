@@ -32,9 +32,11 @@ func New(rowSizeByUser, colSizeByUser uint8) *Board {
 	}
 	return boardTest //pointer to board
 }
+
 func (b *Board) GetRowColSize()(uint8,uint8){
 	return b.rowSize,b.colSize
 }
+
 func (b *Board) DisplayHitMiss() {
 	var i, j uint8
 	for i = 0; i < b.rowSize; i++ {

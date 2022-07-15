@@ -2,34 +2,35 @@ package board
 
 import (
 	"testing"
-	"tic_tac_toe_app/components/cell"
+	"battleShip/components/cell"
 )
 
 
 
 func TestNew(t *testing.T){  //Test___()
-	newBoard := New(5,6)
-	actual  := newBoard.Size
-	expected := 4
+	b := New(5,6)
+	actualRowSize,actualColSize := b.GetRowColSize()
+	var ( expectedRowSize,expectedColSize uint8 = 5,6) 
 
 	// size is proper
-	if int(actual) != expected{
-		t.Error("Actual is ",actual,"but expected is ",expected)
+	if expectedRowSize != actualRowSize{
+		t.Error("Actual row size is ",actualRowSize,"but expected row size is ",expectedRowSize)
+	}
+	if expectedColSize != actualColSize{
+		t.Error("Actual col size is ",actualRowSize,"but expected col size is ",expectedRowSize)
 	}
 
-	// all cells have no mark
-	for _,icell := range newBoard.NCells{
-		actualMark := icell.GetMark()
-		expectedMark := cell.NoMark
-		if (actualMark) != expectedMark{
-			t.Error("Actual is ",actual,"but expected is ",expected)
-		}
+	// all cells should have no mark
+	var i,j uint8
+	for i = 0; i < b.rowSize; i++ {
+		for j = 0; j < b.colSize; j++ {
+			icell := b.NCells[i][j]
+			actualMark := icell.GetMark()
+			expectedMark := cell.NoMark
+			if (actualMark) != expectedMark{
+				t.Error("Actual is ",actualMark,"but expected is ",expectedMark)
+			}		}
 	}
-
-	noOfCellsActual := len(newBoard.NCells)
-	noOfCellsExpected := 16
-	if noOfCellsActual != noOfCellsExpected{
-		t.Error("Actual is ",actual,"but expected is ",expected)
-	}
+	
 }
 
