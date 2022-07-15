@@ -13,13 +13,13 @@ func GameStart(b *board.Board,currentPlayer *player.Player){
 
 	fmt.Println("You only have ",noOfTries," to attack all the ships")
 	for ;shipCells>0 && noOfTries>0;{
-		X,Y = inputFromPlayerToAttack(currentPlayer.Name,b.RowSize,b.ColSize)
+		X,Y = inputFromPlayerToAttack(currentPlayer.GetName(),b.RowSize,b.ColSize)
 		icell := b.NCells[X][Y]
 		if icell.GetMark()==cell.BattleShip{
 			icell.SetMark(cell.Hit)
 			fmt.Println("Hurray! You hit the ship")
 			b.DisplayHitMiss()
-			currentPlayer.Hit++
+			currentPlayer.IncrementHit()
 			shipCells--
 			noOfTries--
 
@@ -27,13 +27,13 @@ func GameStart(b *board.Board,currentPlayer *player.Player){
 			icell.SetMark(cell.Miss)
 			fmt.Println("Oh no,you missed the ship")
 			b.DisplayHitMiss()
-			currentPlayer.Miss++
+			currentPlayer.IncrementMiss()
 			noOfTries--
 		}else{
 			fmt.Println("Already attacked this ship")
 		}
 
-		fmt.Println("Number of hits : ",currentPlayer.Hit," \nNumber of miss : ",currentPlayer.Miss,"\nTrials left : ",noOfTries)
+		fmt.Println("Number of hits : ",currentPlayer.GetHit()," \nNumber of miss : ",currentPlayer.GetMiss(),"\nTrials left : ",noOfTries)
 	}
 
 	resultAnalysis(shipCells,noOfTries)
