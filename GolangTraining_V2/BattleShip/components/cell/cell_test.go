@@ -48,13 +48,13 @@ func TestGetSetMarkBulk(t *testing.T){
 		},
 	}
 
-	for _,iIndex := range listTest{
+	for _,structAtiIndex := range listTest{
 		newCell := New()	
 
-		newCell.SetMark(iIndex.input)
+		newCell.SetMark(structAtiIndex.input)
 		actual := newCell.GetMark()
-		if actual !=iIndex.expected{
-			t.Error("Actual status is ",actual,"but expected is ",iIndex.expected)
+		if actual !=structAtiIndex.expected{
+			t.Error("Actual status is ",actual,"but expected is ",structAtiIndex.expected)
 		}
 	}
 }
