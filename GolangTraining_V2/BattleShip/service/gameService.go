@@ -41,7 +41,7 @@ func GameStart(b *board.Board,currentPlayer *player.Player){
 }
 
 func resultAnalysis(shipCells,noOfTries uint){
-	fmt.Println("GAME OVER!\n\n")
+	fmt.Println("GAME OVER")
 	if shipCells==0{
 		fmt.Println("You won the game!\nYou needed ",50 - noOfTries," of tries to win the game")
 	}else{
