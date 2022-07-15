@@ -30,34 +30,34 @@ func BoardInit(b *board.Board) {
 	//Initializing board with 5 random ships of size 5 4 3 2 1 horizontally or vertically
 	noOfShip := 5	
 	rowSize,colSize := b.GetRowColSize()
-	
+
 	for noOfShip > 0 {
 		XcordinateRandom,YcordinateRandom,orientation := randomNumberGenerator(rowSize,colSize)
 		/*Orientation is to check if vertical placement should be done first then horizontal or 
 		vice versa thereby increasing randomness*/
 		if orientation==1{
-				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), noOfShip,"vertical")
+				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), noOfShip,'V')
 				if okBool {
-					placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, "vertical")
+					placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, 'V')
 					noOfShip--
 					continue
 				}
-				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(colSize), noOfShip,"horizontal")
+				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(colSize), noOfShip,'H')
 				if okBool {
-					placeShip(b.NCells, colStart, colEnd, XcordinateRandom, "horizontal")
+					placeShip(b.NCells, colStart, colEnd, XcordinateRandom, 'H')
 					noOfShip--
 					continue
 				}
 		}else{
-				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(colSize), noOfShip,"horizontal")
+				colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(colSize), noOfShip,'H')
 				if okBool {
-					placeShip(b.NCells, colStart, colEnd, XcordinateRandom, "horizontal")
+					placeShip(b.NCells, colStart, colEnd, XcordinateRandom, 'H')
 					noOfShip--
 					continue	
 				}
-				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), noOfShip,"vertical")
+				rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), noOfShip,'V')
 				if okBool {
-					placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, "vertical")
+					placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, 'V')
 					noOfShip--
 					continue
 				}
@@ -67,7 +67,7 @@ func BoardInit(b *board.Board) {
 
 }
 
-func checkIfHorizontalOrVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, rowOrColSize, shipSize int,orientation string) (int, int, bool){
+func checkIfHorizontalOrVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, rowOrColSize, shipSize int,orientation rune) (int, int, bool){
 	var icell *cell.Cell
 	icell = b[XcordinateRandom][YcordinateRandom]
 	if icell.GetMark()==cell.BattleShip{
@@ -76,12 +76,12 @@ func checkIfHorizontalOrVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateR
 
 	upOrLeftMin, downOrRightMax := YcordinateRandom, YcordinateRandom
 
-	if orientation=="vertical"{
+	if orientation=='V'{
 		upOrLeftMin, downOrRightMax  = XcordinateRandom, XcordinateRandom
 	}
 
 	for upOrLeftMin >= 0 {
-		if orientation=="vertical"{
+		if orientation=='V'{
 			icell = b[upOrLeftMin][YcordinateRandom]
 		}else{
 			icell = b[XcordinateRandom][upOrLeftMin]
@@ -94,7 +94,7 @@ func checkIfHorizontalOrVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateR
 	upOrLeftMin++
 
 	for downOrRightMax < rowOrColSize {
-		if orientation=="vertical"{
+		if orientation=='V'{
 			icell = b[downOrRightMax][YcordinateRandom]
 		}else{
 			icell = b[XcordinateRandom][downOrRightMax]
@@ -114,11 +114,11 @@ func checkIfHorizontalOrVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateR
 	
 }
 
-func placeShip(b [][]*cell.Cell, min, max, cordinate int, direction string) {
+func placeShip(b [][]*cell.Cell, min, max, cordinate int, direction rune) {
 
 	var icell *cell.Cell
 		for i := min; i < max; i++ {
-			if direction == "horizontal" {
+			if direction == 'H' {
 			    icell = b[cordinate][i]
 			}else{
 				icell = b[i][cordinate]
