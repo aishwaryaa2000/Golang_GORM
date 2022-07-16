@@ -20,7 +20,7 @@ func New() *Cell {
 	return cellTest //pointer to cell
 }
 
-func (c*Cell) GetMark() (Mark){
+func (c*Cell) Cell() (Mark){
 	return c.cellMark
 }
 
@@ -29,3 +29,5 @@ func (c *Cell) SetMark(markByUser Mark) {
 		c.cellMark = markByUser
 	
 }
+
+

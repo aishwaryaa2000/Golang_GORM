@@ -4,7 +4,7 @@ func checkIfVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, rowSi
 	var icell *cell.Cell
 
 	icell = b[XcordinateRandom][YcordinateRandom]
-	if icell.GetMark()==cell.BattleShip{
+	if icell.Cell()==cell.BattleShip{
 		return -1, -1, false
 	}
 
@@ -14,7 +14,7 @@ func checkIfVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, rowSi
 
 	for upMin >= 0 {
 		icell = b[upMin][YcordinateRandom]
-		if icell.GetMark() == cell.BattleShip {
+		if icell.Cell() == cell.BattleShip {
 			break
 		}
 		upMin--
@@ -23,7 +23,7 @@ func checkIfVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, rowSi
 
 	for downMax < rowSize {
 		icell = b[downMax][YcordinateRandom]
-		if icell.GetMark() == cell.BattleShip {
+		if icell.Cell() == cell.BattleShip {
 			break
 		}
 		downMax++
@@ -42,7 +42,7 @@ func checkIfHorizontal(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, col
 	var icell *cell.Cell
 
 	icell = b[XcordinateRandom][YcordinateRandom]
-	if icell.GetMark()==cell.BattleShip{
+	if icell.Cell()==cell.BattleShip{
 		return -1, -1, false
 	}
 
@@ -51,7 +51,7 @@ func checkIfHorizontal(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, col
 	)
 	for leftMin >= 0 {
 		icell = b[XcordinateRandom][leftMin]
-		if icell.GetMark() == cell.BattleShip {
+		if icell.Cell() == cell.BattleShip {
 			break
 		}
 		leftMin--
@@ -60,7 +60,7 @@ func checkIfHorizontal(b [][]*cell.Cell, XcordinateRandom, YcordinateRandom, col
 
 	for rightMax < colSize {
 		icell = b[XcordinateRandom][rightMax]
-		if icell.GetMark() == cell.BattleShip {
+		if icell.Cell() == cell.BattleShip {
 			break
 		}
 		rightMax++
@@ -85,7 +85,7 @@ func (b *Board) Display() {
 	for i = 0; i < b.RowSize; i++ {
 		for j = 0; j < b.ColSize; j++ {
 			icell := b.NCells[i][j]           //get a structure pointer of the cell at a particular index
-			fmt.Print(" | ", icell.GetMark()) //get the mark of the cell at that index
+			fmt.Print(" | ", icell.Cell()) //get the mark of the cell at that index
 		}
 		fmt.Printf(" |\n")
 	}

@@ -25,7 +25,7 @@ func TestNew(t *testing.T) { //Test___()
 	for i = 0; i < b.rowSize; i++ {
 		for j = 0; j < b.colSize; j++ {
 			icell := b.NCells[i][j]
-			actualMark := icell.GetMark()
+			actualMark := icell.Cell()
 			expectedMark := cell.NoMark
 			if (actualMark) != expectedMark {
 				t.Error("Actual is ", actualMark, "but expected is ", expectedMark)

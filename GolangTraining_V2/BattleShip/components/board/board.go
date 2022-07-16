@@ -33,8 +33,8 @@ func New(rowSizeByUser, colSizeByUser uint8) *Board {
 	return boardTest //pointer to board
 }
 
-func (b *Board) GetRowColSize()(uint8,uint8){
-	return b.rowSize,b.colSize
+func (b *Board) GetRowColSize() (uint8, uint8) {
+	return b.rowSize, b.colSize
 }
 
 func (b *Board) DisplayHitMiss() {
@@ -42,13 +42,13 @@ func (b *Board) DisplayHitMiss() {
 	for i = 0; i < b.rowSize; i++ {
 		for j = 0; j < b.colSize; j++ {
 			icell := b.NCells[i][j] //get a structure pointer of the cell at a particular index
-			if icell.GetMark() == cell.BattleShip {
+			if icell.Cell() == cell.BattleShip {
 				fmt.Print(" |    ")
 			} else {
-				fmt.Print(" | ", icell.GetMark()) //get the mark of the cell at that index
+				fmt.Print(" | ", icell.Cell()) //get the mark of the cell at that index
 			}
 		}
-		fmt.Printf(" Row %d |\n",i )
+		fmt.Printf(" Row %d |\n", i)
 	}
 }
 
@@ -57,10 +57,9 @@ func (b *Board) Display() {
 	fmt.Print(" ")
 	for i = 0; i < b.rowSize; i++ {
 		for j = 0; j < b.colSize; j++ {
-			icell := b.NCells[i][j]           //get a structure pointer of the cell at a particular index
-			fmt.Print(" | ", icell.GetMark()) //get the mark of the cell at that index
+			icell := b.NCells[i][j]        //get a structure pointer of the cell at a particular index
+			fmt.Print(" | ", icell.Cell()) //get the mark of the cell at that index
 		}
-		fmt.Printf("|  Row %d \n ",i )
+		fmt.Printf("|  Row %d \n ", i)
 	}
 }
-
