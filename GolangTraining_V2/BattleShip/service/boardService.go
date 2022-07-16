@@ -26,38 +26,38 @@ func randomNumberGenerator(rowSize, colSize uint8) (int, int, int) {
 	return XcordinateRandom, YcordinateRandom, orientation
 }
 
-func BoardInit(b *board.Board) {
+func BoardInit(currentBoard *board.Board) {
 	//Initializing board with 5 random ships of size 5 4 3 2 1 horizontally or vertically
 	noOfShip := 5
-	rowSize, colSize := b.GetRowColSize()
+	rowSize, colSize := currentBoard.GetRowColSize()
 
 	for noOfShip > 0 {
 		XcordinateRandom, YcordinateRandom, orientation := randomNumberGenerator(rowSize, colSize)
 		/*Orientation is to check if vertical placement should be done first then horizontal or
 		vice versa thereby increasing randomness*/
 		if orientation == 1 {
-			rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), noOfShip, 'V')
+			rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(currentBoard.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), noOfShip, 'V')
 			if okBool {
-				placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, 'V')
+				placeShip(currentBoard.NCells, rowStart, rowEnd, YcordinateRandom, 'V')
 				noOfShip--
 				continue
 			}
-			colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(colSize), noOfShip, 'H')
+			colStart, colEnd, okBool := checkIfHorizontalOrVertical(currentBoard.NCells, XcordinateRandom, YcordinateRandom, int(colSize), noOfShip, 'H')
 			if okBool {
-				placeShip(b.NCells, colStart, colEnd, XcordinateRandom, 'H')
+				placeShip(currentBoard.NCells, colStart, colEnd, XcordinateRandom, 'H')
 				noOfShip--
 				continue
 			}
 		} else {
-			colStart, colEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(colSize), noOfShip, 'H')
+			colStart, colEnd, okBool := checkIfHorizontalOrVertical(currentBoard.NCells, XcordinateRandom, YcordinateRandom, int(colSize), noOfShip, 'H')
 			if okBool {
-				placeShip(b.NCells, colStart, colEnd, XcordinateRandom, 'H')
+				placeShip(currentBoard.NCells, colStart, colEnd, XcordinateRandom, 'H')
 				noOfShip--
 				continue
 			}
-			rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(b.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), noOfShip, 'V')
+			rowStart, rowEnd, okBool := checkIfHorizontalOrVertical(currentBoard.NCells, XcordinateRandom, YcordinateRandom, int(rowSize), noOfShip, 'V')
 			if okBool {
-				placeShip(b.NCells, rowStart, rowEnd, YcordinateRandom, 'V')
+				placeShip(currentBoard.NCells, rowStart, rowEnd, YcordinateRandom, 'V')
 				noOfShip--
 				continue
 			}
@@ -114,16 +114,4 @@ func checkIfHorizontalOrVertical(b [][]*cell.Cell, XcordinateRandom, YcordinateR
 
 }
 
-func placeShip(b [][]*cell.Cell, min, max, cordinate int, direction rune) {
 
-	var icell *cell.Cell
-	for i := min; i < max; i++ {
-		if direction == 'H' {
-			icell = b[cordinate][i]
-		} else {
-			icell = b[i][cordinate]
-		}
-		icell.SetMark(cell.BattleShip)
-	}
-
-}

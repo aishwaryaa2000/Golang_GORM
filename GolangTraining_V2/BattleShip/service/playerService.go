@@ -52,7 +52,7 @@ func inputSizeFromPlayer() (uint8,uint8){
 	var colSize uint8
 	begin1 : 
 	fmt.Print("Enter number of rows of the board : ")
-	_,err1 := fmt.Scanln(&rowSize)
+	_,err1 := fmt.Scan(&rowSize)
 	if err1!=nil || rowSize<5{
 		fmt.Println("Please enter an integer greater than 4 for board")
 		goto begin1
@@ -60,7 +60,7 @@ func inputSizeFromPlayer() (uint8,uint8){
 
 	begin2 : 
 	fmt.Print("Enter number of columns of the board : ")
-	_,err2 := fmt.Scanln(&colSize)
+	_,err2 := fmt.Scan(&colSize)
 	if err2!=nil || colSize<5{
 		fmt.Println("Please enter an integer greater than 4")
 		goto begin2

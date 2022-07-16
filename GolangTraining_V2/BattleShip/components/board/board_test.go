@@ -6,8 +6,8 @@ import (
 )
 
 func TestNew(t *testing.T) { //Test___()
-	b := New(5, 6)
-	actualRowSize, actualColSize := b.GetRowColSize()
+	board := New(5, 6)
+	actualRowSize, actualColSize := board.GetRowColSize()
 	var (
 		expectedRowSize, expectedColSize uint8 = 5, 6
 	)
@@ -22,9 +22,9 @@ func TestNew(t *testing.T) { //Test___()
 
 	// all cells should have no mark
 	var i, j uint8
-	for i = 0; i < b.rowSize; i++ {
-		for j = 0; j < b.colSize; j++ {
-			icell := b.NCells[i][j]
+	for i = 0; i < board.rowSize; i++ {
+		for j = 0; j < board.colSize; j++ {
+			icell := board.NCells[i][j]
 			actualMark := icell.Cell()
 			expectedMark := cell.NoMark
 			if (actualMark) != expectedMark {
