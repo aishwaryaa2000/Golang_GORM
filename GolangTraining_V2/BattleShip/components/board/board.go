@@ -48,7 +48,7 @@ func (currentBoard *Board) DisplayHitMiss() {
 				fmt.Print(" | ", icell.Cell()) //get the mark of the cell at that index
 			}
 		}
-		fmt.Printf(" Row %d |\n", i)
+		fmt.Printf(" | Row %d \n", i)
 	}
 }
 
@@ -60,6 +60,6 @@ func (currentBoard *Board) Display() {
 			icell := currentBoard.NCells[i][j]        //get a structure pointer of the cell at a particular index
 			fmt.Print(" | ", icell.Cell()) //get the mark of the cell at that index
 		}
-		fmt.Printf("|  Row %d \n ", i)
+		fmt.Printf(" |  Row %d \n ", i)
 	}
 }
