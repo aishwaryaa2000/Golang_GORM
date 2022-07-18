@@ -1,10 +1,10 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "os"
 	"bufio"
+	"fmt"
+	"log"
+	"os"
 	"strings"
 )
 
@@ -36,6 +36,10 @@ func getFileSize(path string){
     }
 
     fileSize := byteSize(fileInfo.Size())
+
+	if fileSize/MB > 50{
+		log.Fatal("Max file size can only be till 50MB and not greater than that")
+	}
 
     fmt.Printf("The file size is %.2f B / %.2f KB / %.2f MB / %.2f GB \n", fileSize,fileSize/KB,fileSize/MB,fileSize/GB)
 }
