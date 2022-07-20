@@ -12,8 +12,7 @@ type square struct{
 	length float64
 }
 
-//struct circle implements shape interface bcoz circle implements these two methods
-func(c circle)area() float64{  //notice no c *cirle
+func(c circle)area() float64{  
 	return 22/7*(c.radius*c.radius)
 }
 
