@@ -27,6 +27,13 @@ func main(){
 	
 	var c circle
 	c.radius=2.2
+
+	/* 
+	c := circle{ 
+     radius: 2.2,
+	}
+	*/
+
 	areaValue := c.area()
 
 	fmt.Println("Area of circle : ",areaValue)
@@ -39,6 +46,10 @@ func main(){
 }
 
 
-
+/* 
+If output is required in different format then we have to change the code a lot so violated
+display (format)
+if format is json or console then print the output accordingly
+*/
 
 

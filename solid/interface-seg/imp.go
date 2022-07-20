@@ -1,6 +1,14 @@
 /* 
-Open close
-functionality should be open for extension and closed for modification
+
+In interface segregation
+suppose we have structures that implement different number of methods
+
+example- square has only one method i.e area() but circle has both vol() and area()
+so instead of creating only one interface with both the methods and explicitly creating a vol() func for square
+we can have 2 interfaces
+one with 1 method area() and another interface with two methods included i.e vol() and area() - 2d + vol()
+
+Therefore,interface segregation
 */
 
 
@@ -92,6 +100,5 @@ func main() {
 
 	//if i add s1,s2,c1,c2,cube1 then we have to change the switch case 
 	fmt.Println("Ans for sum of volume : ",ans)
-	//slice ka interface
 
 }

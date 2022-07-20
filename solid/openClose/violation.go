@@ -1,3 +1,9 @@
+/* 
+Open close
+functionality should be open for extension and closed for modification
+*/
+
+
 package main
 
 import "fmt"
@@ -94,6 +100,8 @@ func main() {
 
 	
 	ans = SumVol(s1, s2, c1, c2)
+
+	//if i add s1,s2,c1,c2,cube1 then we have to change the switch case 
 	fmt.Println("Ans for sum of volume : ",ans)
 	//slice ka interface
 
