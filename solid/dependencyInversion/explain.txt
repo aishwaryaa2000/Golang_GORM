@@ -1,0 +1,16 @@
+High-level modules should not depend on low-level modules.
+Both should depend on abstractions.
+Abstractions should not depend on details.
+Details should depend on abstractions.
+
+Abstraction implementation >>> Concrete implementation
+
+So in violation.go ,we are having a concrete implementation of Zerolog inside ActualLogger
+so if there are some errors in Zerolog and we wish to use DefaultLogger then we will have to change 
+the field/attribute of the ActualLogger - bad practice
+
+so instead,have an Abstract implementation i.e have an interface inside the ActualLogger as attribute
+Here Zerolog and DefaultLogger both implement Logger interface
+So as and when required one can use any one of the logger 
+
+Therefore,easily swaping these implementations of the logger without our program breaking. 
