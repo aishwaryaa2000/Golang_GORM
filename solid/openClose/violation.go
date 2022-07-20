@@ -101,8 +101,8 @@ func main() {
 	
 	ans = SumVol(s1, s2, c1, c2)
 
-	//if i add s1,s2,c1,c2,cube1 then we have to change the switch case 
+	//if i add s1,s2,c1,c2,cube1 then we have to change the switch case -this is not a good practice
+	//so instead shape interface can be created that will automatically call the required method
 	fmt.Println("Ans for sum of volume : ",ans)
-	//slice ka interface
 
 }
