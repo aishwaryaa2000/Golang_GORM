@@ -1,6 +1,8 @@
 /* 
 Open close
 functionality should be open for extension and closed for modification
+The concept suggests that modules should be written in a way 
+so that we can add new modules or new functionalities in a module without requiring existing modules to be modified.
 */
 
 
