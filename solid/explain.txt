@@ -1,0 +1,49 @@
+SINGLE RESPONSIBILITY
+The single responsibility principle suggests that two separate aspects of a problem need to be handled by a different module.
+In other word, changes in a module should be originated from only one reason.
+if you have more than one responsibilities embedded into a single class, 
+the internal logics become highly coupled, which makes the class less responsive towards changes
+Have different functions for each responsibility rather than clubbing it
+
+circle has it's own module/package with area as it's method
+and square has it's own module/package with area as it's method
+
+if printing or display of area is done in the method area then area() method is performing 2 operations-
+1) calculate area
+2) print area
+So it is not a good practice
+
+Instead have a Display() function that handles only the display part
+Here,each function has it's own responsibility-
+Area to calculate area 
+Display function either displays in json format or simply in fmt.println or write onto file
+
+
+
+OPEN CLOSE
+functionality should be open for extension and closed for modification
+The concept suggests that modules should be written in a way 
+so that we can add new modules or new functionalities in a module without requiring existing modules to be modified.
+This can be done with the help of interfaces
+
+
+Liskov substitution
+objects of a superclass should be replaceable with objects of its subclasses without breaking the application
+Child struct is embedded inside parent struct
+
+
+Interface segregation
+In interface segregation suppose we have structures that implement different number of methods.
+So rather than explicity defining all the methods so that it can be clubbed as a single interface
+We should have seperate interfaces each having it's own number of methods
+
+Dependency Inversion
+High-level modules should not depend on low-level modules.
+Both should depend on abstractions.
+Abstractions should not depend on details.
+Details should depend on abstractions.
+Abstraction implementation >>> Concrete implementation
+Abstract implementation can be done with the help of interface
+
+
+
