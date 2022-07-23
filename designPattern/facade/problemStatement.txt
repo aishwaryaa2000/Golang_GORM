@@ -1,0 +1,18 @@
+I want you to create the following structs 
+1) Account{name string} with methods(WM) : a)CheckAccount(name)
+2) SecurityCode{code string} WM : a)CheckCode(code)
+These two check methods will compare argument code/name with object code/name
+3)Wallet{balance int} WM a) Credit(amt int) b)Debit(amt int) error
+4)Ledger{entries []string} WM a)MakeEntry(accName,txnType[depo/withdraw?],amount) b) GetAllEntries()
+5) Notification{} WM a)SendCreditNotification() b) SendDebitNotification()
+
+You can add fields to structs or add parameters to methods 
+Every struct will have it's own NewXYZ() function to initialize it
+
+The flow will be:
+If user wants to deposit, firstly you check the account details and security details,
+if error return, if not, then you will make the deposit (change wallet balance),
+add entry to the ledger about the transaction details and finally fire a notification which simple print to the console
+same for withdraw.
+
+You can design the file structure as you please

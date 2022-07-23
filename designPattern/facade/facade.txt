@@ -1,0 +1,13 @@
+As the name suggests, it means the face of the building. 
+The people walking past the road can only see this glass face of the building. 
+They do not know anything about it, the wiring, the pipes and other complexities. 
+It hides all the complexities of the building and displays a friendly face.
+
+Facade pattern hides the complexities of the system and provides an interface to the client using which the client can access the system.
+This type of design pattern comes under structural pattern as this pattern adds an interface to existing system to hide its complexities.
+
+This pattern involves a single class which provides simplified methods required by client 
+and delegates calls to methods of existing system classes.
+
+Facade basically helps to cordinate all the other structs together.
+In this example,WalletService is a facade as it does not add any additional function but acts as a cordinator
