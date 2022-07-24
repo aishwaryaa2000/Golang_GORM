@@ -1,0 +1,10 @@
+concurrency means doing two or more tasks by switching one to another and so on.At a time,ekk he cheez ho raha hai
+Example-In kitchen
+
+example-a boy jogging and listening to music is not concurrency but parallelism coz dono tasks same time pe ho rahe haai.
+Example-if boy is jogging and his shoe lace open up then he bends down to tie shoe lace and stop running so it is concurrency.
+
+Go supports concurrency
+
+goroutines is used for concurrency
+
