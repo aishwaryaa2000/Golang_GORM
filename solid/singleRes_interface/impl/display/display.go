@@ -13,8 +13,9 @@ type Display struct{
 }
 
 func (d Display) DisplayJson(){
-	ansDisplay := d.Ans
-    json_data, _ := json.Marshal(ansDisplay)
+	// ansDisplay := d.Ans //12
+	
+    json_data, _ := json.Marshal(d) //Ans: 12
 	fmt.Println("In json format : ",string(json_data))
 }
 func (d Display) DisplayTerminal(){
