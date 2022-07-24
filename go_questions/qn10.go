@@ -4,10 +4,10 @@
 // repeatedly. You'll also need to create a channel that carries
 // boolean values to pass to "repeat", so the goroutine can signal
 // when it's done.
-// 
+//
 // Output will vary, but here's one possible result:
 // yyyyyyyyyyyyyyyyyyyyxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyxxxxxxxxxy
-// 
+//
 // Replace the blanks ("____") in the code so the program will
 // compile and run.
 package main
@@ -18,15 +18,15 @@ import (
 
 // repeat prints a string multiple times, then writes "true" to the
 // provided channel to signal it's done.
-func repeat(s string, channel ____ bool) {
+func repeat(s string, channel chan bool) {
 	for i := 0; i < 30; i++ {
 		fmt.Print(s)
 	}
-	channel ____ true
+	channel <- true
 }
 
 func main() {
-	channel := ____(chan bool)
+	channel := make(chan bool)
 	go repeat("x", channel)
 	go repeat("y", channel)
 	<-channel

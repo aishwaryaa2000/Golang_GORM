@@ -1,8 +1,3 @@
-package main
-import(
-	"fmt"
-)
-
 // Solve this without running the code
 func main() {
 	s := make([]int, 0, 5)

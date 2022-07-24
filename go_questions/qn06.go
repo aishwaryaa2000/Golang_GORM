@@ -8,14 +8,13 @@ type Subscriber struct {
 	Name   string
 	Rate   float64
 	Active bool
-	Address		Address
-
+	Address		
 }
 
 type Employee struct {
 	Name   string
 	Salary float64
-	Address		Address
+	 Address	
 }
 type Address struct{
 	Street,City,State,PostalCode string
@@ -32,32 +31,25 @@ type Address struct{
 func main() {
 	var subscriber Subscriber
 	subscriber.Name = "Aman Singh"
-	AddressSub := Address{
-		Street: "123 Oak St",
-		City: "Omaha",
-		State: "NE",
-		PostalCode: "68111",
-	} 
-	subscriber.Address=AddressSub
-	
+	subscriber.Street = "123 Oak St"
+	subscriber.City = "Omaha"
+	subscriber.State = "NE"
+	subscriber.PostalCode = "68111"
 	fmt.Println("Name:", subscriber.Name)              // => Name: Aman Singh
-	fmt.Println("Street:", subscriber.Address.Street)          // => Street: 123 Oak St
-	fmt.Println("City:", subscriber.Address.City)              // => City: Omaha
-	fmt.Println("State:", subscriber.Address.State)            // => State: NE
-	fmt.Println("Postal Code:", subscriber.Address.PostalCode) // => Postal Code: 68111
+	fmt.Println("Street:", subscriber.Street)          // => Street: 123 Oak St
+	fmt.Println("City:", subscriber.City)              // => City: Omaha
+	fmt.Println("State:", subscriber.State)            // => State: NE
+	fmt.Println("Postal Code:", subscriber.PostalCode) // => Postal Code: 68111
 
 	var employee Employee
-	AddressEmp := Address{
-		Street: "456 Elm St",
-		City: "Portland",
-		State: "OR",
-		PostalCode: "97222",
-	} 
 	employee.Name = "Joy Carr"
-	employee.Address=AddressEmp
+	employee.Street = "456 Elm St"
+	employee.City = "Portland"
+	employee.State = "OR"
+	employee.PostalCode = "97222"
 	fmt.Println("Name:", employee.Name)              // => Name: Joy Carr
-	fmt.Println("Street:", employee.Address.Street)          // => Street: 456 Elm St
-	fmt.Println("City:", employee.Address.City)              // => City: Portland
-	fmt.Println("State:", employee.Address.State)            // => State: OR
-	fmt.Println("Postal Code:", employee.Address.PostalCode) // => Postal Code: 97222
+	fmt.Println("Street:", employee.Street)          // => Street: 456 Elm St
+	fmt.Println("City:", employee.City)              // => City: Portland
+	fmt.Println("State:", employee.State)            // => State: OR
+	fmt.Println("Postal Code:", employee.PostalCode) // => Postal Code: 97222
 }
