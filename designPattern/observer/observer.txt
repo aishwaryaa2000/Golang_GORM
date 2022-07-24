@@ -1,0 +1,12 @@
+Observer is a behavioral design pattern that lets you define a subscription mechanism to notify multiple objects
+about any events that happen to the object they’re observing.
+
+The object that has some interesting state is often called subject, 
+but since it’s also going to notify other objects about the changes to its state, we’ll call it publisher.
+All other objects that want to track changes to the publisher’s state are called subscribers.
+
+All subscribers implement the same interface and that the publisher communicates with them only via that interface.
+This interface should declare the notification method along with a set of parameters that the publisher 
+can use to pass some contextual data along with the notification.
+
+load balancing me if load is reduced or increased then adjacent nodes ko notification is sent
