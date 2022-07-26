@@ -1,0 +1,18 @@
+singleton
+we have only one instance
+
+Observer
+ekk obj ka state change kisi aur object ko batana
+
+Decorator
+wrapping using different object
+base object wrap ho gaya 
+
+factory
+new will return interface
+creation is abstracted
+
+command
+ekk command ko object me wrap karna hain
+
+state
