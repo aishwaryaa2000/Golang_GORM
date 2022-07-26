@@ -1,32 +1,46 @@
 package main
 
 import (
-    "fmt"
-    "io/ioutil"
-    "log"
+  "fmt"
+  "log"
+  "os"
 )
 
 func main() {
 
-makeTree("designPattern")
+  makeTree("C:\\Users\aishwarya.anand\\OneDrive - Forcepoint\\Desktop\\Swabhav_Techlabs", 1)
 
 }
 
-func makeTree(dir string){
-    files, err := ioutil.ReadDir(dir)
+func makeTree(dir string, level int) {
+  f, err := os.Open(dir)
+  if err != nil {
+    log.Fatal(err)
+  }
 
-    if err != nil {
+  files, err := f.Readdir(0)
+  if err != nil {
+    log.Fatal(err)
+  }
+  for _, f := range files {
+    if f.IsDir() {
+      dirName := dir + "/" + f.Name()
+      for i := 0; i < level-1; i++ {
+        fmt.Print("|\t")
+      }
+      fmt.Print("|------")
+      fmt.Println(f.Name())
 
-        log.Fatal(err)
+      makeTree(dirName, level+1)
+    } else {
+
+      for i := 0; i < level-1; i++ {
+        fmt.Print("|\t")
+      }
+      fmt.Println("|-----", f.Name())
+      fmt.Println("")
+
     }
 
-    for _, f := range files {
-
-        if !f.IsDir() {
-            fmt.Println("-----",f.Name())
-            makeTree(f.Name())
-        }else{
-            fmt.Println(f.Name())
-		}
-    }
+  }
 }
