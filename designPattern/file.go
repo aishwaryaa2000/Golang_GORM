@@ -4,11 +4,22 @@ import (
   "fmt"
   "log"
   "os"
+  "bufio"
+  "strings"
+
 )
 
 func main() {
 
-  makeTree("C:\\Users\aishwarya.anand\\OneDrive - Forcepoint\\Desktop\\Swabhav_Techlabs", 1)
+  in := bufio.NewReader(os.Stdin)
+  fmt.Print("Hey,please enter file path by having \\ in the path : ")
+	filePath, _ := in.ReadString('\n')
+	filePath = strings.TrimRight(filePath, "\r\n")
+ // filePath = "C:\\Users\aishwarya.anand\\OneDrive - Forcepoint\\Desktop\\Swabhav_Techlabs"
+  mainFolder := strings.Split(filePath, "\\")
+  mainFolderName := mainFolder[len(mainFolder)-1]
+  fmt.Println(mainFolderName)
+  makeTree(filePath, 1)
 
 }
 
