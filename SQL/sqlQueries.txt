@@ -1,21 +1,38 @@
-SELECT ENAME FROM db.emp ORDER BY ENAME;
+SELECT `ENAME` FROM db.`emp` ORDER BY `ENAME`;
 
-SELECT ENAME,SAL,COMM FROM db.emp WHERE DEPTNO=10;
+SELECT `ENAME`,`SAL`,`COMM` FROM db.`emp` WHERE `DEPTNO`=10;
 
-SELECT * FROM db.emp WHERE DEPTNO=20 OR DEPTNO=30;
+SELECT * FROM db.`emp` WHERE `DEPTNO`=20 OR `DEPTNO`=30;
 
-SELECT * FROM db.emp WHERE JOB="MANAGER";
+SELECT * FROM db.`emp` WHERE `JOB`="MANAGER";
 
-SELECT * FROM db.emp WHERE SAL BETWEEN 2000 AND 5000;
+SELECT * FROM db.`emp` WHERE `SAL` BETWEEN 2000 AND 5000;
 
-SELECT * FROM db.emp WHERE COMM IS NULL;
+SELECT * FROM db.`emp` WHERE `COMM` IS NULL;
 
-SELECT ENAME,SAL,COMM FROM db.emp ORDER BY SAL;
+SELECT `ENAME`,`SAL`,`COMM` FROM db.`emp` ORDER BY `SAL`;
 
 SELECT AVG(SAL),MAX(SAL),MIN(SAL),SUM(SAL) FROM db.emp;
 
-SELECT ENAME,HIREDATE,sysdate() AS today ,datediff((sysdate()) , (HIREDATE)) AS TenureInDays FROM db.emp;
-SELECT ENAME,HIREDATE,sysdate() AS today ,timestampdiff(month,HIREDATE,sysdate()) AS TenureInMonth FROM db.emp;
+SELECT `ENAME`,`HIREDATE`,sysdate() AS today ,datediff((sysdate()) , (HIREDATE)) AS TenureInDays FROM db.`emp`;
+SELECT `ENAME`,`HIREDATE`,sysdate() AS today ,timestampdiff(month,HIREDATE,sysdate()) AS TenureInMonth FROM db.`emp`;
 
-SELECT * FROM db.emp WHERE ENAME LIKE 'S%';
+SELECT * FROM db.`emp` WHERE `ENAME` LIKE 'S%';
 
+SELECT DISTINCT `DEPTNO` FROM db.`dept`;
+
+SELECT LOWER(`JOB`) from db.`emp`;
+
+SELECT e1.`ENAME`,e1.`EMPNO`,e1.`JOB`,e1.`SAL` FROM db.`emp` e1 
+WHERE 3 > (SELECT count(distinct e2.`SAL`) FROM db.`emp` e2 where e2.`SAL`>e1.`SAL`);
+
+SELECT * FROM db.`emp` 
+WHERE `JOB` IN ("CLERK","MANAGER") AND `DEPTNO`=10;
+
+SELECT * FROM db.`emp` WHERE `JOB`="CLERK" ORDER BY  `DEPTNO`;
+
+SELECT * FROM db.`emp` ORDER BY  `DEPTNO`;
+
+SELECT count(`EMPNO`) AS NumberOFEmployees,`JOB` FROM db.`emp` GROUP BY  `JOB`;
+
+SELECT count(`EMPNO`) AS NumberOFEmployees,`DEPTNO` FROM db.`emp` GROUP BY  `DEPTNO`;
