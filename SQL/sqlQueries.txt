@@ -25,6 +25,7 @@ SELECT LOWER(`JOB`) from db.`emp`;
 
 SELECT e1.`ENAME`,e1.`EMPNO`,e1.`JOB`,e1.`SAL` FROM db.`emp` e1 
 WHERE 3 > (SELECT count(distinct e2.`SAL`) FROM db.`emp` e2 where e2.`SAL`>e1.`SAL`);
+//So here 2 people earn 5000,one earns 3000 and 3rd one earns 2000
 
 SELECT * FROM db.`emp` 
 WHERE `JOB` IN ("CLERK","MANAGER") AND `DEPTNO`=10;
@@ -35,4 +36,11 @@ SELECT * FROM db.`emp` ORDER BY  `DEPTNO`;
 
 SELECT count(`EMPNO`) AS NumberOFEmployees,`JOB` FROM db.`emp` GROUP BY  `JOB`;
 
+SELECT `DEPTNO`, `JOB`,COUNT(DISTINCT JOB) ,COUNT(`EMPNO`) AS countOFEmployee FROM db.`emp` GROUP BY `DEPTNO`, `JOB`;
+
+SELECT DEPTNO, JOB ,COUNT(`EMPNO`) FROM db.`emp` GROUP BY `DEPTNO`, `JOB`;
+
 SELECT count(`EMPNO`) AS NumberOFEmployees,`DEPTNO` FROM db.`emp` GROUP BY  `DEPTNO`;
+
+SELECT * ,DENSE_RANK() OVER (ORDER BY `SAL`) AS Rank_No FROM db.`emp`;
+//if we use rank then if 2 people are at 1 ,the next one will be 3rd ranker
