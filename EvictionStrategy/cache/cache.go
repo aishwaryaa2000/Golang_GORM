@@ -38,9 +38,14 @@ func (c *Cache) Add(key string) {
 }
 
 func (c *Cache) Get(key string) {
+	_,okBool:= c.Storage[key]
+	if !okBool{
+		fmt.Println("Element doesn't exist")
+	}else{
 	c.Storage[key]++
 	fmt.Println("Key:", key, " Value:", c.Storage[key])
 	c.algo.Add(key)
+	}
 }
 
 func (c *Cache) evict() {
