@@ -1,16 +1,27 @@
-// package main
+package main
 
-// import (
-// 	"github.com/jinzhu/gorm"
-// 	_ "github.com/jinzhu/gorm/dialects/mysql"
-// 	"log"
-// )
-  
-//   func main() {
+import (
+	"gorm/connect"
+	"gorm/crud"
+)
 
-// 	db, err := gorm.Open("mysql", "root:Pass@123@/db?charset=utf8&parseTime=True&loc=Local")
-// 	if err!=nil{
-// 		log.Fatal(err)
-// 	}
-// 	defer db.Close()
-//   }
+func main() {
+
+	db := connect.SetupDB()
+	crud.CreateTable(db)
+	crud.MakeForeignKey(db)
+	crud.Insert(db)
+	crud.Update(db)
+	crud.Delete(db)
+	crud.Query(db)
+
+
+
+
+}
+
+/*
+
+update and save ka difference
+
+*/
