@@ -180,7 +180,7 @@ func HardDeleteUser() {
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
 	defer uow.Complete()
 	var user model.User
-	user.ID, _= uuid.FromString("0d1ddf9f-53e2-4440-9545-d72679582fed")
+	user.ID, _= uuid.FromString("888b997a-1226-4883-b92b-35baad6f7901")
 
 	err := serviceInstanceUser.gormRepo.HardDelete(uow, &user)
 	if err != nil {

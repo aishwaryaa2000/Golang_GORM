@@ -3,7 +3,7 @@ package repository
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/satori/go.uuid"
-	"gorm/model"
+	// "gorm/model"
 )
 
 type Repository interface {
@@ -105,11 +105,25 @@ func (repository *GormRepository) Delete(uow *UnitOfWork, entity interface{}) er
 
 
 func (repository *GormRepository) HardDelete(uow *UnitOfWork, entity interface{}) error {
-	var user model.User
-	uow.DB.Where("id = ?", "0d1ddf9f-53e2-4440-9545-d72679582fed").Preload("Courses").First(&user)
-	uow.DB.Debug().Model(entity).Association("Courses").Delete(user.Courses)//this is deleting the association of user_courses
+	/*this is working code 1 -
+	 method 1
+	 var user model.User
+	 uow.DB.Where("id = ?", "0d1ddf9f-53e2-4440-9545-d72679582fed").Preload("Courses").First(&user)
+	 uow.DB.Debug().Model(entity).Association("Courses").Delete(user.Courses)//this is deleting the association of user_courses
+	*/
+
+
+	/*
+	METHOD 2
+	This is also used to delete the association user_courses but here structField.Courses should be populated by the values
+	structField := entity.(*model.User)
+	uow.DB.Debug().Model(entity).Association("Courses").Delete(structField.Courses)
+	*/
+
 	return uow.DB.Debug().Unscoped().Delete(entity).Error
 	//this is hard deleting the user and the hobbies but not the entries from user_courses
+
+
 
 	/*
 	Delete Associations

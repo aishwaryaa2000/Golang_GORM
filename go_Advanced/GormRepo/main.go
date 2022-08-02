@@ -14,9 +14,9 @@ func main() {
 
 	// service.AddUser()
 	// service.GetUser()
-	service.GetAllUser()
+	// service.GetAllUser()
 	service.HardDeleteUser()
-	service.GetAllUser()
+	
 	// service.AddCourse()
 	// service.GetAllCourses()
 	// service.UpdateCourse()
@@ -24,7 +24,7 @@ func main() {
 	service.GetAllCourses()
 
 	// service.UpdateUser()
-	// service.GetAllUser()
+	 service.GetAllUser()
 	//  service.DeleteUser()
 	// service.GetAllUser()
 
