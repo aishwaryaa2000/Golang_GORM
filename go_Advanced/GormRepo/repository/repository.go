@@ -3,6 +3,7 @@ package repository
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/satori/go.uuid"
+	"gorm/model"
 )
 
 type Repository interface {
@@ -12,6 +13,7 @@ type Repository interface {
 	Add(uow *UnitOfWork, out interface{}) error
 	Update(uow *UnitOfWork, out interface{}) error
 	Delete(uow *UnitOfWork, out interface{}) error
+	HardDelete(uow *UnitOfWork, out interface{}) error
 	AddWithOmit(uow *UnitOfWork, entity interface{}, omitFields []string) error
 
 }
@@ -100,3 +102,21 @@ func (repository *GormRepository) Update(uow *UnitOfWork, entity interface{}) er
 func (repository *GormRepository) Delete(uow *UnitOfWork, entity interface{}) error {
 	return uow.DB.Delete(entity).Error
 }
+
+
+func (repository *GormRepository) HardDelete(uow *UnitOfWork, entity interface{}) error {
+	var user model.User
+	uow.DB.Where("id = ?", "0d1ddf9f-53e2-4440-9545-d72679582fed").Preload("Courses").First(&user)
+	uow.DB.Debug().Model(entity).Association("Courses").Delete(user.Courses)//this is deleting the association of user_courses
+	return uow.DB.Debug().Unscoped().Delete(entity).Error
+	//this is hard deleting the user and the hobbies but not the entries from user_courses
+
+	/*
+	Delete Associations
+	Remove relationship between source & argument objects, only delete the reference, won’t delete those objects from DB.
+	db.Model(&user).Association("Languages").Delete([]Language{languageZH, languageEN})
+	db.Model(&user).Association("Languages").Delete(languageZH, languageEN)
+	*/
+}
+
+

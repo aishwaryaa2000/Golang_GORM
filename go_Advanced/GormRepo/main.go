@@ -12,10 +12,11 @@ func main() {
 	// createTableAndSetForiegnKey()
 	service.GetAllUser()
 
-	service.AddUser()
+	// service.AddUser()
 	// service.GetUser()
 	service.GetAllUser()
-
+	service.HardDeleteUser()
+	service.GetAllUser()
 	// service.AddCourse()
 	// service.GetAllCourses()
 	// service.UpdateCourse()

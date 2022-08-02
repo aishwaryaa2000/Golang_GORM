@@ -18,14 +18,14 @@ func AddUser() {
 	id:=uuid.NewV4()
 	// course1 := model.NewCourse("History")
 	// course2 := model.NewCourse("Politcs")
-	hobby1 := model.NewHobby("painting")
-	hobby2 := model.NewHobby("drawing")
+	hobby1 := model.NewHobby("skating")
+	hobby2 := model.NewHobby("acting")
 	courseID ,_ := uuid.FromString("712ca4b1-8c35-4871-9673-45bd49a6394a")
 	//here with the help of ID,I can fetch the course name from course table
 	courseName := "Geography"
 	userr := model.User{
-		FName: "Kaustubh",
-		LName: "Bhure",
+		FName: "Ramani",
+		LName: "Anand",
 		CustomModel: model.CustomModel{
 			ID : id,
 		},
@@ -152,6 +152,37 @@ func DeleteUser() {
 	user.ID, _= uuid.FromString("dbbe9842-be7b-451f-bd1c-2206b9bfbbd6")
 
 	err := serviceInstanceUser.gormRepo.Delete(uow, &user)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("\nDeleted user successfully")
+	}
+
+	/*var hobby model.Hobby
+	hobby.UserID=user.ID
+	err := serviceInstanceUser.gormRepo.Delete(uow, &hobby)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("Deleted hobbies successfully")
+	}
+
+	Isse pura user he gayab ho gaya hai
+	*/
+	uow.Commit()
+
+}
+
+
+
+func HardDeleteUser() {
+
+	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
+	defer uow.Complete()
+	var user model.User
+	user.ID, _= uuid.FromString("0d1ddf9f-53e2-4440-9545-d72679582fed")
+
+	err := serviceInstanceUser.gormRepo.HardDelete(uow, &user)
 	if err != nil {
 		fmt.Println(err)
 	} else {
