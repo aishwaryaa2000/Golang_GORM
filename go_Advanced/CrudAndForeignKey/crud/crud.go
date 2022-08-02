@@ -174,12 +174,18 @@ func Delete(db *gorm.DB) {
 
 /*
 
-Immediate functions
+Immediate functions always at last
 create
 update
 save
 find
 first
 last
+
+
+not immediate
+model
+join
+where
 
 */
