@@ -10,9 +10,11 @@ import (
 func main() {
 
 	// createTableAndSetForiegnKey()
-	// service.AddUser()
+	service.GetAllUser()
+
+	service.AddUser()
 	// service.GetUser()
-	// service.GetAllUser()
+	service.GetAllUser()
 
 	// service.AddCourse()
 	// service.GetAllCourses()

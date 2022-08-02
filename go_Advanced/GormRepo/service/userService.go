@@ -16,19 +16,27 @@ func AddUser() {
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
 	defer uow.Complete()
 	id:=uuid.NewV4()
-	course1 := model.NewCourse("History")
-	course2 := model.NewCourse("Politcs")
-	hobby1 := model.NewHobby("playing")
-	hobby2 := model.NewHobby("reading")
+	// course1 := model.NewCourse("History")
+	// course2 := model.NewCourse("Politcs")
+	hobby1 := model.NewHobby("painting")
+	hobby2 := model.NewHobby("drawing")
+	courseID ,_ := uuid.FromString("712ca4b1-8c35-4871-9673-45bd49a6394a")
+	//here with the help of ID,I can fetch the course name from course table
+	courseName := "Geography"
 	userr := model.User{
-		FName: "Aayush",
-		LName: "Kuuty",
+		FName: "Kaustubh",
+		LName: "Bhure",
 		CustomModel: model.CustomModel{
 			ID : id,
 		},
 		Courses: []model.Course{
-			course1,
-			course2,
+			{
+				CustomModel : model.CustomModel{
+					ID :courseID,
+				},
+				Name: courseName,
+			},
+		
 		},
 		Hobbies: []model.Hobby{
 			hobby1,
@@ -36,7 +44,21 @@ func AddUser() {
 		},
 	}
 
-	err := serviceInstanceUser.gormRepo.Add(uow, &userr)
+	/*
+    For many2many associations, GORM will upsert the associations before creating the join table references,
+	if you want to skip the upserting of associations, you could skip it like:
+    db.Omit("Courses.*").Create(&user)
+	Values will get added in user_courses but not in courses table
+	courses table me buss name update hoga according to courseID specified while creation
+
+    The following code will skip the creation of the association and its references
+	db.Omit("Courses").Create(&user)
+	In this case,values won't get added in user_course and courses table
+	*/
+
+	var omit = []string{"Courses.*"}
+	//New record in course table will not be added here,it has to be done via courseService.go
+	err := serviceInstanceUser.gormRepo.AddWithOmit(uow, &userr,omit)
 	if err != nil {
 		fmt.Println(err)
 	}

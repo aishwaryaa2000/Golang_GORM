@@ -1,9 +1,10 @@
 package repository
 
-import(
+import (
 	"github.com/jinzhu/gorm"
 	"github.com/satori/go.uuid"
 )
+
 type Repository interface {
 	Get(uow *UnitOfWork, out interface{}, id uuid.UUID, preloadAssociations []string) error
 	GetAll(uow *UnitOfWork, out interface{}, preloadAssociations []string) error
@@ -11,6 +12,8 @@ type Repository interface {
 	Add(uow *UnitOfWork, out interface{}) error
 	Update(uow *UnitOfWork, out interface{}) error
 	Delete(uow *UnitOfWork, out interface{}) error
+	AddWithOmit(uow *UnitOfWork, entity interface{}, omitFields []string) error
+
 }
 
 // UnitOfWork represents a connection
@@ -82,6 +85,10 @@ func (repository *GormRepository) GetAllForTenant(uow *UnitOfWork, out interface
 // Add specified Entity
 func (repository *GormRepository) Add(uow *UnitOfWork, entity interface{}) error {
 	return uow.DB.Create(entity).Error
+}
+
+func (repository *GormRepository) AddWithOmit(uow *UnitOfWork, entity interface{}, omitFields []string) error {
+	return uow.DB.Debug().Omit(omitFields...).Create(entity).Error	
 }
 
 // Update specified Entity
