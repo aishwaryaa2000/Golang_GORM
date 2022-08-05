@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
-	"EvictionStrategy/cache"
-	"EvictionStrategy/lru"
+	"swabhav-training/GoTraining/EvictionStrategy/cache"
+	"swabhav-training/GoTraining/EvictionStrategy/lfu"
+	"swabhav-training/GoTraining/EvictionStrategy/lru"
 )
 
 func main() {
-	//lfu := lfu.NewLfu()
-	//fifo := fifo.NewFifo()
-	lru := lru.NewLru()
-	cache := cache.NewCache(lru)
+	lfu := lfu.New()
+	//fifo := fifo.New()
+	lru := lru.New()
+	cache := cache.New(lfu)
 
 	cache.Add("a")
 	cache.Add("b")
@@ -24,7 +25,21 @@ func main() {
 	cache.Get("c")
 	cache.Get("a")
 
+	cache.SetEvictionAlgo(lru)
+
 	cache.Add("d")
 
 	fmt.Println(cache.Storage)
+
+	// lru := lru.NewLru()
+	// cache1 := cache.NewCache(lru)
+
+	// cache.Add("d")
+
+	// fifo := fifo.NewFifo()
+	// cache = cache.NewCache(fifo)
+	// cache.Add(fifo)
+
+	// cache.Add("e")
+
 }

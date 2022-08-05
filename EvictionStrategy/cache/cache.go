@@ -2,19 +2,20 @@ package cache
 
 import "fmt"
 
-type Algo interface {
+type Evictor interface {
 	Evict(*Cache)
-	Add(string)
 }
 
 type Cache struct {
 	Storage     map[string]int
-	algo        Algo
+	AddOrder    []string
+	ReadOrder   []string
+	algo        Evictor
 	size        int
 	maxCapacity int
 }
 
-func NewCache(e Algo) *Cache {
+func New(e Evictor) *Cache {
 	tempstorage := make(map[string]int)
 	return &Cache{
 		Storage:     tempstorage,
@@ -24,7 +25,7 @@ func NewCache(e Algo) *Cache {
 	}
 }
 
-func (c *Cache) setEvictionAlgo(e Algo) {
+func (c *Cache) SetEvictionAlgo(e Evictor) {
 	c.algo = e
 }
 
@@ -34,21 +35,53 @@ func (c *Cache) Add(key string) {
 	}
 	c.size++
 	c.Storage[key] = 0
-	c.algo.Add(key)
+	c.AddOrder = append(c.AddOrder, key)
+	c.ReadOrder = append(c.ReadOrder, key)
 }
 
 func (c *Cache) Get(key string) {
-	_,okBool:= c.Storage[key]
-	if !okBool{
-		fmt.Println("Element doesn't exist")
-	}else{
 	c.Storage[key]++
 	fmt.Println("Key:", key, " Value:", c.Storage[key])
-	c.algo.Add(key)
+	pos := -1
+	for i, val := range c.ReadOrder {
+		if val == key {
+			pos = i
+			break
+		}
+	}
+	if pos != -1 {
+		for i := pos; i < len(c.ReadOrder)-1; i++ {
+			c.ReadOrder[i] = c.ReadOrder[i+1]
+		}
+		c.ReadOrder[len(c.ReadOrder)-1] = key
+	} else {
+		c.ReadOrder = append(c.ReadOrder, key)
 	}
 }
 
 func (c *Cache) evict() {
 	c.algo.Evict(c)
 	c.size--
+}
+
+func (c *Cache) DeleteFromReadOrder(key string) {
+	pos := -1
+	for i, val := range c.ReadOrder {
+		if val == key {
+			pos = i
+		}
+	}
+	c.ReadOrder[pos] = c.ReadOrder[len(c.ReadOrder)-1]
+	c.ReadOrder = c.ReadOrder[:len(c.ReadOrder)-1]
+}
+
+func (c *Cache) DeleteFromAddOrder(key string) {
+	pos := -1
+	for i, val := range c.AddOrder {
+		if val == key {
+			pos = i
+		}
+	}
+	c.AddOrder[pos] = c.AddOrder[len(c.AddOrder)-1]
+	c.AddOrder = c.AddOrder[:len(c.AddOrder)-1]
 }
