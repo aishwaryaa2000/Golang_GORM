@@ -4,12 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"gorm/encrypt"
-	"gorm/jwtauthentication"
+	"gorm/authentication"
 	"gorm/model"
 	"gorm/repository"
 	"net/http"
 	"time"
-
 	"github.com/gorilla/mux"
 	"github.com/satori/go.uuid"
 )
@@ -47,7 +46,7 @@ func Login(w http.ResponseWriter, r *http.Request){
 
 	}
 
-	token,_ := jwtauthentication.GenerateJWT(currentLogin.Id)
+	token,_ := authentication.GenerateJWT(currentLogin.Id)
 	outputString :="Successfully logged in.Token is : " +token
 
 	http.SetCookie(w,&http.Cookie{
@@ -166,7 +165,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	defer uow.Complete()
 
 	var user model.User
-	user.ID = jwtauthentication.GetIdFromCookieClaims(r)
+	user.ID = authentication.GetIdFromCookieClaims(r)
 	err := UnmarshalJSON(r,&user)
 	if err!=nil{
 		w.Write([]byte(err.Error()))
@@ -201,7 +200,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	defer uow.Complete()
 
 	var user model.User
-	user.ID = jwtauthentication.GetIdFromCookieClaims(r)
+	user.ID = authentication.GetIdFromCookieClaims(r)
 
 	err := serviceInstanceUser.gormRepo.Delete(uow, &user)
 	if err != nil {
@@ -212,6 +211,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w,&http.Cookie{
 		Name : "token",
+		Value : " ",
 		MaxAge:   -1,
 		// MaxAge<0 means delete cookie now, equivalently 'Max-Age: 0'
 	})
@@ -230,7 +230,7 @@ func DeleteHobbyOfAUser(w http.ResponseWriter, r *http.Request) {
 	defer uow.Complete()
 	
 
-	userId := jwtauthentication.GetIdFromCookieClaims(r)
+	userId := authentication.GetIdFromCookieClaims(r)
 
 	var singleHobby model.Hobby
 
@@ -277,7 +277,7 @@ func DeleteCourseOfAUser(w http.ResponseWriter, r *http.Request){
 	course.ID,_ = uuid.FromString(vars["courseid"])
 
 	var user model.User
-	user.ID = jwtauthentication.GetIdFromCookieClaims(r)
+	user.ID = authentication.GetIdFromCookieClaims(r)
 
 	err := serviceInstanceUser.gormRepo.RemoveAssociations(uow,&user,"Courses",&course)
 	if err != nil {

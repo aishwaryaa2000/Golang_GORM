@@ -1,7 +1,7 @@
 package service
 
 import (
-	"gorm/jwtauthentication"
+	"gorm/authentication"
 	"net/http"
 )
 
@@ -14,7 +14,7 @@ func IsAuthorized(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		okBool := jwtauthentication.VerifyJWT(cookie.Value)
+		okBool := authentication.VerifyJWT(cookie.Value)
 
 		if !okBool {
 			w.Write([]byte("Login again.Token invalid"))
