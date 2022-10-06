@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/golang-jwt/jwt"
 	uuid "github.com/satori/go.uuid"
@@ -33,4 +34,22 @@ func GetIdFromCookieClaims(r *http.Request) uuid.UUID {
 	}
 
 	return uuid.Nil
+}
+
+func SetCookieValue(w http.ResponseWriter, token string) {
+	http.SetCookie(w, &http.Cookie{
+		Name:    "token",
+		Value:   token,
+		Expires: time.Now().Add(time.Minute * 5),
+	})
+}
+
+
+func DeleteCookieValue(w http.ResponseWriter){
+	http.SetCookie(w,&http.Cookie{
+		Name : "token",
+		Value : " ",
+		MaxAge:   -1,
+		// MaxAge<0 means delete cookie now, equivalently 'Max-Age: 0'
+	})
 }

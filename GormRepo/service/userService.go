@@ -8,7 +8,6 @@ import (
 	"gorm/model"
 	"gorm/repository"
 	"net/http"
-	"time"
 	"github.com/gorilla/mux"
 	"github.com/satori/go.uuid"
 )
@@ -47,14 +46,8 @@ func Login(w http.ResponseWriter, r *http.Request){
 	}
 
 	token,_ := authentication.GenerateJWT(currentLogin.Id)
+	authentication.SetCookieValue(w,token)
 	outputString :="Successfully logged in.Token is : " +token
-
-	http.SetCookie(w,&http.Cookie{
-		Name : "token",
-		Value : token,
-		Expires: time.Now().Add(time.Minute*5),
-	})
-
 	json.NewEncoder(w).Encode(outputString)
 
 	uow.Commit()
@@ -166,6 +159,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	var user model.User
 	user.ID = authentication.GetIdFromCookieClaims(r)
+	
 	err := UnmarshalJSON(r,&user)
 	if err!=nil{
 		w.Write([]byte(err.Error()))
@@ -208,16 +202,9 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Error occured while deleting the user"))
 		return
 	} 
-
-	http.SetCookie(w,&http.Cookie{
-		Name : "token",
-		Value : " ",
-		MaxAge:   -1,
-		// MaxAge<0 means delete cookie now, equivalently 'Max-Age: 0'
-	})
-
+	authentication.DeleteCookieValue(w)
 	w.Write([]byte("\nDeleted user successfully"))
-		
+
 	uow.Commit()
 
 }
