@@ -1,4 +1,4 @@
-package gorm
+package app
 
 import (
 	"context"
@@ -8,22 +8,30 @@ import (
 	"log"
 	"net/http"
 	"time"
-	"gorm/repository"
 	"github.com/gorilla/mux"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"honnef.co/go/tools/config"
+	"gorm/config"
 )
 
 type App struct {
-	Name   string
 	Config *config.Config
 	DB     *gorm.DB
 	Router *mux.Router
 	server *http.Server
 }
+var db *gorm.DB
 
-
+func New(router *mux.Router) *App{
+	var defaults = make(map[string]interface{})
+	appConfig := config.NewConfig(defaults)
+	app := App{Config: appConfig} 
+	app.Router = router
+	app.Initialize()
+	app.MigrateDB()
+	db = app.DB
+	return &app
+}
 
 func (app *App) GetConnectionString() string {
 	dbHost := app.Config.GetString("DB_HOST")
@@ -105,6 +113,6 @@ func createTables(db *gorm.DB) {
 }
 
 // NewUnitOfWork creates new UnitOfWork
-func (app *App) NewUnitOfWork(readOnly bool, logger zerolog.Logger) *repository.UnitOfWork {
-	return repository.NewUnitOfWork(app.DB, readOnly, logger, log.Config{SlowThreshold: time.Duration(app.Config.GetInt(config.EvSuffixForGormSlowThreshold)) * time.Millisecond})
-}
+// func (app *App) NewUnitOfWork(readOnly bool, logger zerolog.Logger) *repository.UnitOfWork {
+// 	return repository.NewUnitOfWork(app.DB, readOnly, logger, log.Config{SlowThreshold: time.Duration(app.Config.GetInt(config.EvSuffixForGormSlowThreshold)) * time.Millisecond})
+// }
