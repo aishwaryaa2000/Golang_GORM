@@ -267,7 +267,7 @@ func DeleteCourseOfAUser(w http.ResponseWriter, r *http.Request){
 	var user model.User
 	user.ID = jwtauthentication.GetIdFromCookieClaims(r)
 
-	err := serviceInstanceUser.gormRepo.RemoveAssociations(uow,&user,"Courses",course)
+	err := serviceInstanceUser.gormRepo.RemoveAssociations(uow,&user,"Courses",&course)
 	if err != nil {
 		fmt.Println(err)
 		w.Write([]byte("Error while deleting the course"))

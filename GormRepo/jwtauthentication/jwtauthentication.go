@@ -52,7 +52,7 @@ func VerifyJWT(tokenString string) bool {
 	}
 
 	if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		return true
+		return true 
 	}
 
 	return false
