@@ -19,9 +19,9 @@ type UserLogin struct {
 	Password   string `json:"password"`
 }
 
-var serviceInstanceUser = getInstanceOfService()
 
 func Login(w http.ResponseWriter, r *http.Request){
+	var serviceInstanceUser = getInstanceOfService()
 
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, true)
 	defer uow.Complete()
@@ -64,6 +64,8 @@ func Login(w http.ResponseWriter, r *http.Request){
 
 func AddUser(w http.ResponseWriter, r *http.Request) {
 
+	var serviceInstanceUser = getInstanceOfService()
+
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
 	defer uow.Complete()
 
@@ -87,6 +89,8 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
+
+	var serviceInstanceUser = getInstanceOfService()
 
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, true)
 	defer uow.Complete()
@@ -123,6 +127,8 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 func GetAllUser(w http.ResponseWriter, r *http.Request) {
 
+	var serviceInstanceUser = getInstanceOfService()
+
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, true)
 	defer uow.Complete()
 
@@ -154,6 +160,7 @@ func GetAllUser(w http.ResponseWriter, r *http.Request) {
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
+	var serviceInstanceUser = getInstanceOfService()
 
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
 	defer uow.Complete()
@@ -188,6 +195,8 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 
+	var serviceInstanceUser = getInstanceOfService()
+
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
 	defer uow.Complete()
 
@@ -215,6 +224,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 
 func DeleteHobbyOfAUser(w http.ResponseWriter, r *http.Request) {
 
+	var serviceInstanceUser = getInstanceOfService()
 
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
 	defer uow.Complete()
@@ -255,6 +265,8 @@ func DeleteHobbyOfAUser(w http.ResponseWriter, r *http.Request) {
 
 
 func DeleteCourseOfAUser(w http.ResponseWriter, r *http.Request){
+
+	var serviceInstanceUser = getInstanceOfService()
 
 	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
 	defer uow.Complete()

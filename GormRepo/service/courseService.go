@@ -10,9 +10,9 @@ import (
 )
 
 
-var serviceInstanceCourse = getInstanceOfService()
 
 func AddCourse(w http.ResponseWriter, r *http.Request){
+	var serviceInstanceCourse = getInstanceOfService()
 
 	
 	uow := repository.NewUnitOfWork(serviceInstanceCourse.db, false)
@@ -37,8 +37,10 @@ func AddCourse(w http.ResponseWriter, r *http.Request){
 
 
 func GetCourse(w http.ResponseWriter, r *http.Request) {
+	var serviceInstanceCourse = getInstanceOfService()
 
-	uow := repository.NewUnitOfWork(serviceInstanceUser.db, true)
+
+	uow := repository.NewUnitOfWork(serviceInstanceCourse.db, true)
 	defer uow.Complete()
 
 	vars := mux.Vars(r)
@@ -67,6 +69,7 @@ func GetCourse(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllCourses(w http.ResponseWriter, r *http.Request) {
+	var serviceInstanceCourse = getInstanceOfService()
 
 	uow := repository.NewUnitOfWork(serviceInstanceCourse.db, true)
 	defer uow.Complete()
@@ -90,8 +93,10 @@ func GetAllCourses(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateCourse(w http.ResponseWriter, r *http.Request) {
+	var serviceInstanceCourse = getInstanceOfService()
 
-	uow := repository.NewUnitOfWork(serviceInstanceUser.db, true)
+
+	uow := repository.NewUnitOfWork(serviceInstanceCourse.db, true)
 	defer uow.Complete()
 
 	vars := mux.Vars(r)
@@ -118,15 +123,14 @@ func UpdateCourse(w http.ResponseWriter, r *http.Request) {
 
 
 func DeleteCourse(w http.ResponseWriter, r *http.Request) {
-
-	
-	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
+	var serviceInstanceCourse = getInstanceOfService()
+	uow := repository.NewUnitOfWork(serviceInstanceCourse.db, false)
 	defer uow.Complete()
 	
 	vars := mux.Vars(r)
 	var currCourse model.Course
 	currCourse.ID,_ = uuid.FromString(vars["id"])
-	err := serviceInstanceUser.gormRepo.Delete(uow, &currCourse)
+	err := serviceInstanceCourse.gormRepo.Delete(uow, &currCourse)
 	if err != nil {
 		fmt.Println(err)
 		w.Write([]byte("Error occurred while deleting course"))

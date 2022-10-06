@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"gorm/model"
-	"gorm/router"
 	"log"
 	"net/http"
 	"time"
@@ -45,12 +44,11 @@ func (app *App) GetConnectionString() string {
 
 func (app *App) Initialize() {
 
-	app.Router = router.CreateRoute()
 
-	apiPort := "80"
+	apiPort := "8080"
 
 	app.server = &http.Server{
-		Addr:         "0.0.0.0:" + apiPort,
+		Addr:         "localhost:" + apiPort,
 		WriteTimeout: time.Second * time.Duration(app.Config.GetInt("HTTP_WRITE_TIMEOUT")),
 		ReadTimeout:  time.Second * time.Duration(app.Config.GetInt("HTTP_READ_TIMEOUT")),
 		IdleTimeout:  time.Second * time.Duration(app.Config.GetInt("HTTP_IDLE_TIMEOUT")),
@@ -61,9 +59,10 @@ func (app *App) Initialize() {
 //Start http server and start listening to the requests
 func (app *App) Start() {
 
+	fmt.Println("server started->", app.server.Addr)
 	if err := app.server.ListenAndServe(); err != nil {
 		if err != http.ErrServerClosed {
-			log.Fatal("Unable to start server, exiting the application!")
+			log.Fatal("exiting the application!")
 		}
 	}
 
@@ -81,7 +80,8 @@ func (app *App) Stop() {
 	if err != nil {
 		sqlDB.Close()
 	}
-	
+	fmt.Println("Closing Resourses")
+
 }
 
 func (app *App) MigrateDB() {
@@ -90,11 +90,11 @@ func (app *App) MigrateDB() {
 	if err != nil {
 		log.Fatal("Unable to open DB connection for migration, exiting the application!")
 	}
+	app.DB = migrateDB.Debug()
 	createTables(migrateDB)
 }
 
 func createTables(db *gorm.DB) {
-	//db := connect.SetupDB().Debug()
 
 	if !db.Migrator().HasTable(&model.User{}){
 		db.AutoMigrate(&model.User{})
@@ -112,7 +112,7 @@ func createTables(db *gorm.DB) {
 	}
 }
 
-// NewUnitOfWork creates new UnitOfWork
-// func (app *App) NewUnitOfWork(readOnly bool, logger zerolog.Logger) *repository.UnitOfWork {
-// 	return repository.NewUnitOfWork(app.DB, readOnly, logger, log.Config{SlowThreshold: time.Duration(app.Config.GetInt(config.EvSuffixForGormSlowThreshold)) * time.Millisecond})
-// }
+func GetDb() *gorm.DB{
+	fmt.Println("db : ",db)
+	return db
+}

@@ -18,12 +18,17 @@ func NewConfig(defaults map[string]interface{}) *Config {
 	config.viper.SetDefault(dbPort, 3306)
 	config.viper.SetDefault(dbUser, "root")
 	config.viper.SetDefault(dbPwd, "Pass@123")
+	config.viper.SetDefault(HTTPReadTimeout, 15)
+	config.viper.SetDefault(HTTPWriteTimeout, 15)
+	config.viper.SetDefault(HTTPIdleTimeout, 60)
 	
 	for key, value := range defaults {
 		config.viper.SetDefault(key, value)
 	}
 
 	config.viper.AutomaticEnv()
+	config.viper.SetEnvPrefix(Prefix)
+
 
 
 	return config

@@ -1,8 +1,10 @@
 package service
 
 import (
-	"gorm/connect"
+	"fmt"
+	"gorm/app"
 	"gorm/repository"
+
 	"gorm.io/gorm"
 )
 
@@ -18,15 +20,12 @@ func getInstanceOfService() *Service {
 	if singleInstanceOfSevice == nil {
 		singleInstanceOfSevice = &Service{
 			gormRepo: repository.NewRepository(),
-			db:       connect.SetupDB().Debug(),
+			db:       app.GetDb(),
 		}
 	}
+	fmt.Println(singleInstanceOfSevice.db)
 
 	return singleInstanceOfSevice
-	
+
 }
 
-/*
-Singleton design pattern
-Didn't add Mutex part as go routines are not included for now
-*/
