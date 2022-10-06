@@ -1,10 +1,8 @@
 package service
 
 import (
-	"fmt"
 	"gorm/app"
 	"gorm/repository"
-
 	"gorm.io/gorm"
 )
 
@@ -23,7 +21,6 @@ func getInstanceOfService() *Service {
 			db:       app.GetDb(),
 		}
 	}
-	fmt.Println(singleInstanceOfSevice.db)
 
 	return singleInstanceOfSevice
 

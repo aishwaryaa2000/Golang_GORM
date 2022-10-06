@@ -46,10 +46,17 @@ func SetCookieValue(w http.ResponseWriter, token string) {
 
 
 func DeleteCookieValue(w http.ResponseWriter){
-	http.SetCookie(w,&http.Cookie{
-		Name : "token",
-		Value : " ",
-		MaxAge:   -1,
-		// MaxAge<0 means delete cookie now, equivalently 'Max-Age: 0'
-	})
+
+    cookie := &http.Cookie{
+        Name:     "token",
+        Path:     "/",
+        HttpOnly: false,
+        Secure:   false,
+        Domain:   "localhost",
+        Expires:  time.Now(),
+        MaxAge:   -1,
+	}
+
+	http.SetCookie(w, cookie)
+
 }

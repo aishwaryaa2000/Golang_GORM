@@ -159,7 +159,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	var user model.User
 	user.ID = authentication.GetIdFromCookieClaims(r)
-	
+
 	err := UnmarshalJSON(r,&user)
 	if err!=nil{
 		w.Write([]byte(err.Error()))

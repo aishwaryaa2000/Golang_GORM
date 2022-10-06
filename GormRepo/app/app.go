@@ -24,8 +24,7 @@ var db *gorm.DB
 func New(router *mux.Router) *App{
 	var defaults = make(map[string]interface{})
 	appConfig := config.NewConfig(defaults)
-	app := App{Config: appConfig} 
-	app.Router = router
+	app := App{Config: appConfig,Router: router} 
 	app.Initialize()
 	app.MigrateDB()
 	db = app.DB
@@ -68,7 +67,7 @@ func (app *App) Start() {
 
 }
 
-
+//stop the app-graceful shutdown
 func (app *App) Stop() {
 	wait, _ := time.ParseDuration("2m")
 	ctx, cancel := context.WithTimeout(context.Background(), wait)
@@ -84,6 +83,7 @@ func (app *App) Stop() {
 
 }
 
+//open connection to DB and create initial tables
 func (app *App) MigrateDB() {
 
 	migrateDB, err := gorm.Open(mysql.Open(app.GetConnectionString()), &gorm.Config{})
@@ -91,7 +91,7 @@ func (app *App) MigrateDB() {
 		log.Fatal("Unable to open DB connection for migration, exiting the application!")
 	}
 	app.DB = migrateDB.Debug()
-	createTables(migrateDB)
+	createTables(migrateDB.Debug())
 }
 
 func createTables(db *gorm.DB) {
@@ -103,16 +103,13 @@ func createTables(db *gorm.DB) {
 	if !db.Migrator().HasTable(&model.Course{}){
 		db.AutoMigrate(&model.Course{})
 		fmt.Println("Course table created")
-
 	}
 	if !db.Migrator().HasTable(&model.Hobby{}){
 		db.AutoMigrate(&model.Hobby{})
 		fmt.Println("Hobby table created")
-
 	}
 }
 
 func GetDb() *gorm.DB{
-	fmt.Println("db : ",db)
 	return db
 }
