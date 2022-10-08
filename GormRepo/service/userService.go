@@ -1,15 +1,15 @@
 package service
 
 import (
-	"encoding/json"
-	"fmt"
+	"net/http"
+	"github.com/gorilla/mux"
+	"github.com/satori/go.uuid"
+	
 	"gorm/encrypt"
 	"gorm/authentication"
 	"gorm/model"
 	"gorm/repository"
-	"net/http"
-	"github.com/gorilla/mux"
-	"github.com/satori/go.uuid"
+	"gorm/web"
 )
 
 type UserLogin struct {
@@ -25,9 +25,9 @@ func Login(w http.ResponseWriter, r *http.Request){
 	defer uow.Complete()
 
 	var currentLogin UserLogin	
-	err := UnmarshalJSON(r,&currentLogin)
+	err := web.UnmarshalJSON(r,&currentLogin)
 	if err!=nil{
-		w.Write([]byte(err.Error()))
+		web.RespondErrorMessage(w,http.StatusBadRequest,err.Error())
 		return
 	}
 
@@ -35,21 +35,19 @@ func Login(w http.ResponseWriter, r *http.Request){
 	var preloadAssoc = []string{"Courses", "Hobbies"}
 	currID ,_ := uuid.FromString(currentLogin.Id)
 	hashedPassword := encrypt.CreateHash(currentLogin.Id + currentLogin.Password)
+
 	qp := repository.Filter("id = ? AND password = ? ",currID,hashedPassword)
-	
 	err = serviceInstanceUser.gormRepo.Get(uow, &userr, currID, preloadAssoc,qp)
+
 	if err != nil {
-		fmt.Println(err)
-		json.NewEncoder(w).Encode("Username or Password is incorrect")
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
 		return
 
 	}
 
 	token,_ := authentication.GenerateJWT(currentLogin.Id)
 	authentication.SetCookieValue(w,token)
-	outputString :="Successfully logged in.Token is : " +token
-	json.NewEncoder(w).Encode(outputString)
-
+	web.RespondJSON(w,http.StatusOK,"Successfully logged in.")
 	uow.Commit()
 
 }
@@ -62,9 +60,9 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 	defer uow.Complete()
 
 	var user model.User
-	err := UnmarshalJSON(r,&user)
+	err := web.UnmarshalJSON(r,&user)
 	if err!=nil{
-		w.Write([]byte(err.Error()))
+		web.RespondErrorMessage(w,http.StatusBadRequest,err.Error())
 		return
 	}
 
@@ -72,11 +70,10 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 	//New record in course table will not be added here,it has to be done via courseService.go
 	err = serviceInstanceUser.gormRepo.AddWithOmit(uow, &user,omit)
 	if err != nil {
-		fmt.Println(err)
-		w.Write([]byte("Error occured while registering the user"))
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
 		return
 	}
-	w.Write([]byte("User added successfully"))
+	web.RespondJSON(w,http.StatusCreated,"User added successfully")
 	uow.Commit()
 }
 
@@ -98,21 +95,11 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	
 	err := serviceInstanceUser.gormRepo.Get(uow, &user, user.ID, preloadAssoc,qp)
 	if err != nil {
-		fmt.Println(err)
-		w.Write([]byte("Error while getting the user with specifies user id"))
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
 		return
 	}
 
-	outputString := "\nID is : " + user.ID.String() + "\nName is : " + user.FName + " " + user.LName + "\n Hobbies are : "
-	
-	for _, iHobby := range user.Hobbies {
-		outputString += iHobby.Name + " "
-	}
-	outputString +=  "\nCourses enrolled are "
-	for _, iCourse := range user.Courses {
-		outputString += iCourse.Name + " "
-	}
-	w.Write([]byte(outputString))
+	web.RespondJSON(w,http.StatusOK,user)
 	uow.Commit()
 
 }
@@ -128,24 +115,11 @@ func GetAllUser(w http.ResponseWriter, r *http.Request) {
 	var preloadAssoc = []string{"Courses", "Hobbies"}
 	err := serviceInstanceUser.gormRepo.GetAll(uow, &users, preloadAssoc)
 	if err != nil {
-		fmt.Println(err)
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		return
 	}
 	
-	outputString:= "LIST OF ALL USERS\n"
-	for _, currUser := range users {
-		outputString += "\n\nID is : " +  currUser.ID.String() + "\nName is : " + currUser.FName + " " +currUser.LName + "\nHobbies : "
-		
-		for _, iHobby := range currUser.Hobbies {
-			outputString += iHobby.Name + " "
-		}
-		outputString += "\nCourses : "
-		for _, iCourse := range currUser.Courses {
-			outputString += iCourse.Name + " "
-		}
-	}
-
-	w.Write([]byte(outputString))
-
+	web.RespondJSON(w,http.StatusOK,users)
 	uow.Commit()
 
 }
@@ -160,9 +134,9 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	var user model.User
 	user.ID = authentication.GetIdFromCookieClaims(r)
 
-	err := UnmarshalJSON(r,&user)
+	err := web.UnmarshalJSON(r,&user)
 	if err!=nil{
-		w.Write([]byte(err.Error()))
+		web.RespondErrorMessage(w,http.StatusBadRequest,err.Error())
 		return
 	}
 
@@ -174,13 +148,11 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	//Dont add anything in courses table
 	err = serviceInstanceUser.gormRepo.UpdateWithOmit(uow, &user,omit)
 	if err != nil {
-		fmt.Println(err)
-		w.Write([]byte("Error occured while updating the user"))
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
 		return
 	} 
 
-	w.Write([]byte("\nUpdated user successfully"))
-
+	web.RespondJSON(w,http.StatusOK,"Updated user successfully")
 	uow.Commit()
 
 }
@@ -198,12 +170,11 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 
 	err := serviceInstanceUser.gormRepo.Delete(uow, &user)
 	if err != nil {
-		fmt.Println(err)
-		w.Write([]byte("Error occured while deleting the user"))
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
 		return
 	} 
 	authentication.DeleteCookieValue(w)
-	w.Write([]byte("\nDeleted user successfully"))
+	web.RespondJSON(w,http.StatusOK,"Deleted user successfully")
 
 	uow.Commit()
 
@@ -221,9 +192,9 @@ func DeleteHobbyOfAUser(w http.ResponseWriter, r *http.Request) {
 
 	var singleHobby model.Hobby
 
-	err := UnmarshalJSON(r,&singleHobby)
+	err := web.UnmarshalJSON(r,&singleHobby)
 	if err!=nil{
-		w.Write([]byte(err.Error()))
+		web.RespondErrorMessage(w,http.StatusBadRequest,err.Error())
 		return
 	}
 
@@ -231,21 +202,17 @@ func DeleteHobbyOfAUser(w http.ResponseWriter, r *http.Request) {
 	qp := repository.Filter("name = ? AND user_id = ? ",singleHobby.Name,userId)
 	err = serviceInstanceUser.gormRepo.Get(uow, &singleHobby, userId, []string{} ,qp)
 	if err != nil {
-		fmt.Println(err)
-		w.Write([]byte("No such hobby found"))
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
 		return
 	} 
 
 	err = serviceInstanceUser.gormRepo.Delete(uow, &singleHobby)
 	if err != nil {
-		fmt.Println(err)
-		w.Write([]byte("Error while deleting the hobby"))
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
 		return
 	}
 
-	w.Write([]byte("Deleted hobby successfully"))
-	
-
+	web.RespondJSON(w,http.StatusOK,"Deleted hobby successfully")
 	uow.Commit()
 
 }
@@ -268,12 +235,11 @@ func DeleteCourseOfAUser(w http.ResponseWriter, r *http.Request){
 
 	err := serviceInstanceUser.gormRepo.RemoveAssociations(uow,&user,"Courses",&course)
 	if err != nil {
-		fmt.Println(err)
-		w.Write([]byte("Error while deleting the course"))
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
 		return
 	}
 
-	w.Write([]byte("Deleted course mapped to the user successfully"))
+	web.RespondJSON(w,http.StatusOK,"Deleted course mapped to the user successfully")
 	uow.Commit()
 
 }

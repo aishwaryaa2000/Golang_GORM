@@ -10,6 +10,7 @@ type Course struct {
 	Name string `json:"cname" gorm:"uniqueIndex:idx_course_name;type:varchar(100)"`
 }
 
+//hook to assign uuid to course id
 func (c *Course) BeforeCreate(tx *gorm.DB) (err error) {
 	c.ID = uuid.NewV4()
 	return nil

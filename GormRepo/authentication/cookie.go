@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"time"
-
 	"github.com/golang-jwt/jwt"
 	uuid "github.com/satori/go.uuid"
 )

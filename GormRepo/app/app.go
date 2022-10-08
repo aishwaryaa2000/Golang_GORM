@@ -10,6 +10,7 @@ import (
 	"github.com/gorilla/mux"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	
 	"gorm/config"
 )
 
@@ -110,6 +111,7 @@ func createTables(db *gorm.DB) {
 	}
 }
 
+//get app.db to be used by the services
 func GetDb() *gorm.DB{
 	return db
 }

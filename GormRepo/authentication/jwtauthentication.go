@@ -2,9 +2,7 @@ package authentication
 
 import (
 	"fmt"
-
 	"time"
-
 	"github.com/golang-jwt/jwt"
 )
 
@@ -31,7 +29,7 @@ func GenerateJWT(id string) (string, error) {
 
 }
 
-//verifyJWT function is a middleware that takes in the handler function for the request you want to verify.
+//verifyJWT function returns true if token is valid else returns false.
 func VerifyJWT(tokenString string) bool {
 
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {

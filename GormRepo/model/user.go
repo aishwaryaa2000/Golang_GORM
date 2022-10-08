@@ -16,6 +16,7 @@ type User struct {
 	Hobbies []Hobby  `gorm:"foreign_key:UserID;constraint:OnDelete:CASCADE;" json:"hobbies"`
 }
 
+//hook to assign uuid to user id and hash user password
 func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	u.ID = uuid.NewV4()
 	u.Password = encrypt.CreateHash(u.ID.String() + u.Password)

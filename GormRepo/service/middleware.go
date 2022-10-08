@@ -2,9 +2,11 @@ package service
 
 import (
 	"gorm/authentication"
+	
 	"net/http"
 )
 
+//middleware to check if the request made is by an authorized user
 func IsAuthorized(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 

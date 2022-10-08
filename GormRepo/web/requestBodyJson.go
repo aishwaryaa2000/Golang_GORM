@@ -1,4 +1,4 @@
-package service
+package web
 
 import (
 	"encoding/json"
@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// UnmarshalJSON checks for empty body and then parses JSON into the target
 func UnmarshalJSON(r *http.Request, target interface{}) error {
 
 	if r.Body == nil{
