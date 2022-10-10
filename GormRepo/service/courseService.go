@@ -27,7 +27,7 @@ func AddCourse(w http.ResponseWriter, r *http.Request){
 	
 	err = serviceInstanceCourse.gormRepo.Add(uow, &singleCourse)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error occurred while adding a course")
 		return
 	}
 
@@ -51,7 +51,7 @@ func GetCourse(w http.ResponseWriter, r *http.Request) {
 	
 	err := serviceInstanceCourse.gormRepo.Get(uow, &singleCourse, singleCourse.ID, preloadAssoc,qp)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error occurred while getting the course")
 		return
 	}
 
@@ -69,7 +69,7 @@ func GetAllCourses(w http.ResponseWriter, r *http.Request) {
 	var courses []model.Course
 	err := serviceInstanceCourse.gormRepo.GetAll(uow, &courses, []string{})
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error occurred while getting courses")
 		return
 	}
 	
@@ -96,7 +96,7 @@ func UpdateCourse(w http.ResponseWriter, r *http.Request) {
 
 	err = serviceInstanceCourse.gormRepo.Update(uow, &singleCourse)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error occurred while updating course")
 		return
 	} 
 		
@@ -116,7 +116,7 @@ func DeleteCourse(w http.ResponseWriter, r *http.Request) {
 	currCourse.ID,_ = uuid.FromString(vars["id"])
 	err := serviceInstanceCourse.gormRepo.Delete(uow, &currCourse)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error occurred while deleting course")
 		return
 	} 
 
