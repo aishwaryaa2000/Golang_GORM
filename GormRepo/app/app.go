@@ -87,6 +87,8 @@ func (app *App) Stop() {
 //open connection to DB and create initial tables
 func (app *App) MigrateDB() {
 
+	fmt.Println("str : ",app.GetConnectionString())
+
 	migrateDB, err := gorm.Open(mysql.Open(app.GetConnectionString()), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Unable to open DB connection for migration, exiting the application!")

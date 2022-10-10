@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/satori/go.uuid"
+	"fmt"
 	
 	"gorm/encrypt"
 	"gorm/authentication"
@@ -75,6 +76,63 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 	}
 	web.RespondJSON(w,http.StatusCreated,"User added successfully")
 	uow.Commit()
+}
+
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
+
+	//soft delete
+	var serviceInstanceUser = getInstanceOfService()
+
+	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
+	defer uow.Complete()
+
+	var user model.User
+	user.ID = authentication.GetIdFromCookieClaims(r)
+	var preloadAssoc = []string{"Hobbies"}
+	
+	qp := repository.Filter("id = ?",user.ID)
+	
+	err := serviceInstanceUser.gormRepo.Get(uow, &user, user.ID, preloadAssoc,qp)
+	fmt.Println("user : ",user)
+	for _,iHobby := range user.Hobbies{
+		err = serviceInstanceUser.gormRepo.Delete(uow, &iHobby)
+	}
+	err = serviceInstanceUser.gormRepo.Delete(uow, &user)
+	if err != nil {
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		return
+	} 
+	authentication.DeleteCookieValue(w)
+	web.RespondJSON(w,http.StatusOK,"Deleted user successfully")
+
+	uow.Commit()
+
+}
+
+func DeleteCourseOfAUser(w http.ResponseWriter, r *http.Request){
+
+	var serviceInstanceUser = getInstanceOfService()
+
+	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
+	defer uow.Complete()
+	
+
+	vars := mux.Vars(r)
+	var course model.Course
+	course.ID,_ = uuid.FromString(vars["courseid"])
+
+	var user model.User
+	user.ID = authentication.GetIdFromCookieClaims(r)
+
+	err := serviceInstanceUser.gormRepo.RemoveAssociations(uow,&user,"Courses",&course)
+	if err != nil {
+		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		return
+	}
+
+	web.RespondJSON(w,http.StatusOK,"Deleted course mapped to the user successfully")
+	uow.Commit()
+
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
@@ -158,28 +216,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func DeleteUser(w http.ResponseWriter, r *http.Request) {
-
-	var serviceInstanceUser = getInstanceOfService()
-
-	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
-	defer uow.Complete()
-
-	var user model.User
-	user.ID = authentication.GetIdFromCookieClaims(r)
-
-	err := serviceInstanceUser.gormRepo.Delete(uow, &user)
-	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
-		return
-	} 
-	authentication.DeleteCookieValue(w)
-	web.RespondJSON(w,http.StatusOK,"Deleted user successfully")
-
-	uow.Commit()
-
-}
-
 func DeleteHobbyOfAUser(w http.ResponseWriter, r *http.Request) {
 
 	var serviceInstanceUser = getInstanceOfService()
@@ -216,31 +252,3 @@ func DeleteHobbyOfAUser(w http.ResponseWriter, r *http.Request) {
 	uow.Commit()
 
 }
-
-
-func DeleteCourseOfAUser(w http.ResponseWriter, r *http.Request){
-
-	var serviceInstanceUser = getInstanceOfService()
-
-	uow := repository.NewUnitOfWork(serviceInstanceUser.db, false)
-	defer uow.Complete()
-	
-
-	vars := mux.Vars(r)
-	var course model.Course
-	course.ID,_ = uuid.FromString(vars["courseid"])
-
-	var user model.User
-	user.ID = authentication.GetIdFromCookieClaims(r)
-
-	err := serviceInstanceUser.gormRepo.RemoveAssociations(uow,&user,"Courses",&course)
-	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
-		return
-	}
-
-	web.RespondJSON(w,http.StatusOK,"Deleted course mapped to the user successfully")
-	uow.Commit()
-
-}
-

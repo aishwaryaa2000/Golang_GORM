@@ -39,70 +39,70 @@ var routes = Routes{
 
 	Route{
 		"PUT",
-		"/update/user",
+		"/user",
 		//update the user which is currently logged in
 		service.IsAuthorized(http.HandlerFunc(service.UpdateUser)),
 	},
 
 	Route{
 		"POST",
-		"/add/user",
+		"/user",
 		http.HandlerFunc(service.AddUser),
 	},
 
 	Route{
 		"GET",
-		"/get/{id}/user",
+		"/users/{id}",
 		(http.HandlerFunc(service.GetUser)),
 	},
 
 	Route{
 		"GET",
-		"/get/users",
+		"/users",
 		(http.HandlerFunc(service.GetAllUser)),
 	},
 	Route{
 		"DELETE",
-		"/delete/user",
+		"/user",
 		//delete the user which is currently logged in
 		service.IsAuthorized(http.HandlerFunc(service.DeleteUser)),
 	},
 	Route{
 		"DELETE",
-		"/delete/hobby",
+		"/user/hobby",
 		//delete the hobby of the user which is currently logged in
 		service.IsAuthorized(http.HandlerFunc(service.DeleteHobbyOfAUser)),
 	},
 	Route{
 		"DELETE",
-		"/delete/user/course/{courseid}",
+		"/user/courses/{courseid}",
 		//delete an associated course of the user which is currently logged in
 		service.IsAuthorized(http.HandlerFunc(service.DeleteCourseOfAUser)),
 	},
 	Route{
 		"PUT",
-		"/update/{id}/course",
+		"/courses/{id}",
 		service.IsAuthorized(http.HandlerFunc(service.UpdateCourse)),
 	},
 	Route{
 		"POST",
-		"/add/course",
+		"/course",
 		http.HandlerFunc(service.AddCourse),
 		//service.IsAuthorized(http.HandlerFunc(service.AddCourse)),
 	},
 	Route{
 		"GET",
-		"/get/{id}/course",
+		"/courses/{id}",
 		(http.HandlerFunc(service.GetCourse)),
 	},
 	Route{
 		"GET",
-		"/get/courses",
+		"/courses",
 		(http.HandlerFunc(service.GetAllCourses)),
 	},
 	Route{
 		"DELETE",
-		"/delete/{id}/course",
+		"/courses/{id}",
 		service.IsAuthorized(http.HandlerFunc(service.DeleteCourse)),
 	},
 }

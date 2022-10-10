@@ -26,8 +26,8 @@ func NewConfig(defaults map[string]interface{}) *Config {
 		config.viper.SetDefault(key, value)
 	}
 
-	config.viper.AutomaticEnv()
 	config.viper.SetEnvPrefix(Prefix)
+	config.viper.AutomaticEnv()
 
 
 
