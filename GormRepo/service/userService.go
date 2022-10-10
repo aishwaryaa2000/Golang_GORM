@@ -41,7 +41,7 @@ func Login(w http.ResponseWriter, r *http.Request){
 	err = serviceInstanceUser.gormRepo.Get(uow, &userr, currID, preloadAssoc,qp)
 
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Username or Password is incorrect")
 		return
 
 	}
@@ -71,7 +71,7 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 	//New record in course table will not be added here,it has to be done via courseService.go
 	err = serviceInstanceUser.gormRepo.AddWithOmit(uow, &user,omit)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error occured while registering the user")
 		return
 	}
 	web.RespondJSON(w,http.StatusCreated,"User added successfully")
@@ -99,7 +99,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 	err = serviceInstanceUser.gormRepo.Delete(uow, &user)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error occured while deleting the user")
 		return
 	} 
 	authentication.DeleteCookieValue(w)
@@ -126,7 +126,7 @@ func DeleteCourseOfAUser(w http.ResponseWriter, r *http.Request){
 
 	err := serviceInstanceUser.gormRepo.RemoveAssociations(uow,&user,"Courses",&course)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"error during deleting course mapped to the user")
 		return
 	}
 
@@ -153,7 +153,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	
 	err := serviceInstanceUser.gormRepo.Get(uow, &user, user.ID, preloadAssoc,qp)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error while getting the user with specified user id")
 		return
 	}
 
@@ -173,7 +173,7 @@ func GetAllUser(w http.ResponseWriter, r *http.Request) {
 	var preloadAssoc = []string{"Courses", "Hobbies"}
 	err := serviceInstanceUser.gormRepo.GetAll(uow, &users, preloadAssoc)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error while getting all the users")
 		return
 	}
 	
@@ -206,7 +206,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	//Dont add anything in courses table
 	err = serviceInstanceUser.gormRepo.UpdateWithOmit(uow, &user,omit)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error occured while updating the user")
 		return
 	} 
 
@@ -238,13 +238,13 @@ func DeleteHobbyOfAUser(w http.ResponseWriter, r *http.Request) {
 	qp := repository.Filter("name = ? AND user_id = ? ",singleHobby.Name,userId)
 	err = serviceInstanceUser.gormRepo.Get(uow, &singleHobby, userId, []string{} ,qp)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"No such hobby exists")
 		return
 	} 
 
 	err = serviceInstanceUser.gormRepo.Delete(uow, &singleHobby)
 	if err != nil {
-		web.RespondErrorMessage(w,http.StatusInternalServerError,err.Error())
+		web.RespondErrorMessage(w,http.StatusInternalServerError,"Error occured during deleting the hobby")
 		return
 	}
 
