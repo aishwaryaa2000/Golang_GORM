@@ -20,7 +20,7 @@ type App struct {
 	Router *mux.Router
 	server *http.Server
 }
-var db *gorm.DB
+// var db *gorm.DB
 
 func New(router *mux.Router) *App{
 	var defaults = make(map[string]interface{})
@@ -28,7 +28,17 @@ func New(router *mux.Router) *App{
 	app := App{Config: appConfig,Router: router} 
 	app.Initialize()
 	app.MigrateDB()
-	db = app.DB
+	// db = app.DB
+	return &app
+}
+
+//https://github.com/islax/microapp/blob/master/app.go-line 66
+func NewWithEnv() *App{
+	var defaults = make(map[string]interface{})
+	appConfig := config.NewConfig(defaults)
+	app := App{Config: appConfig} 
+	app.MigrateDB()
+	// db = app.DB
 	return &app
 }
 
@@ -114,6 +124,6 @@ func createTables(db *gorm.DB) {
 }
 
 //get app.db to be used by the services
-func GetDb() *gorm.DB{
-	return db
+func (app *App)GetDb() *gorm.DB{
+	return app.DB
 }
