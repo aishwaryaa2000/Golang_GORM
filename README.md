@@ -1,2 +1,4 @@
-# Swabhav_Techlabs
-For Golang training and assignment submission purpose.
+# GOLANG PRACTICE
+Golang GORM
+Design Pattern
+SOLID principles
